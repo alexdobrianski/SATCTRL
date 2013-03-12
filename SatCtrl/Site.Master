@@ -1,0 +1,78 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SatCtrl.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    Craft's /CubeSat's Mission Control 
+                </h1>
+            </div>
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/CraftCubeSat.aspx" Text="Craft/CubeSat"/>
+                        <asp:MenuItem NavigateUrl="~/Simulation.aspx" Text="Simulation" 
+                            Value="Simulation">
+                            <asp:MenuItem NavigateUrl="~/SimulationGPS.aspx" Text="GPS satellites" 
+                                Value="GPS satelites"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/GroundStation.aspx" Text="Ground Stations" 
+                            Value="Ground Stations">
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=1" Text="Vancouver" 
+                                Value="Vancouver"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=2" Text="Florida (TBD)" 
+                                Value="Florida"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=3" 
+                                Text="East Brasilia (TBD)" Value="East Brasilia (TBD)"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=4" Text="South Africa (TBD)" 
+                                Value="South Africa (TBD)"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=5" Text="Donetsk (TBD)" 
+                                Value="Donetsk (TBD)"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=6" Text="Kazakhstan(TBD)" 
+                                Value="Kazakhstan"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=7" 
+                                Text="West Australia(TBD)" Value="West Australia"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=8" Text="Hawaii(TBD)" 
+                                Value="Hawaii"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=9" Text="Cook Island(TBD)" 
+                                Value="Cook Island(TBD)"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Sessions data" Value="Sessions data"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+    </div>
+    </form>
+</body>
+</html>
