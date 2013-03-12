@@ -57,6 +57,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="CraftCubeSat.aspx" />
     <Content Include="GroundStation.aspx" />
+    <Content Include="Img\SDC10316.JPG" />
     <Content Include="Simulation.aspx" />
     <Content Include="SimulationGPS.aspx" />
     <Content Include="Styles\Site.css" />
