@@ -13,13 +13,31 @@ namespace SatCtrl {
     public partial class _GroundStation {
         
         /// <summary>
-        /// Image1 control.
+        /// StatusText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.Label StatusText;
+        
+        /// <summary>
+        /// ImagePoint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image ImagePoint;
+        
+        /// <summary>
+        /// MainGroundStation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox MainGroundStation;
         
         /// <summary>
         /// TextBox3 control.
@@ -31,22 +49,22 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.TextBox TextBox3;
         
         /// <summary>
-        /// CheckBox1 control.
+        /// Button2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
-        /// Button1 control.
+        /// TestCallCubesat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button TestCallCubesat;
         
         /// <summary>
         /// TextBox1 control.

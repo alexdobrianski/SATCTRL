@@ -10,6 +10,6 @@
 namespace SatCtrl {
     
     
-    public partial class About {
+    public partial class _SessionPost {
     }
 }

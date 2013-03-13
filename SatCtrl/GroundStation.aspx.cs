@@ -16,6 +16,11 @@ namespace SatCtrl
         public string WeatherTitle;
         public string WeatherTitle2;
         public string WeatherTitlepwscode;
+        public string AntennaAzimuth;
+        public string AntennaAltitude;
+        public string CalulatedAzimuth;
+        public string CalulatedAltitude;
+        public string GrStnStatus;
         protected void Page_Load(object sender, EventArgs e)
         {
             Latitude = "49.257735";
@@ -25,7 +30,31 @@ namespace SatCtrl
             WeatherTitle = "Vancouver, British Columbia Weather Forecast";
             WeatherTitle2 = "Find more about Weather in Vancouver, CA";
             LatitudeName = "Vancouver";
+            ImagePoint.ImageUrl = "~/Img/SDC10316.JPG";
             String Location = Page.Request.QueryString["st"];
+            if (Location == null)
+                Location = "1";
+            AntennaAzimuth = "000.000";
+            AntennaAltitude = "00.000";
+            CalulatedAzimuth = "000.000";
+            CalulatedAltitude = "00.000";
+            GrStnStatus = "OFFLINE";
+
+            string strDefaultMainGrStn = "1";
+            if (HttpContext.Current.Session["DefaultMainGrStn"] != null)
+            {
+                strDefaultMainGrStn = HttpContext.Current.Session["DefaultMainGrStn"].ToString();
+            }
+            else
+            {
+                strDefaultMainGrStn = System.Configuration.ConfigurationManager.AppSettings["DefaultMainGrStn"];
+                HttpContext.Current.Session["DefaultMainGrStn"] = strDefaultMainGrStn;
+            }
+            //MainGroundStation.Checked = false;
+            if (strDefaultMainGrStn == Location)
+            {
+                MainGroundStation.Checked = true;
+            }
             if (Location == "1")
             {
                 Latitude = "49.257735";
@@ -35,6 +64,9 @@ namespace SatCtrl
                 WeatherTitle = "Vancouver, British Columbia Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Vancouver, CA";
                 LatitudeName = "Vancouver, BC";
+                ImagePoint.ImageUrl = "~/Img/SDC10316.JPG";
+                GrStnStatus = "OFFLINE";
+                
             }
             if (Location == "2")
             {
@@ -45,6 +77,8 @@ namespace SatCtrl
                 WeatherTitle = "Sarasota, Florida Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Sarasota, FL";
                 LatitudeName = "Sarasota, Florida (TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
             if (Location == "3")
             {
@@ -55,6 +89,8 @@ namespace SatCtrl
                 WeatherTitle = "Joao Pessoa, Brazil Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Joao Pessoa, BZ";
                 LatitudeName = "Joao Pessoa, East Brasilia (TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
             if (Location == "4")
             {
@@ -65,6 +101,8 @@ namespace SatCtrl
                 WeatherTitle = "Cape Town, South Africa Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Cape Town, ZA";
                 LatitudeName = " Cape Town, South Africa(TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
             if (Location == "5")
             {
@@ -75,6 +113,8 @@ namespace SatCtrl
                 WeatherTitle = "Donetsk, Ukraine Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Donetsk, UR";
                 LatitudeName = "Donetsk, Ukraine (TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
             if (Location == "6")
             {
@@ -85,6 +125,8 @@ namespace SatCtrl
                 WeatherTitle = "Karaganda, Kazakhstan Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Karaganda, KZ";
                 LatitudeName = "Karaganda, Kazakhstan (TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
             if (Location == "7")
             {
@@ -95,6 +137,8 @@ namespace SatCtrl
                 WeatherTitle = "Perth, Western Australia Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Perth, AU";
                 LatitudeName = "Perth, Western Australia (TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
             if (Location == "8")
             {
@@ -105,6 +149,8 @@ namespace SatCtrl
                 WeatherTitle = "Hilo, Hawaii Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Hilo, HI";
                 LatitudeName = "Hilo, Hawaii (TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
             if (Location == "9")
             {
@@ -116,11 +162,41 @@ namespace SatCtrl
                 WeatherTitle = "Rarotonga Aws, Cook Islands Weather Forecast";
                 WeatherTitle2 = "Find more about Weather in Rarotonga Aws, KU";
                 LatitudeName = "Rarotonga Aws, Cook Islands (TBD)";
+                ImagePoint.ImageUrl = "~/Img/empty.JPG";
+                GrStnStatus = "OFFLINE";
             }
-
+            if (GrStnStatus == "OFFLINE")
+            {
+                StatusText.ForeColor = System.Drawing.Color.Red;
+            }
+            if (GrStnStatus == "ONLINE")
+            {
+                StatusText.ForeColor = System.Drawing.Color.Blue; 
+            }
+            if (GrStnStatus == "COMLINK")
+            {
+                StatusText.ForeColor = System.Drawing.Color.Green; 
+            }
         }
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            String Location = Page.Request.QueryString["st"];
+            if (MainGroundStation.Checked)
+            {
+                if (Location != null)
+                {
+                    HttpContext.Current.Session["DefaultMainGrStn"] = Location;
+                }
+            }
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
         {
 
         }

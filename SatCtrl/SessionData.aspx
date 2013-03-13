@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeBehind="SimulationGPS.aspx.cs" Inherits="SatCtrl._SimulationGPS" %>
+﻿<%@ Page Title="SessionData Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+    CodeBehind="SessionData.aspx.cs" Inherits="SatCtrl._SessionData" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
@@ -7,4 +7,4 @@
     <p>
     <br />
 </p>
-    </asp:Content>
+</asp:Content>

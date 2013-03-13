@@ -58,7 +58,8 @@
                             <asp:MenuItem NavigateUrl="~/GroundStation.aspx?st=9" Text="Cook Island(TBD)" 
                                 Value="Cook Island(TBD)"></asp:MenuItem>
                         </asp:MenuItem>
-                        <asp:MenuItem Text="Sessions data" Value="Sessions data"></asp:MenuItem>
+                        <asp:MenuItem Text="Sessions data" Value="Sessions data" 
+                            NavigateUrl="~/SessionData.aspx"></asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
                     </Items>
                 </asp:Menu>

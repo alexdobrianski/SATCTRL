@@ -2,39 +2,54 @@
     CodeBehind="GroundStation.aspx.cs" Inherits="SatCtrl._GroundStation" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+    <style type="text/css" id="ID_COLOR_RED">
+        .style1
+        {
+            color: #FF0000;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <p>
-        &nbsp;Ground station <%=LatitudeName%>, location <%=Latitude%>, <%=Longitude%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        Sky view from Ground Station Camera. </p>
+        &nbsp;Ground Station <%=LatitudeName%>, location <%=Latitude%>, <%=Longitude%> 
+        <asp:Label ID="StatusText" runat="server"><strong>&nbsp;&nbsp;&nbsp;&nbsp;  <%=GrStnStatus %></strong></asp:Label>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sky view from Ground Station Camera. </p>
     <p>
         <iframe id="I1" frameborder="0" height="350" marginheight="0" marginwidth="0" 
             name="I1" scrolling="no" 
             src="https://maps.google.ca/?ie=UTF8&amp;ll=<%=Latitude%>,<%=Longitude%>&amp;spn=0.153041,0.316887&amp;t=m&amp;z=12&amp;output=embed" 
             width="425"></iframe>
 &nbsp;
-        <asp:Image ID="Image1" runat="server" Height="350px" 
+        <asp:Image ID="ImagePoint" runat="server" Height="350px" 
             ImageUrl="~/Img/SDC10316.JPG" />
         <br />
         <small>
         <a href="https://maps.google.ca/?ie=UTF8&amp;ll=<%=Latitude%>,<%=Longitude%>&amp;spn=0.153041,0.316887&amp;t=m&amp;z=12&amp;source=embed" 
             style="color:#0000FF;text-align:left">View Larger Map</a></small></p>
     <p>
-        Antenna position Azimuth=???, Altitude=???&nbsp; URL address:&nbsp;
-        <asp:TextBox ID="TextBox3" runat="server" Width="215px">http://192.168.0.1:6897/</asp:TextBox>
-&nbsp;(make port 6897 visible from internet)</p>
+        Antenna Azimuth=<%=AntennaAzimuth%>(<%=CalulatedAzimuth%>), Altitude=<%=AntennaAltitude%>(<%=CalulatedAltitude%>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        </p>
     <p>
-        <asp:CheckBox ID="CheckBox1" runat="server" 
-            oncheckedchanged="CheckBox1_CheckedChanged" Text="Enable Main Communication." />
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Button ID="Button1" runat="server" Text="Call Cubesat" />
+        Use as
+        <asp:CheckBox ID="MainGroundStation" runat="server" 
+            oncheckedchanged="CheckBox1_CheckedChanged" 
+            Text="main GrStn." />
+        ;&nbsp;IP address:&nbsp;
+        <asp:TextBox ID="TextBox3" runat="server" Width="215px">http://192.168.0.1:6897/</asp:TextBox>
+&nbsp;<asp:Button ID="Button2" runat="server" Text="Test GrStnConnection" 
+            onclick="Button2_Click" />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:Button ID="TestCallCubesat" runat="server" Text="Test Call Cubesat" 
+            onclick="Button1_Click" />
     </p>
     <p>
         Uplink&nbsp;&nbsp;&nbsp; : 
-        <asp:TextBox ID="TextBox1" runat="server" Height="57px" Width="810px"></asp:TextBox>
+        <asp:TextBox ID="TextBox1" runat="server" Height="57px" Width="810px" 
+            ReadOnly="True"></asp:TextBox>
     </p>
     <p>
-        Downlink:<asp:TextBox ID="TextBox2" runat="server" Height="58px" Width="822px"></asp:TextBox>
+        Downlink:<asp:TextBox ID="TextBox2" runat="server" Height="58px" 
+            Width="822px" ReadOnly="True"></asp:TextBox>
     </p>
     <p>
         Weather at Ground station location
