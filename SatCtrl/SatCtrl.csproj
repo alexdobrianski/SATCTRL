@@ -59,6 +59,7 @@
     <Content Include="GroundStation.aspx" />
     <Content Include="Img\SDC10316.JPG" />
     <Content Include="SessionData.aspx" />
+    <Content Include="SessionPost.aspx" />
     <Content Include="Simulation.aspx" />
     <Content Include="SimulationGPS.aspx" />
     <Content Include="Styles\Site.css" />
@@ -133,6 +134,12 @@
     </Compile>
     <Compile Include="SessionData.aspx.designer.cs">
       <DependentUpon>SessionData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SessionPost.aspx.cs">
+      <DependentUpon>SessionPost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SessionPost.aspx.designer.cs">
+      <DependentUpon>SessionPost.aspx</DependentUpon>
     </Compile>
     <Compile Include="Simulation.aspx.cs">
       <DependentUpon>Simulation.aspx</DependentUpon>

@@ -89,7 +89,7 @@
                 <td class="style6">
                     &lt;-&gt;</td>
                 <td>
-                    Distributed, packets fixing stations</td>
+                    packet&#39;s fixing distributed stations</td>
             </tr>
             <tr>
                 <td class="style2">
