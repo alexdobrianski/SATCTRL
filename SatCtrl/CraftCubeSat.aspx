@@ -4,4 +4,6 @@
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+    <input id="UpLoadMsg" type="text" /><input id="SendToCubeSat" type="submit" 
+        value="SendToCubeSat" />
     </asp:Content>

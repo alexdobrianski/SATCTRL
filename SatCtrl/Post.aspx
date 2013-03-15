@@ -1,0 +1,16 @@
+﻿<%@ Page Title="Post Page" Language="C#" MasterPageFile="~/Empty.master" AutoEventWireup="true"
+    CodeBehind="Post.aspx.cs" Inherits="SatCtrl._Post" %>
+
+<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+</asp:Content>
+<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+    <p>
+        post</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        &nbsp;</p>
+    <p>
+        <br />
+    </p>
+</asp:Content>
