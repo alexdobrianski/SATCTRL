@@ -59,6 +59,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="CraftCubeSat.aspx" />
     <Content Include="GroundStation.aspx" />
+    <Content Include="GrStn.exe" />
     <Content Include="Img\SDC10316.JPG" />
     <Content Include="Post.aspx" />
     <Content Include="SessionData.aspx" />

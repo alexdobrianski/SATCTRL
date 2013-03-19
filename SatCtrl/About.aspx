@@ -42,7 +42,7 @@
                 <td class="style3">
                     &lt;-&gt;</td>
                 <td class="style5">
-                    GrStn (Vancouver)</td>
+                    <a href=GrStn.exe> GrStn (Vancouver)</a></td>
                 <td class="style6">
                     &lt;-&gt;</td>
                 <td>

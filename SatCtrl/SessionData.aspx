@@ -6,7 +6,8 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <p>
         <asp:GridView ID="GridView1" runat="server" AllowPaging="True" 
-            AllowSorting="True" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
+            AllowSorting="True" AutoGenerateColumns="False" 
+            DataSourceID="SqlDataSource1" Width="917px">
             <Columns>
                 <asp:BoundField DataField="session_no" HeaderText="session_no" 
                     SortExpression="session_no" />
