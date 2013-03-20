@@ -7,7 +7,8 @@
     <p>
         <asp:GridView ID="GridView1" runat="server" AllowPaging="True" 
             AllowSorting="True" AutoGenerateColumns="False" 
-            DataSourceID="SqlDataSource1" Width="917px">
+            DataSourceID="SqlDataSource1" Width="856px" Height="429px" PageSize="25" 
+            style="margin-bottom: 106px">
             <Columns>
                 <asp:BoundField DataField="session_no" HeaderText="session_no" 
                     SortExpression="session_no" />
@@ -33,7 +34,7 @@
             ConnectionString="<%$ ConnectionStrings:missionlogConnectionString %>" 
             ProviderName="<%$ ConnectionStrings:missionlogConnectionString.ProviderName %>" 
             
-            SelectCommand="SELECT session_no, packet_type, packet_no, d_time, g_station, gs_time, package FROM mission_session ORDER BY session_no, packet_type, packet_no">
+            SelectCommand="SELECT session_no, packet_type, packet_no, d_time, g_station, gs_time, package FROM mission_session ORDER BY session_no desc, packet_type desc, packet_no desc">
         </asp:SqlDataSource>
     <br />
 </p>
