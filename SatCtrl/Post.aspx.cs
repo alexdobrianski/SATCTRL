@@ -30,6 +30,7 @@ namespace SatCtrl
             {
                 DateTime d = new DateTime();
                 d = DateTime.UtcNow;
+                str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString();
                 //String ConnStr = System.Configuration.ConfigurationManager.ConnectionStrings.ConnectionStrings["missionlogConnectionString"];
 
                 MySqlConnection conn =

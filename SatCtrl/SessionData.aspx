@@ -34,7 +34,7 @@
             ConnectionString="<%$ ConnectionStrings:missionlogConnectionString %>" 
             ProviderName="<%$ ConnectionStrings:missionlogConnectionString.ProviderName %>" 
             
-            SelectCommand="SELECT session_no, packet_type, packet_no, d_time, g_station, gs_time, package FROM mission_session ORDER BY session_no desc, packet_type desc, packet_no desc">
+            SelectCommand="SELECT session_no, packet_type, packet_no, d_time, g_station, gs_time, package FROM mission_session ORDER BY d_time desc">
         </asp:SqlDataSource>
     <br />
 </p>
