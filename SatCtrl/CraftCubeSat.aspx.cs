@@ -16,41 +16,7 @@ namespace SatCtrl
         public long intMaxSessionN;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            string strMaxSessionN = "0";
-            if (HttpContext.Current.Session["MaxSessionN"] != null)
-            {
-                strMaxSessionN = HttpContext.Current.Session["MaxSessionN"].ToString();
-            }
-            else
-            {
-                MySqlConnection conn =
-                    new MySqlConnection("server=127.0.0.1;User Id=root;password=azura2samtak;Persist Security Info=True;database=missionlog");
-                MySqlDataReader rdr = null;
-                try
-                {
-                    conn.Open();
-
-                    MySqlCommand cmd = new MySqlCommand("", conn);
-
-                    cmd.CommandText = "SELECT MAX(session_no) FROM mission_session;";
-                    rdr = cmd.ExecuteReader();
-
-                    //cmd.ExecuteNonQuery();
-                    while (rdr.Read())
-                    {
-                        strMaxSessionN = rdr.GetString(0);
-                    }
-
-
-                    conn.Close();
-                    HttpContext.Current.Session["MaxSessionN"] = strMaxSessionN;
-                }
-                catch (MySqlException ex)
-                {
-                    String mmm = (ex.Message);
-                }
-            }
+            string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
         }
 
@@ -60,13 +26,10 @@ namespace SatCtrl
             Stream dataStream;
             intMaxSessionN = intMaxSessionN + 1;
             string strMaxSessionN = intMaxSessionN.ToString().PadLeft(10,'0');
-            HttpContext.Current.Session["MaxSessionN"] = strMaxSessionN;
+            HttpContext.Current.Application["strMaxSessionN"] = strMaxSessionN;
             string strUpLoadMsg = MsgUplink.Text.ToString();
 
-            //String url = "http://www.adobri.com";
-            //request = WebRequest.Create("http://localhost:3159/Post.aspx?session_no=000000003&packet_type=2&packet_no=00000&d_time=03/15/13 07:00:55.734&g_station=3&gs_time=03/15/13 07:00:55.734&package=qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
-            String url = "http://localhost:6921/cmd?session_no="+strMaxSessionN + "&package="+strUpLoadMsg;
-            //request = HttpWebRequest.Create("http://localhost:6921/cmd?session_no=000000003&packet_type=2&packet_no=00000&d_time=03/15/1307:00:55.734&g_station=3&gs_time=03/15/1307:00:55.734&package=qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+            String url = HttpContext.Current.Application["StnURL"].ToString() + "cmd?session_no=" + strMaxSessionN + "&package=" + strUpLoadMsg + "&g_station=" + HttpContext.Current.Application["DefaultMainGrStn"].ToString();
             /////////////////////////////////////////////////////////////////////////////////////////
             // param
             /////////////////////////////////////////////////////////////////////////////////////////
@@ -75,30 +38,11 @@ namespace SatCtrl
             // 
             request = WebRequest.Create(url);
             request.Method = "GET";
-            //string postData = "cmd?session_no=000000003&packet_type=2&packet_no=00000&d_time=03/15/1307:00:55.734&g_station=3&gs_time=03/15/1307:00:55.734&package=qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
-            //byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-
-            // Set the ContentType property of the WebRequest.
-            //request.ContentType = "application/x-www-form-urlencoded";
+            request.Timeout = 5000;
             request.ContentType = "text/html";
-
-            // Set the ContentLength property of the WebRequest.
-            //request.ContentLength = byteArray.Length;
-
-            // Get the request stream.
-
-            //dataStream = request.GetRequestStream();
-
-            // Write the data to the request stream.
-            //dataStream.Write(byteArray, 0, byteArray.Length);
-
-
-
-            // Close the Stream object.
-            //dataStream.Close();
             string ResonseString = "";
-            //try
-            //{
+            try
+            {
                 WebResponse resp = request.GetResponse();
                 long sizeresp = resp.ContentLength;
                 dataStream = resp.GetResponseStream();
@@ -106,12 +50,13 @@ namespace SatCtrl
 
                 dataStream.Read(byteArray, 0, (int)sizeresp);
                 dataStream.Close();
-                ResonseString = Convert.ToString(byteArray);
-            //}
-            //catch()
-            //{
-            //}
-            if (ResonseString.IndexOf("Page OK") != null)
+                UTF8Encoding encoding = new UTF8Encoding();
+                ResonseString = encoding.GetString(byteArray);
+            }
+            catch (WebException)
+            {
+            }
+            if (ResonseString.IndexOf("Page OK") >0)
             {
                 // Uplink was download to Ground Station 
                 // needs to post upling data to database 
@@ -122,7 +67,7 @@ namespace SatCtrl
                 d = DateTime.UtcNow;
                 String str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString(); 
 
-                String str_g_station = "V";
+                String str_g_station = HttpContext.Current.Application["DefaultMainGrStn"].ToString();
                 String str_gs_time = str_d_time;
                 String str_package = strUpLoadMsg;
                 if ((str_session_no != null) &&
@@ -158,7 +103,7 @@ namespace SatCtrl
                 // reset SessionNumber to prev one
                 intMaxSessionN = intMaxSessionN - 1;
                 strMaxSessionN = intMaxSessionN.ToString().PadLeft(10, '0');
-                HttpContext.Current.Session["MaxSessionN"] = strMaxSessionN;
+                HttpContext.Current.Application["strMaxSessionN"] = strMaxSessionN;
             }
         }
     }

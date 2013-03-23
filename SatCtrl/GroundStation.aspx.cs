@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Net;
+using System.IO;
+using System.Text;
 using MySql.Data.MySqlClient;
 
 namespace SatCtrl
@@ -11,7 +14,7 @@ namespace SatCtrl
 
     public partial class _GroundStation : System.Web.UI.Page
     {
-        public long intMaxSessionN;
+       
         public string LatitudeName;
         public string Latitude;
         public string Longitude;
@@ -24,43 +27,47 @@ namespace SatCtrl
         public string CalulatedAzimuth;
         public string CalulatedAltitude;
         public string GrStnStatus;
-        protected void Page_Load(object sender, EventArgs e)
+        public string StationUrl;
+        public String MyTestGrStn(String Location)
         {
-            string strMaxSessionN = "0";
-            if (HttpContext.Current.Session["MaxSessionN"] != null)
+            String RetStr = "OFFLINE";
+            WebRequest request = null;
+            Stream dataStream;
+            String url = StationUrl + "cmd?g_station=" + Location + "&ping=1";
+            request = WebRequest.Create(url);
+            if (request != null)
             {
-                strMaxSessionN = HttpContext.Current.Session["MaxSessionN"].ToString();
-            }
-            else
-            {
-                MySqlConnection conn =
-                    new MySqlConnection("server=127.0.0.1;User Id=root;password=azura2samtak;Persist Security Info=True;database=missionlog");
-                MySqlDataReader rdr = null;
+                request.Method = "GET";
+                request.ContentType = "text/html";
+                request.Timeout = 1000;
+                string ResonseString = "";
                 try
                 {
-                    conn.Open();
+                    WebResponse resp = request.GetResponse();
+                    long sizeresp = resp.ContentLength;
+                    dataStream = resp.GetResponseStream();
+                    byte[] byteArray = new byte[sizeresp];
 
-                    MySqlCommand cmd = new MySqlCommand("", conn);
-
-                    cmd.CommandText = "SELECT MAX(session_no) FROM mission_session;";
-                    rdr = cmd.ExecuteReader();
-
-                    //cmd.ExecuteNonQuery();
-                    while (rdr.Read())
+                    dataStream.Read(byteArray, 0, (int)sizeresp);
+                    dataStream.Close();
+                    UTF8Encoding encoding = new UTF8Encoding();
+                    ResonseString = encoding.GetString(byteArray);
+                    if (ResonseString.IndexOf("Page PING") > 0)
                     {
-                        strMaxSessionN = rdr.GetString(0);
+                        RetStr = "ONLINE";
                     }
-
-
-                    conn.Close();
-                    HttpContext.Current.Session["MaxSessionN"] = strMaxSessionN;
                 }
-                catch (MySqlException ex)
+                catch (WebException)
                 {
-                    String mmm = (ex.Message);
                 }
             }
-            intMaxSessionN = Convert.ToInt32(strMaxSessionN);
+            return RetStr;
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            String Tempo = HttpContext.Current.Application["strMaxSessionN"].ToString();
+            
             Latitude = "49.257735";
             Longitude = "-123.123904";
             Weather = "http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:00000.1.71892&amp;bannertypeclick=wu_clean2day";
@@ -78,16 +85,8 @@ namespace SatCtrl
             CalulatedAltitude = "00.000";
             GrStnStatus = "OFFLINE";
 
-            string strDefaultMainGrStn = "1";
-            if (HttpContext.Current.Session["DefaultMainGrStn"] != null)
-            {
-                strDefaultMainGrStn = HttpContext.Current.Session["DefaultMainGrStn"].ToString();
-            }
-            else
-            {
-                strDefaultMainGrStn = System.Configuration.ConfigurationManager.AppSettings["DefaultMainGrStn"];
-                HttpContext.Current.Session["DefaultMainGrStn"] = strDefaultMainGrStn;
-            }
+            string strDefaultMainGrStn = HttpContext.Current.Application["DefaultMainGrStn"].ToString();
+
             //MainGroundStation.Checked = false;
             if (strDefaultMainGrStn == Location)
             {
@@ -104,6 +103,7 @@ namespace SatCtrl
                 LatitudeName = "Vancouver, BC";
                 ImagePoint.ImageUrl = "~/Img/SDC10316.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn1URL"].ToString();
                 
             }
             if (Location == "2")
@@ -117,6 +117,7 @@ namespace SatCtrl
                 LatitudeName = "Sarasota, Florida (TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn2URL"].ToString();
             }
             if (Location == "3")
             {
@@ -129,6 +130,7 @@ namespace SatCtrl
                 LatitudeName = "Joao Pessoa, East Brasilia (TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn3URL"].ToString();
             }
             if (Location == "4")
             {
@@ -141,6 +143,7 @@ namespace SatCtrl
                 LatitudeName = " Cape Town, South Africa(TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn4URL"].ToString();
             }
             if (Location == "5")
             {
@@ -153,6 +156,7 @@ namespace SatCtrl
                 LatitudeName = "Donetsk, Ukraine (TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn5URL"].ToString();
             }
             if (Location == "6")
             {
@@ -165,6 +169,7 @@ namespace SatCtrl
                 LatitudeName = "Karaganda, Kazakhstan (TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn6URL"].ToString();
             }
             if (Location == "7")
             {
@@ -177,6 +182,7 @@ namespace SatCtrl
                 LatitudeName = "Perth, Western Australia (TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn7URL"].ToString();
             }
             if (Location == "8")
             {
@@ -189,6 +195,7 @@ namespace SatCtrl
                 LatitudeName = "Hilo, Hawaii (TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn8URL"].ToString();
             }
             if (Location == "9")
             {
@@ -202,7 +209,9 @@ namespace SatCtrl
                 LatitudeName = "Rarotonga Aws, Cook Islands (TBD)";
                 ImagePoint.ImageUrl = "~/Img/empty.JPG";
                 GrStnStatus = "OFFLINE";
+                SationIpAddress.Text = StationUrl = HttpContext.Current.Application["Stn9URL"].ToString();
             }
+            GrStnStatus =  MyTestGrStn(Location);
             if (GrStnStatus == "OFFLINE")
             {
                 StatusText.ForeColor = System.Drawing.Color.Red;
@@ -224,14 +233,34 @@ namespace SatCtrl
             {
                 if (Location != null)
                 {
-                    HttpContext.Current.Session["DefaultMainGrStn"] = Location;
+                    HttpContext.Current.Application["DefaultMainGrStn"] = Location;
+                    String StationN = HttpContext.Current.Application["DefaultMainGrStn"].ToString();
+                    if (StationN == "1")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn1URL"];
+                    else if (StationN == "2")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn2URL"];
+                    else if (StationN == "3")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn3URL"];
+                    else if (StationN == "4")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn4URL"];
+                    else if (StationN == "5")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn5URL"];
+                    else if (StationN == "6")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn6URL"];
+                    else if (StationN == "7")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn7URL"];
+                    else if (StationN == "8")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn8URL"];
+                    else if (StationN == "9")
+                        HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn9URL"];
                 }
             }
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            
+            String Location = Page.Request.QueryString["st"];
+            GrStnStatus = MyTestGrStn(Location);
         }
 
         protected void Button1_Click(object sender, EventArgs e)

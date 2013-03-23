@@ -35,7 +35,7 @@
             oncheckedchanged="CheckBox1_CheckedChanged" 
             Text="main GrStn." />
         ;&nbsp;IP address:&nbsp;
-        <asp:TextBox ID="TextBox3" runat="server" Width="215px">http://192.168.0.1:6897/</asp:TextBox>
+        <asp:TextBox ID="SationIpAddress" runat="server" Width="215px">http://192.168.0.1:6897/</asp:TextBox>
 &nbsp;<asp:Button ID="Button2" runat="server" Text="Test GrStnConnection" 
             onclick="Button2_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
