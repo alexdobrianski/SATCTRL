@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <p>
-        post</p>
+        post MAX_session_no=<%=MAX_session_no%></p>
     <p>
         &nbsp;</p>
     <p>
