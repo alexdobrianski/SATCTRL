@@ -11,10 +11,12 @@ namespace SatCtrl
     public partial class _Post : System.Web.UI.Page
     {
         public string MAX_session_no;
+        public string MAX_packet_no;
         protected void Page_Load(object sender, EventArgs e)
         {
 
             MAX_session_no = HttpContext.Current.Application["strMaxSessionN"].ToString();
+            MAX_packet_no = HttpContext.Current.Application["strPacketN"].ToString();
             String str_session_no = Page.Request.QueryString["session_no"];
             String str_packet_type = Page.Request.QueryString["packet_type"];
             String str_packet_no = Page.Request.QueryString["packet_no"];
@@ -30,13 +32,19 @@ namespace SatCtrl
                 (str_gs_time != null) &&
                 (str_package != null))
             {
+                if (str_packet_no != "-0001")
+                {
+                    HttpContext.Current.Application["strPacketN"] = str_packet_no;
+                }
                 if (str_session_no != "-000000001") // ping packets does not stored
                 {
+                    
                     DateTime d = new DateTime();
                     d = DateTime.UtcNow;
-                    str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString();
+                    str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3,'0');
                     //String ConnStr = System.Configuration.ConfigurationManager.ConnectionStrings.ConnectionStrings["missionlogConnectionString"];
 
+                    //str_package = str_package.Substring(1);
                     MySqlConnection conn =
                         new MySqlConnection("server=127.0.0.1;User Id=root;password=azura2samtak;Persist Security Info=True;database=missionlog");
 

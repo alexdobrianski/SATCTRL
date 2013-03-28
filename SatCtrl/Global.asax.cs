@@ -15,7 +15,9 @@ namespace SatCtrl
         void Application_Start(object sender, EventArgs e)
         {
             string strMaxSessionN = "0";
-            long intMaxSessionN;
+            long intMaxSessionN = 0;
+            string strMaxPacketNumber = "0";
+            long MaxPacketNumber = 0;
 
             MySqlConnection conn =
                 new MySqlConnection("server=127.0.0.1;User Id=root;password=azura2samtak;Persist Security Info=True;database=missionlog");
@@ -24,24 +26,41 @@ namespace SatCtrl
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("", conn);
-                cmd.CommandText = "SELECT MAX(session_no) FROM mission_session;";
+                //cmd.CommandText = "SELECT MAX(session_no) FROM mission_session;";
+                cmd.CommandText = "SELECT MAX(CONVERT(session_no,DECIMAl (10,0))) FROM mission_session;";
                 rdr = cmd.ExecuteReader();
-                //cmd.ExecuteNonQuery();
                 while (rdr.Read())
                 {
                     strMaxSessionN = rdr.GetString(0);
                 }
                 conn.Close();
-                
+            }
+            catch (MySqlException ex)
+            {
+                String mmm = (ex.Message);
+            }
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("", conn);
+                cmd.CommandText = "select MAX(convert(packet_no, decimal (6,0))) from mission_session where convert(session_no, decimal(10,0))="+strMaxSessionN+";";
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    strMaxPacketNumber = rdr.GetString(0);
+                }
+                conn.Close();
             }
             catch (MySqlException ex)
             {
                 String mmm = (ex.Message);
             }
             intMaxSessionN = Convert.ToInt32(strMaxSessionN.ToString());
+            MaxPacketNumber = Convert.ToInt32(strMaxPacketNumber.ToString());
+
             HttpContext.Current.Application["strMaxSessionN"] = strMaxSessionN;
+            HttpContext.Current.Application["strPacketN"] = MaxPacketNumber;
             HttpContext.Current.Application["DefaultMainGrStn"] = System.Configuration.ConfigurationManager.AppSettings["DefaultMainGrStn"];
-            
 
             HttpContext.Current.Application["Stn1URL"] = System.Configuration.ConfigurationManager.AppSettings["Stn1URL"];
             HttpContext.Current.Application["Stn2URL"] = System.Configuration.ConfigurationManager.AppSettings["Stn2URL"];

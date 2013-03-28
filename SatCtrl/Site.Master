@@ -10,7 +10,7 @@
 </head>
 <body>
     <form runat="server">
-    <div class="page">
+    <div class="page" style="width:auto">
         <div class="header">
             <div class="title">
                 <h1>
@@ -31,7 +31,12 @@
             <div class="clear hideSkiplink">
                 <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal">
                     <Items>
-                        <asp:MenuItem NavigateUrl="~/CraftCubeSat.aspx" Text="Craft/CubeSat"/>
+                        <asp:MenuItem NavigateUrl="~/CraftCubeSatStatus.aspx" Text="Craft/CubeSat">
+                            <asp:MenuItem NavigateUrl="~/CraftCubeSat.aspx" Text="UpLink" Value="UpLink">
+                            </asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/CraftCubeSatStatus.aspx" Text="Status" 
+                                Value="Status"></asp:MenuItem>
+                        </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/Simulation.aspx" Text="Simulation" 
                             Value="Simulation">
                             <asp:MenuItem NavigateUrl="~/SimulationGPS.aspx" Text="GPS satellites" 

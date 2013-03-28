@@ -58,6 +58,7 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="CraftCubeSat.aspx" />
+    <Content Include="CraftCubeSatStatus.aspx" />
     <Content Include="GroundStation.aspx" />
     <Content Include="GrStn.exe" />
     <Content Include="Img\SDC10316.JPG" />
@@ -121,6 +122,13 @@
     </Compile>
     <Compile Include="CraftCubeSat.aspx.designer.cs">
       <DependentUpon>CraftCubeSat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CraftCubeSatStatus.aspx.cs">
+      <DependentUpon>CraftCubeSatStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CraftCubeSatStatus.aspx.designer.cs">
+      <DependentUpon>CraftCubeSatStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Empty.Master.cs">
       <DependentUpon>Empty.Master</DependentUpon>
