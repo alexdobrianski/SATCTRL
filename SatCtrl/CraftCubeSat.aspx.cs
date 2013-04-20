@@ -106,5 +106,40 @@ namespace SatCtrl
                 HttpContext.Current.Application["strMaxSessionN"] = strMaxSessionN;
             }
         }
+
+        protected void CheckBoxAutoAntenna_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBoxAutoAntenna.Checked)
+            {
+                CalcAntnOrientation.Enabled = false;
+                SetOrientation1.Enabled = false;
+                AntQX.Enabled = false;
+                AntQY.Enabled = false;
+                AntQZ.Enabled = false;
+                AntQN.Enabled = false;
+                SetAntMove.Enabled = false;
+                AntMoveQX.Enabled = false;
+                AntMoveQY.Enabled = false;
+                AntMoveQZ.Enabled = false;
+                AntMoveQN.Enabled = false;
+                AntMoveQSec.Enabled = false;
+            }
+            else
+            {
+                CalcAntnOrientation.Enabled = true;
+                SetOrientation1.Enabled = true;
+                AntQX.Enabled = true;
+                AntQY.Enabled = true;
+                AntQZ.Enabled = true;
+                AntQN.Enabled = true;
+                SetAntMove.Enabled = true;
+                AntMoveQX.Enabled = true;
+                AntMoveQY.Enabled = true;
+                AntMoveQZ.Enabled = true;
+                AntMoveQN.Enabled = true;
+                AntMoveQSec.Enabled = true;
+
+            }
+        }
     }
 }

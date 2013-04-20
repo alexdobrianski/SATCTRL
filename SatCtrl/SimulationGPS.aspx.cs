@@ -13,5 +13,22 @@ namespace SatCtrl
         {
 
         }
+
+        protected void GPS1Line1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void GPS1Line2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void GPS1Line3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
