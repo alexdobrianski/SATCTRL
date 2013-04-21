@@ -256,22 +256,22 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.Button ReadFlshComm;
         
         /// <summary>
-        /// TextBox10 control.
+        /// ReadFlashAddr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox10;
+        protected global::System.Web.UI.WebControls.TextBox ReadFlashAddr;
         
         /// <summary>
-        /// TextBox11 control.
+        /// ReadFlashLen control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox11;
+        protected global::System.Web.UI.WebControls.TextBox ReadFlashLen;
         
         /// <summary>
         /// Button2 control.
@@ -535,13 +535,13 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.Button Button9;
         
         /// <summary>
-        /// TextBox25 control.
+        /// BackUpM10 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox25;
+        protected global::System.Web.UI.WebControls.TextBox BackUpM10;
         
         /// <summary>
         /// Button14 control.

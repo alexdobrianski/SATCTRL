@@ -13,7 +13,8 @@
     <p>
         &nbsp;Ground Station <%=LatitudeName%>, location <%=Latitude%>, <%=Longitude%> 
         <asp:Label ID="StatusText" runat="server"><strong>&nbsp;&nbsp;&nbsp;&nbsp;  <%=GrStnStatus %></strong></asp:Label>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sky view from Ground Station Camera. </p>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        Sky view from Ground Station Camera. </p>
     <p>
         <iframe id="I1" frameborder="0" height="350" marginheight="0" marginwidth="0" 
             name="I1" scrolling="no" 
@@ -26,6 +27,7 @@
         <small>
         <a href="https://maps.google.ca/?ie=UTF8&amp;ll=<%=Latitude%>,<%=Longitude%>&amp;spn=0.153041,0.316887&amp;t=m&amp;z=12&amp;source=embed" 
             style="color:#0000FF;text-align:left">View Larger Map</a></small></p>
+
     <p>
         Antenna Azimuth=<%=AntennaAzimuth%>(<%=CalulatedAzimuth%>), Altitude=<%=AntennaAltitude%>(<%=CalulatedAltitude%>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         </p>
@@ -52,16 +54,15 @@
             Width="822px" ReadOnly="True"></asp:TextBox>
     </p>
     <p>
-        Weather at Ground station location
-        <span style="display: block !important; width: 320px; text-align: center; font-family: sans-serif; font-size: 12px;">
-        <a href="<%=Weather%>" 
-            target="_blank" title="<%=WeatherTitle%>"">
-        <img alt="<%=WeatherTitle2%>" 
-            src="<%=WeatherTitlepwscode%>"
-            width="300" /></a><br />
-        <a href="<%=Weather%>"
-            style="font-family: sans-serif; font-size: 12px" target="_blank" 
-            title="Get latest Weather Forecast updates">Click for weather forecast</a></span><br />
+
+       <span style="display: block !important; width: 320px; text-align: center; font-family: sans-serif; font-size: 12px;">
+            <a href='<%=Weather%>' title='<%=WeatherTitle%>'>
+            <img src='<%=WeatherTitlepwscode%>'
+             alt='<%=WeatherTitle2%>' /></a><br/>
+             <a href='<%=WeatherMore%>' title="Get latest Weather Forecast updates"  style='font-family: sans-serif; font-size: 12px;'>
+                 Click for weather forecast</a>
+       </span>
+<br />
     </p>
     <p>
     </p>

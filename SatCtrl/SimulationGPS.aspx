@@ -9,6 +9,12 @@
         }
         
 
+        .style2
+        {
+            font-size: medium;
+        }
+        
+
     </style>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
@@ -24,7 +30,8 @@
     <APPLET ARCHIVE="/SatCtrl/visualtra.jar" CODE=visualtra.class WIDTH=640 HEIGHT=480>
     </applet>
                     </td>
-                <td> THREE PUNCH CARDS ELEMENTS (modern TLE) <br />
+                <td> <span class="style2"><strong>THREE PUNCH CARDS ELEMENTS (modern TLE)= Two Line 
+                    Element</strong></span> <br />
                     <asp:RadioButton ID="RBGPSManual" runat="server" Text="Manual" 
                         GroupName="Obtain" />
                     <asp:RadioButton ID="RBGPSExtract" runat="server" Text="Extract from signal" 

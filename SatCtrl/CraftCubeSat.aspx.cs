@@ -141,5 +141,38 @@ namespace SatCtrl
 
             }
         }
+
+        protected void Button12_Click(object sender, EventArgs e)
+        {
+            MsgUplink.Text += "3atdtluna\x0d\x0a\x33" ;
+        }
+
+        protected void GetStatusViaBackup_Click(object sender, EventArgs e)
+        {
+            BackUpM10.Text += "1N1";
+        }
+
+        protected void GetStatus_Click(object sender, EventArgs e)
+        {
+            MsgUplink.Text += "3#1N#1\x33";
+        }
+
+        protected void ReadFlshComm_Click(object sender, EventArgs e)
+        {
+            long FlashAddr   = Int32.Parse(ReadFlashAddr.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashAddr.Text.ToString());
+            long FlashLength = Int32.Parse(ReadFlashLen.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashLen.Text.ToString());
+            
+            if ((FlashAddr != 0) && (FlashLength != 0))
+            {
+                for (long StartAddr = FlashAddr; StartAddr < (FlashAddr + FlashLength); StartAddr+=16)
+                {
+                    MsgUplink.Text += "3=#5   F\x05\x03";
+                    MsgUplink.Text += char.ConvertFromUtf32((int)(FlashAddr >> 16));
+                    MsgUplink.Text += char.ConvertFromUtf32((int)(((FlashAddr & 0xff00) >> 8)));
+                    MsgUplink.Text += char.ConvertFromUtf32((int)((FlashAddr & 0xff)));
+                    MsgUplink.Text += "@\x10\x33";
+                }
+            }
+        }
     }
 }
