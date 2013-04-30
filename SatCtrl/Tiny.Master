@@ -1,0 +1,1 @@
+﻿<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Tiny.master.cs" Inherits="SatCtrl.TinyMaster" %>

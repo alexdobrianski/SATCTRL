@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
+using System.IO;
+
 
 namespace SatCtrl
 {
@@ -14,7 +16,43 @@ namespace SatCtrl
         public string MAX_packet_no;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string xml = null;
+            if (Request.RequestType == "POST")
+            {
+                try
+                {
+                    using (StreamReader reader = new StreamReader(Request.InputStream))
+                    {
+                        xml = reader.ReadToEnd();
+                        HttpContext.Current.Application["TraVisualXML"] = xml;
+                    }
+                }
+                catch (Exception Exs) 
+                {
+                    xml = null;
+                }
+                Response.Clear();
+                Response.ContentType = "text/html";
+                Response.Write("OK");
+            }
+            else
+            {
+                Response.Clear();
+                Response.ContentType = "text/html";
+                object IsIt = HttpContext.Current.Application["TraVisualXML"];
+                if (IsIt != null)
+                {
+                    xml = IsIt.ToString();
+                    if (xml != null)
+                        Response.Write(xml);
+                    else
+                    {
+                        Response.Write("bad bad");
+                    }
+                }
+                else
+                    Response.Write("bad");
+                /*
             MAX_session_no = HttpContext.Current.Application["strMaxSessionN"].ToString();
             MAX_packet_no = HttpContext.Current.Application["strPacketN"].ToString();
             String str_session_no = Page.Request.QueryString["session_no"];
@@ -64,7 +102,9 @@ namespace SatCtrl
 
                     //tb.Text = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString();
                 }
+            }*/
             }
+            
         }
     }
 }
