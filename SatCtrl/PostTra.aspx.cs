@@ -14,9 +14,13 @@ namespace SatCtrl
     {
         public string MAX_session_no;
         public string MAX_packet_no;
+        
+        private List<DateTime> MyList;
         protected void Page_Load(object sender, EventArgs e)
         {
             string xml = null;
+            //string ClientIp = Request.UserHostAddress;
+            DateTime CutReq = DateTime.Now;
             if (Request.RequestType == "POST")
             {
                 try
@@ -37,14 +41,68 @@ namespace SatCtrl
             }
             else
             {
+                object IsList = HttpContext.Current.Application["ListOfGetsTraVisualXML"];
+                int ListSize = 1;
+                if (IsList == null)
+                {
+                    MyList = new List<DateTime>();
+                    MyList.Add(CutReq);
+                    HttpContext.Current.Application["ListOfGetsTraVisualXML"] = MyList;
+                }
+                else
+                {
+                    MyList = (List<DateTime>)IsList;
+                    DateTime CutReqMinus100s = DateTime.Now.AddSeconds(-100);
+                    int iCount = 0;
+                    foreach (DateTime InList in MyList)
+                    {
+                        if (DateTime.Compare(InList, CutReqMinus100s) < 0) // requast was 100 long time ago
+                            iCount ++;
+                        else 
+                            break;
+                    }
+                    if (iCount>0)
+                        MyList.RemoveRange(0, iCount);
+                    MyList.Add(CutReq);
+                    ListSize = MyList.Count;
+                }
+                double WasTransfered = 40000 * ListSize;
+                double CurTransferPerSec = WasTransfered / 100.0;
+                double DelayNeeded = CurTransferPerSec / 40000; // 50K max
+                int iDelayNeeded = Convert.ToInt32(DelayNeeded) + 1;
+                String ReFreshSet = "<ReloadInSec>"+iDelayNeeded+"</ReloadInSec>";
+                if (Page.User.Identity.IsAuthenticated)
+                    ReFreshSet = "<ReloadInSec>1</ReloadInSec>";
+
                 Response.Clear();
                 Response.ContentType = "text/html";
                 object IsIt = HttpContext.Current.Application["TraVisualXML"];
+                if (IsIt == null)
+                {
+                    String MapPath = Server.MapPath("TraVisual.xml");
+                    try
+                    {
+                        xml = File.ReadAllText(MapPath);
+                    }
+                    catch (Exception Exs)
+                    {
+                        xml = null;
+                    }
+                    if (xml != null)
+                        HttpContext.Current.Application["TraVisualXML"] = xml;
+
+                    IsIt = HttpContext.Current.Application["TraVisualXML"];
+                }
+
                 if (IsIt != null)
                 {
                     xml = IsIt.ToString();
                     if (xml != null)
+                    {
+                        
+                        xml = xml.Replace("<ReloadInSec>00001</ReloadInSec>", ReFreshSet);
                         Response.Write(xml);
+                    }
                     else
                     {
                         Response.Write("bad bad");
@@ -52,57 +110,6 @@ namespace SatCtrl
                 }
                 else
                     Response.Write("bad");
-                /*
-            MAX_session_no = HttpContext.Current.Application["strMaxSessionN"].ToString();
-            MAX_packet_no = HttpContext.Current.Application["strPacketN"].ToString();
-            String str_session_no = Page.Request.QueryString["session_no"];
-            String str_packet_type = Page.Request.QueryString["packet_type"];
-            String str_packet_no = Page.Request.QueryString["packet_no"];
-            String str_d_time = Page.Request.QueryString["d_time"];
-            String str_g_station = Page.Request.QueryString["g_station"];
-            String str_gs_time = Page.Request.QueryString["gs_time"];
-            String str_package = Page.Request.QueryString["package"];
-            if ((str_session_no != null) &&
-                (str_packet_type != null) &&
-                (str_packet_no != null) &&
-                (str_d_time != null) &&
-                (str_g_station != null) &&
-                (str_gs_time != null) &&
-                (str_package != null))
-            {
-                if (str_packet_no != "-0001")
-                {
-                    HttpContext.Current.Application["strPacketN"] = str_packet_no;
-                }
-                if (str_session_no != "-000000001") // ping packets does not stored
-                {
-                    
-                    DateTime d = new DateTime();
-                    d = DateTime.UtcNow;
-                    str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3,'0');
-                    //String ConnStr = System.Configuration.ConfigurationManager.ConnectionStrings.ConnectionStrings["missionlogConnectionString"];
-
-                    //str_package = str_package.Substring(1);
-                    MySqlConnection conn =
-                        new MySqlConnection("server=127.0.0.1;User Id=root;password=azura2samtak;Persist Security Info=True;database=missionlog");
-
-                    try
-                    {
-                        conn.Open();
-                        MySqlCommand cmd = new MySqlCommand("", conn);
-                        cmd.CommandText = "INSERT INTO mission_session (session_no, packet_type, packet_no, d_time, g_station, gs_time, package) "
-                            + "VALUES ('" + str_session_no + "','" + str_packet_type + "','" + str_packet_no + "','" + str_d_time + "','" + str_g_station + "','" + str_gs_time + "','" + str_package + "');";
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
-                    }
-                    catch (MySqlException ex)
-                    {
-                        String mmm = (ex.Message);
-                    }
-
-                    //tb.Text = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString();
-                }
-            }*/
             }
             
         }
