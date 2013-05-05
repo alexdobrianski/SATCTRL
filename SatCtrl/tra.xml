@@ -83,6 +83,44 @@
       <TRA:setting name="ProbKeplerLine2" value="0 NAVSTAR 18 (USA 50)" />
       <TRA:setting name="ProbKeplerLine3" value="2 20452 055.9375 302.3040 0010546 215.8509 286.6389 01.89596331165219" />
 
+         <TRA:setting name="GRSTNNAME" value="vancouver" />
+         <TRA:setting name="GRSTNLat" value="49.257735" />
+         <TRA:setting name="GRSTNLong" value="-123.123904" />
+
+
+         <TRA:setting name="GRSTNNAME" value="Sarasota" />
+         <TRA:setting name="GRSTNLat" value="27.306121" />
+         <TRA:setting name="GRSTNLong" value="-82.569112" />
+
+         <TRA:setting name="GRSTNNAME" value="Joao Pessoa" />
+         <TRA:setting name="GRSTNLat" value="-7.153526" />
+         <TRA:setting name="GRSTNLong" value="-34.88966" />
+
+         <TRA:setting name="GRSTNNAME" value="Cape Town" />
+         <TRA:setting name="GRSTNLat" value="-33.916743" />
+         <TRA:setting name="GRSTNLong" value="18.402658" />
+
+         <TRA:setting name="GRSTNNAME" value="Donetsk" />
+         <TRA:setting name="GRSTNLat" value="47.971091" />
+         <TRA:setting name="GRSTNLong" value="37.712352" />
+
+         <TRA:setting name="GRSTNNAME" value="Karaganda" />
+         <TRA:setting name="GRSTNLat" value="49.789355" />
+         <TRA:setting name="GRSTNLong" value="73.070583" />
+
+         <TRA:setting name="GRSTNNAME" value="Perth" />
+         <TRA:setting name="GRSTNLat" value="-31.967891" />
+         <TRA:setting name="GRSTNLong" value="115.883274" />
+
+         <TRA:setting name="GRSTNNAME" value="Hilo" />
+         <TRA:setting name="GRSTNLat" value="19.707243" />
+         <TRA:setting name="GRSTNLong" value="-155.064983" />
+
+
+         <TRA:setting name="GRSTNNAME" value="Rarotonga" />
+         <TRA:setting name="GRSTNLat" value="-21.255302" />
+         <TRA:setting name="GRSTNLong" value="-159.768333" />
+
 
 <!-- target point on the Moon -->
     <TRA:setting name="Targetlongitude" value="-15" />
