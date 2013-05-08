@@ -99,7 +99,13 @@ namespace SatCtrl
                     xml = IsIt.ToString();
                     if (xml != null)
                     {
-                        
+                        String dMinFromNow ;
+                        object IsItIs = HttpContext.Current.Application["dMinFromNow"];
+                        if (IsItIs != null)
+                        {
+                            dMinFromNow = IsItIs.ToString();
+                            xml = xml.Replace("<dMinFromNow>50</dMinFromNow>","<dMinFromNow>" + dMinFromNow+ "</dMinFromNow>");
+                        }
                         xml = xml.Replace("<ReloadInSec>00001</ReloadInSec>", ReFreshSet);
                         Response.Write(xml);
                     }
