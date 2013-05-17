@@ -28,7 +28,9 @@
         <a href="http://java3d.java.net/binary-builds.html">Requare install of Java 3D - 
         click to install</a><br />
     <APPLET ARCHIVE="/SatCtrl/visualtra.jar" CODE=visualtra.class WIDTH=640 HEIGHT=480>
-    </applet>
+      <PARAM name="URLSOURCE" value="<%=ParamURLApplet %>">
+
+    </APPLET>
                     </td>
                 <td> <span class="style2"><strong>THREE PUNCH CARDS ELEMENTS (modern TLE)= Two Line 
                     Element</strong></span> <br />

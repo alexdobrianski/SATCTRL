@@ -6,14 +6,12 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
         <table style="width:100%;">
             <tr>
-                <td><a href="http://java3d.java.net/binary-builds.html">Requare Java 3D - click to install</a></p>
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td><APPLET ARCHIVE="/SatCtrl/visualtra.jar" CODE=visualtra.class WIDTH=1280 HEIGHT=800> </APPLET>
+                <td><APPLET ARCHIVE="/SatCtrl/visualtra.jar" CODE=visualtra.class WIDTH=1280 HEIGHT=800> 
+                    <PARAM name="URLSOURCE" value="<%=ParamURLApplet %>">
+                    </APPLET>
                     &nbsp;</td>
                 <td>
-                
+                    <a href="http://java3d.java.net/binary-builds.html">Requare Java 3D - click to install</a></p>
                     <asp:TextBox ID="ProbKeplerLine1" runat="server" Width="500px"></asp:TextBox>
                     <asp:TextBox ID="ProbKeplerLine2" runat="server" Width="500px"></asp:TextBox>
                     <asp:TextBox ID="ProbKeplerLine3" runat="server" Width="500px"></asp:TextBox>

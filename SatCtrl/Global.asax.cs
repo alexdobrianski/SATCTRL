@@ -5,12 +5,36 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace SatCtrl
 {
 
     public class Global : System.Web.HttpApplication
     {
+        protected String GetValue(String xml, String SearchStr, int iInstance)
+        {
+            String MySearch = "\"" + SearchStr + "\"";
+            int FirstLine = xml.IndexOf(MySearch);
+            int iCount = 0;
+
+            if (FirstLine > 0)
+            {
+                do
+                {
+                    if (iCount == iInstance)
+                    {
+                        int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
+                        int LastValue = xml.IndexOf('\"', FirstValue) - 1;
+                        return xml.Substring(FirstValue, LastValue - FirstValue + 1);
+                    }
+                    FirstLine = xml.IndexOf(MySearch, FirstLine+1);
+                    iCount+=1;
+                }
+                while (FirstLine > 0);
+            }
+            return null;
+        }
 
         void Application_Start(object sender, EventArgs e)
         {
@@ -90,6 +114,50 @@ namespace SatCtrl
                 HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn8URL"];
             else if (StationN == "9")
                 HttpContext.Current.Application["StnURL"] = HttpContext.Current.Application["Stn9URL"];
+
+            string SVal1 = null;
+            string SVal2 = null;
+            string SVal3 = null;
+            object IsIt = HttpContext.Current.Application["ProbKeplerLine1"];
+            if (IsIt == null)
+            {
+                String xml = null;
+                String MapPath = Server.MapPath("Tra.xml");
+                try
+                {
+                    xml = File.ReadAllText(MapPath);
+                }
+                catch (Exception Exs)
+                {
+                    xml = null;
+                }
+                if (xml != null)
+                {
+                    SVal1 = GetValue(xml, "ProbKeplerLine1",0);
+                    HttpContext.Current.Application["ProbKeplerLine1"] = SVal1;
+                    SVal2 = GetValue(xml, "ProbKeplerLine2",0);
+                    HttpContext.Current.Application["ProbKeplerLine2"] = SVal2;
+                    SVal3 = GetValue(xml, "ProbKeplerLine3",0);
+                    HttpContext.Current.Application["ProbKeplerLine3"] = SVal3;
+                }
+                int iInteration = 1;
+                do
+                {
+                    SVal1 = GetValue(xml, "ProbKeplerLine1", iInteration);
+                    SVal2 = GetValue(xml, "ProbKeplerLine2", iInteration);
+                    SVal3 = GetValue(xml, "ProbKeplerLine3", iInteration);
+                    if ((SVal1 != null) && (SVal2 != null) && (SVal3 != null))
+                    {
+                        HttpContext.Current.Application["GPS" + iInteration + "ProbKeplerLine1"] = SVal1;
+                        HttpContext.Current.Application["GPS" + iInteration + "ProbKeplerLine2"] = SVal2;
+                        HttpContext.Current.Application["GPS" + iInteration + "ProbKeplerLine3"] = SVal3;
+                    }
+                    else
+                        break;
+                    iInteration += 1;
+                }
+                while ((SVal1 != null) && (SVal2 != null) && (SVal3 != null));
+            }
         }
 
         void Application_End(object sender, EventArgs e)

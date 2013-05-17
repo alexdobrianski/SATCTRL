@@ -13,23 +13,42 @@ namespace SatCtrl
     public partial class _Simulation : System.Web.UI.Page
     {
         public string RecomendedClicks;
-        protected String GetValue(String xml, String SearchStr)
+        public string ParamURLApplet = "http://24.84.33.246/SatCtrl";
+        protected String GetValue(String xml, String SearchStr, int iInstance)
         {
-            int FirstLine = xml.IndexOf(SearchStr);
+            String MySearch = "\"" + SearchStr + "\"";
+            int FirstLine = xml.IndexOf(MySearch);
+            int iCount = 0;
+
             if (FirstLine > 0)
             {
-                int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
-                int LastValue = xml.IndexOf('\"', FirstValue) - 1;
-                return xml.Substring(FirstValue, LastValue - FirstValue+1);
+                do
+                {
+                    if (iCount == iInstance)
+                    {
+                        int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
+                        int LastValue = xml.IndexOf('\"', FirstValue) - 1;
+                        return xml.Substring(FirstValue, LastValue - FirstValue + 1);
+                    }
+                    FirstLine = xml.IndexOf(MySearch, FirstLine + 1);
+                    iCount += 1;
+                }
+                while (FirstLine > 0);
             }
-            else
-                return null;
+            return null;
         }
         protected void Page_Load(object sender, EventArgs e)
         {
             string SVal1 = null;
             string SVal2 = null;
             string SVal3 = null;
+            string UrlMy = Request.Url.ToString();
+            int PtrLast = UrlMy.IndexOf("Simulation.aspx");
+            if (PtrLast > 0)
+            {
+                UrlMy = UrlMy.Substring(0, PtrLast-1);
+                ParamURLApplet = UrlMy;
+            }
                 
             //RecomendedClicks = "<a href=\"http://java3d.java.net/binary-builds.html\">Requare Java 3D - click to install</a>";
             //System.Web.HttpBrowserCapabilities browser = Request.Browser;
@@ -50,13 +69,30 @@ namespace SatCtrl
                 }
                 if (xml != null)
                 {
-                    SVal1 = GetValue(xml, "ProbKeplerLine1");
+                    SVal1 = GetValue(xml, "ProbKeplerLine1", 0);
                     HttpContext.Current.Application["ProbKeplerLine1"] = SVal1;
-                    SVal2 = GetValue(xml, "ProbKeplerLine2");
+                    SVal2 = GetValue(xml, "ProbKeplerLine2", 0);
                     HttpContext.Current.Application["ProbKeplerLine2"] = SVal2;
-                    SVal3 = GetValue(xml, "ProbKeplerLine3");
+                    SVal3 = GetValue(xml, "ProbKeplerLine3", 0);
                     HttpContext.Current.Application["ProbKeplerLine3"] = SVal3;
                 }
+                int iInteration = 1;
+                do
+                {
+                    SVal1 = GetValue(xml, "ProbKeplerLine1", iInteration);
+                    SVal2 = GetValue(xml, "ProbKeplerLine2", iInteration);
+                    SVal3 = GetValue(xml, "ProbKeplerLine3", iInteration);
+                    if ((SVal1 != null) && (SVal2 != null) && (SVal3 != null))
+                    {
+                        HttpContext.Current.Application["GPS" + iInteration + "ProbKeplerLine1"] = SVal1;
+                        HttpContext.Current.Application["GPS" + iInteration + "ProbKeplerLine2"] = SVal2;
+                        HttpContext.Current.Application["GPS" + iInteration + "ProbKeplerLine3"] = SVal3;
+                    }
+                    else
+                        break;
+                    iInteration += 1;
+                }
+                while ((SVal1 != null) && (SVal2 != null) && (SVal3 != null));
             }
             else
             {
