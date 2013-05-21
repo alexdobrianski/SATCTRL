@@ -31,23 +31,44 @@
     </h2>
     <p>
         &nbsp;Main goal for Cubest testing flight is to confirm orientation of the 
-        Cubesat in particular moment of a time</p>
+        Cubesat in particular moment of a time.</p>
 <p>
         <table frame="box" rules="all" style="width: 100%;">
             <tr>
                 <td class="style2">
+                <img alt="" src="Img/mission_ctrl.JPG" 
+                        width="320" />
+                <br />
                     Mission Control WebSite</td>
                 <td class="style4">
                     Session to Ground Station</td>
                 <td class="style3">
                     &lt;-&gt;</td>
                 <td class="style5">
-                    <a href=GrStn.exe> GrStn (Vancouver)</a></td>
+                
+                    <img alt="" height="320" src="Img/GrStn.JPG" /><br />
+                    <a href=GrStn.exe> GrStn (Vancouver) host software</a></td>
                 <td class="style6">
                     &lt;-&gt;</td>
                 <td>
                     Cubesat/Craft</td>
             </tr>
+            <tr>
+                <td class="style2">
+                    </td>
+                <td class="style4">
+                    &nbsp;</td>
+                <td class="style3">
+                    &nbsp;</td>
+                <td class="style5">
+                    </td>
+                <td class="style6">
+                    &lt;-&gt;</td>
+                <td>
+                    <img alt="" dir="rtl" height="320" src="Img/planb.jpg" /> <br />
+                    Ground station controller</td>
+            </tr>
+
             <tr>
                 <td class="style2">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -65,6 +86,9 @@
             </tr>
             <tr>
                 <td class="style2">
+                    dasd<img 
+                        alt="" src="Img/cubesat_ctrl.JPG" width="320" />asd
+                    <br />
                     Sattelite Control Panel</td>
                 <td class="style4">
                     &nbsp;</td>
@@ -79,6 +103,7 @@
             </tr>
             <tr>
                 <td class="style2">
+                    <img alt="" src="Img/sessionDB.JPG" width="320" /><br />
                     Sessions DB</td>
                 <td class="style4">
                     -&gt; (pictures, telemetry, etc.)</td>
@@ -107,7 +132,11 @@
             </tr>
             <tr>
                 <td class="style2">
-                    Simulation
+                    <img alt="" src="Img/tra_sim.JPG" width="320" /><br />
+                    Simulation engine - runs separatly<a href="tra.exe">1. click to download and save executable TRA.EXE</a>.<br />
+                    <a href="trabat.bat">2.Click to download and save TRABAT.BAT file</a> to run simulation in loop.<br />
+                    Batch file requare to adjust IP adress.<br />
+                    <a href="bin410.bin">3.Click to download JPL BIN410.BIN (sabe in same directory)</a><br />
                 </td>
                 <td class="style4">
                     GPS satelites</td>

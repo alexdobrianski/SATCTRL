@@ -61,7 +61,13 @@
     <Content Include="CraftCubeSatStatus.aspx" />
     <Content Include="GroundStation.aspx" />
     <Content Include="GrStn.exe" />
+    <Content Include="Img\cubesat_ctrl.JPG" />
+    <Content Include="Img\GrStn.JPG" />
+    <Content Include="Img\mission_ctrl.JPG" />
+    <Content Include="Img\planb.jpg" />
     <Content Include="Img\SDC10316.JPG" />
+    <Content Include="Img\sessionDB.JPG" />
+    <Content Include="Img\tra_sim.JPG" />
     <Content Include="Post.aspx" />
     <Content Include="PostTra.aspx" />
     <Content Include="SessionData.aspx" />
@@ -73,6 +79,7 @@
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="tra.exe" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -218,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tiny.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="trabat.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
