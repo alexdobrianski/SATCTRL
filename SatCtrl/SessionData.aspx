@@ -11,20 +11,28 @@
             style="margin-bottom: 106px" HorizontalAlign="Center" PageSize="25">
             <Columns>
                 <asp:BoundField DataField="session_no" HeaderText="session" 
-                    SortExpression="session_no" />
+                    SortExpression="session_no" >
+                <ItemStyle Width="90px" />
+                </asp:BoundField>
                 <asp:BoundField DataField="packet_type" HeaderText="type" 
-                    SortExpression="packet_type" />
+                    SortExpression="packet_type" >
+                <ItemStyle Width="20px" />
+                </asp:BoundField>
                 <asp:BoundField DataField="packet_no" HeaderText="packet" 
-                    SortExpression="packet_no" />
+                    SortExpression="packet_no" >
+                <ItemStyle Width="50px" />
+                </asp:BoundField>
                 <asp:BoundField DataField="d_time" HeaderText="d&amp;t" 
                     SortExpression="d_time" >
-                <ItemStyle Wrap="False" />
+                <ItemStyle Wrap="False" Width="150px" />
                 </asp:BoundField>
                 <asp:BoundField DataField="g_station" HeaderText="GrStn" 
-                    SortExpression="g_station" />
+                    SortExpression="g_station" >
+                <ItemStyle Width="20px" />
+                </asp:BoundField>
                 <asp:BoundField DataField="gs_time" HeaderText="GrStn d&amp;t" 
                     SortExpression="gs_time" >
-                <ItemStyle Wrap="False" />
+                <ItemStyle Wrap="False" Width="150px" />
                 </asp:BoundField>
                 <asp:BoundField DataField="package" HeaderText="package" 
                     SortExpression="package" >

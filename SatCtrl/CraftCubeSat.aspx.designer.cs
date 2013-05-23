@@ -535,6 +535,33 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.Button Button9;
         
         /// <summary>
+        /// ButtonGrStReadFlash control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonGrStReadFlash;
+        
+        /// <summary>
+        /// GrStReadFlashFrom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox GrStReadFlashFrom;
+        
+        /// <summary>
+        /// GrStReadFlashLen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox GrStReadFlashLen;
+        
+        /// <summary>
         /// BackUpM10 control.
         /// </summary>
         /// <remarks>

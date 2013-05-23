@@ -8,9 +8,9 @@
             <td class="style1">
                 <span class="style6"><strong>sequence of a communication's commands
                 to send:</strong></span>
-                <asp:TextBox ID="MsgUplink" runat="server" Height="294px" Width="491px" 
+                <asp:TextBox ID="MsgUplink" runat="server" Height="294px" Width="415px" 
                 TextMode="MultiLine"></asp:TextBox>
-    
+                <br />
                 <asp:Button ID="Button1" runat="server"  onclick="Button1_Click" Text="Send" />
 
                 </td>
@@ -41,37 +41,40 @@
                 <asp:TextBox ID="TextBox14" runat="server" Width="90px" Enabled="False"></asp:TextBox>
                 <br />
                 <asp:Button ID="Button4" runat="server" Text="Wait" Enabled="False" />
-                <asp:TextBox ID="TextBox15" runat="server" Enabled="False"></asp:TextBox>
+                <asp:TextBox ID="TextBox15" runat="server" Enabled="False" Width="90px"></asp:TextBox>
 &nbsp;seconds<br />
                 <asp:Button ID="SetOrientation" runat="server" Text="Set Orientation" 
                     Enabled="False" />
-                At time : <asp:TextBox ID="TimeToRunCmd" runat="server" Enabled="False"></asp:TextBox>
+                At time : <asp:TextBox ID="TimeToRunCmd" runat="server" Enabled="False" 
+                    Width="90px"></asp:TextBox>
                 <br />
                 X:<asp:TextBox 
-                    ID="TextBox1" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                Y:<asp:TextBox ID="TextBox2" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                Z:<asp:TextBox ID="TextBox3" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                N:<asp:TextBox ID="TextBox4" runat="server" Width="120px" Enabled="False"></asp:TextBox>
+                    ID="TextBox1" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                Y:<asp:TextBox ID="TextBox2" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                Z:<asp:TextBox ID="TextBox3" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                N:<asp:TextBox ID="TextBox4" runat="server" Width="90px" Enabled="False"></asp:TextBox>
                 <br />
                 <asp:Button ID="SetOrientMF" runat="server" 
                     Text="set orientation in magnetic field" Enabled="False" />
-                At time : <asp:TextBox ID="TextBox5" runat="server" Enabled="False"></asp:TextBox>
+                At time : <asp:TextBox ID="TextBox5" runat="server" Enabled="False" 
+                    Width="90px"></asp:TextBox>
                 <br />
                 X:<asp:TextBox 
-                    ID="TextBox6" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                Y:<asp:TextBox ID="TextBox7" runat="server" Width="119px" Enabled="False"></asp:TextBox>
-                Z:<asp:TextBox ID="TextBox8" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                N:<asp:TextBox ID="TextBox9" runat="server" Width="120px" Enabled="False"></asp:TextBox>
+                    ID="TextBox6" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                Y:<asp:TextBox ID="TextBox7" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                Z:<asp:TextBox ID="TextBox8" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                N:<asp:TextBox ID="TextBox9" runat="server" Width="90px" Enabled="False"></asp:TextBox>
                 <br />
                 <br />
                 <asp:Button ID="ReadFlshComm" runat="server" Text="Read Comm Flash" 
                     onclick="ReadFlshComm_Click" />
-&nbsp;from addr:<asp:TextBox ID="ReadFlashAddr" runat="server" Width="100px"></asp:TextBox>
-&nbsp;length:<asp:TextBox ID="ReadFlashLen" runat="server" Width="100px"></asp:TextBox>
+&nbsp;from:<asp:TextBox ID="ReadFlashAddr" runat="server" Width="90px"></asp:TextBox>
+&nbsp;len:<asp:TextBox ID="ReadFlashLen" runat="server" Width="90px"></asp:TextBox>
                 <br />
                 <asp:Button ID="Button2" runat="server" Text="Write Comm Flash" 
                     Enabled="False" />
-&nbsp;from addr<asp:TextBox ID="TextBox12" runat="server" Width="100px" Enabled="False"></asp:TextBox>
+&nbsp;from:<asp:TextBox ID="TextBox12" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+<br />
                 <asp:FileUpload ID="FileUpload1" runat="server" Width="220px" Enabled="False" />
             </td>
             <td>
@@ -88,28 +91,28 @@
                 <br />
                 <br />
                 X:<asp:TextBox 
-                    ID="AntQX" runat="server" Width="120px"></asp:TextBox>
-                Y:<asp:TextBox ID="AntQY" runat="server" Width="120px"></asp:TextBox>
-                Z:<asp:TextBox ID="AntQZ" runat="server" Width="120px"></asp:TextBox>
-                N:<asp:TextBox ID="AntQN" runat="server" Width="120px"></asp:TextBox>
+                    ID="AntQX" runat="server" Width="90px"></asp:TextBox>
+                Y:<asp:TextBox ID="AntQY" runat="server" Width="90px"></asp:TextBox>
+                Z:<asp:TextBox ID="AntQZ" runat="server" Width="90px"></asp:TextBox>
+                N:<asp:TextBox ID="AntQN" runat="server" Width="90px"></asp:TextBox>
                 <br />
                 <asp:Button ID="SetAntMove" runat="server" Text="Set Movement" />
                 &nbsp;from current quternion to quternion:<br />
                 X:<asp:TextBox 
-                    ID="AntMoveQX" runat="server" Width="120px"></asp:TextBox>
-                Y:<asp:TextBox ID="AntMoveQY" runat="server" Width="120px"></asp:TextBox>
-                Z:<asp:TextBox ID="AntMoveQZ" runat="server" Width="120px"></asp:TextBox>
-                N:<asp:TextBox ID="AntMoveQN" runat="server" Width="120px"></asp:TextBox>
+                    ID="AntMoveQX" runat="server" Width="90px"></asp:TextBox>
+                Y:<asp:TextBox ID="AntMoveQY" runat="server" Width="90px"></asp:TextBox>
+                Z:<asp:TextBox ID="AntMoveQZ" runat="server" Width="90px"></asp:TextBox>
+                N:<asp:TextBox ID="AntMoveQN" runat="server" Width="90px"></asp:TextBox>
                 <br />
                 in
-                <asp:TextBox ID="AntMoveQSec" runat="server"></asp:TextBox>
+                <asp:TextBox ID="AntMoveQSec" runat="server" Width="90px"></asp:TextBox>
 &nbsp;seconds.</td>
         </tr>
         <tr>
             <td class="style7">
                 <span class="style6"><strong>responce:</strong></span><br />
                 <asp:TextBox ID="TextBox19" runat="server" Height="169px" ReadOnly="True" 
-                    TextMode="MultiLine" Width="492px"></asp:TextBox>
+                    TextMode="MultiLine" Width="415px"></asp:TextBox>
                 </td>
             <td class="style8">
                 <span class="style6"><strong>flash storage commands:</strong></span><br />
@@ -118,32 +121,41 @@
                     Enabled="False" />
                 <asp:Button ID="Button6" runat="server" Text="Upload file to flush" 
                     Enabled="False" />
+                <br />
                 <asp:FileUpload ID="FileUpload2" runat="server" Enabled="False" />
                 <br />
                 <asp:Button ID="Button10" runat="server" Text="CD" Enabled="False" />
-                <asp:TextBox ID="TextBox17" runat="server" Enabled="False"></asp:TextBox>
+                <asp:TextBox ID="TextBox17" runat="server" Enabled="False" Width="90px"></asp:TextBox>
                 <br />
                 <asp:Button ID="Button11" runat="server" Text="RM" Enabled="False" />
-                <asp:TextBox ID="TextBox18" runat="server" Enabled="False"></asp:TextBox>
+                <asp:TextBox ID="TextBox18" runat="server" Enabled="False" Width="90px"></asp:TextBox>
                 <br />
                 <asp:Button ID="Button7" runat="server" Text="Make HD picture" 
                     Enabled="False" />
                 <br />
                 <asp:Button ID="Button8" runat="server" Text="Record HD video" 
                     Enabled="False" /> for a 
-                <asp:TextBox ID="TextBox16" runat="server" Enabled="False"></asp:TextBox> seconds
+                <asp:TextBox ID="TextBox16" runat="server" Enabled="False" Width="90px"></asp:TextBox> seconds
                 <br />
                 <asp:Button ID="Button9" runat="server" Text="Make regular picture" 
                     Enabled="False" />
             </td>
             <td class="style9">
+                <span class="style6"><strong>GrStn flash storage commands:</strong></span><br /><br />
+                <asp:Button ID="ButtonGrStReadFlash" runat="server" Text="Read GrStn Flash" 
+                    onclick="ButtonGrStReadFlash_Click" />
+                    &nbsp;from:<asp:TextBox ID="GrStReadFlashFrom" runat="server" Width="90px"></asp:TextBox>
+                    &nbsp;len:<asp:TextBox ID="GrStReadFlashLen" runat="server" 
+                    Width="90px"></asp:TextBox>
+                <br />
                 </td>
         </tr>
         <tr>
             <td class="style3">
                 <span class="style6"><strong>sequence of&nbsp; commands send via backup comm</strong></span><br />
                 <asp:TextBox ID="BackUpM10" runat="server" TextMode="MultiLine" Height="131px" 
-                    Width="489px" ></asp:TextBox>
+                    Width="415px" ></asp:TextBox>
+                    <br />
                 <asp:Button ID="Button14" runat="server" Text="bckp" />
                 </td>
             <td class="style4">
@@ -153,13 +165,13 @@
 &nbsp;<asp:Button ID="SetOrientation0" runat="server" Text="Set Movement" Enabled="False" />
                 &nbsp;from current quternion to quternion:<br />
                 X:<asp:TextBox 
-                    ID="TextBox20" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                Y:<asp:TextBox ID="TextBox21" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                Z:<asp:TextBox ID="TextBox22" runat="server" Width="120px" Enabled="False"></asp:TextBox>
-                N:<asp:TextBox ID="TextBox23" runat="server" Width="120px" Enabled="False"></asp:TextBox>
+                    ID="TextBox20" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                Y:<asp:TextBox ID="TextBox21" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                Z:<asp:TextBox ID="TextBox22" runat="server" Width="90px" Enabled="False"></asp:TextBox>
+                N:<asp:TextBox ID="TextBox23" runat="server" Width="90px" Enabled="False"></asp:TextBox>
                 <br />
                 in
-                <asp:TextBox ID="TextBox24" runat="server" Enabled="False"></asp:TextBox>
+                <asp:TextBox ID="TextBox24" runat="server" Enabled="False" Width="90px"></asp:TextBox>
 &nbsp;seconds.<br />
                 </td>
             <td class="style5">
@@ -179,20 +191,20 @@
         }
         .style1
         {
-            width: 545px;
+            width: 432px;
         }
         .style2
         {
-            width: 571px;
+            width: 451px;
         }
         .style3
         {
-            width: 545px;
+            width: 432px;
             height: 20px;
         }
         .style4
         {
-            width: 571px;
+            width: 451px;
             height: 20px;
         }
         .style5
@@ -205,12 +217,12 @@
         }
         .style7
         {
-            width: 545px;
+            width: 432px;
             height: 12px;
         }
         .style8
         {
-            width: 571px;
+            width: 451px;
             height: 12px;
         }
         .style9

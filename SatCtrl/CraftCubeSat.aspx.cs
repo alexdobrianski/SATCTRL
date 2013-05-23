@@ -19,7 +19,23 @@ namespace SatCtrl
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
         }
-
+        protected String AddHexString(String Str2)
+        {
+            String Str1 = "";
+            for (int i = 0; i < Str2.Length; i++)
+            {
+                Char CharS = Str2.ElementAt(i);
+                if ((CharS >= '0') && ((CharS <= '9')) || (CharS >= 'a') && ((CharS <= 'z')) || (CharS >= 'A') && ((CharS <= 'Z')))
+                {
+                    Str1 += CharS;
+                }
+                else
+                {
+                    Str1 = Str1 + "%" + Convert.ToByte(CharS).ToString("x2");
+                }
+            }
+            return Str1;
+        }
         protected void Button1_Click(object sender, EventArgs e)
         {
             WebRequest request;
@@ -65,7 +81,12 @@ namespace SatCtrl
                 String str_packet_no = "00000";
                 DateTime d = new DateTime();
                 d = DateTime.UtcNow;
-                String str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString(); 
+                String szMils = d.Millisecond.ToString();
+                if (szMils.Length == 1)
+                    szMils = "00" + szMils;
+                else if (szMils.Length == 2)
+                        szMils = "0" + szMils;
+                String str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + szMils; 
 
                 String str_g_station = HttpContext.Current.Application["DefaultMainGrStn"].ToString();
                 String str_gs_time = str_d_time;
@@ -159,19 +180,54 @@ namespace SatCtrl
 
         protected void ReadFlshComm_Click(object sender, EventArgs e)
         {
-            long FlashAddr   = Int32.Parse(ReadFlashAddr.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashAddr.Text.ToString());
-            long FlashLength = Int32.Parse(ReadFlashLen.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashLen.Text.ToString());
-            
-            if ((FlashAddr != 0) && (FlashLength != 0))
+            if ((ReadFlashAddr.Text != "") && (ReadFlashLen.Text != ""))
             {
-                for (long StartAddr = FlashAddr; StartAddr < (FlashAddr + FlashLength); StartAddr+=16)
+                long FlashAddr   = Int32.Parse(ReadFlashAddr.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashAddr.Text.ToString());
+                long FlashLength = Int32.Parse(ReadFlashLen.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashLen.Text.ToString());
+            
+                if (FlashLength != 0)
                 {
-                    MsgUplink.Text += "3=#5   F\x05\x03";
-                    MsgUplink.Text += char.ConvertFromUtf32((int)(FlashAddr >> 16));
-                    MsgUplink.Text += char.ConvertFromUtf32((int)(((FlashAddr & 0xff00) >> 8)));
-                    MsgUplink.Text += char.ConvertFromUtf32((int)((FlashAddr & 0xff)));
-                    MsgUplink.Text += "@\x10\x33";
+                    for (long StartAddr = FlashAddr; StartAddr < (FlashAddr + FlashLength); StartAddr += 16)
+                    {
+                        MsgUplink.Text += AddHexString("3=#5   F\x05\x03");
+                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(FlashAddr >> 16)));
+                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(((FlashAddr & 0xff00) >> 8))));
+                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)((FlashAddr & 0xff))));
+                        MsgUplink.Text += AddHexString("@\x10\x33");
+                    }
                 }
+            }
+            else
+            {
+                ReadFlashAddr.Text = "0000";
+                ReadFlashLen.Text = "0010";
+            }
+        }
+
+        protected void ButtonGrStReadFlash_Click(object sender, EventArgs e)
+        {
+            if ((GrStReadFlashFrom.Text != "") && (GrStReadFlashLen.Text != ""))
+            {
+                long FlashAddr = Int32.Parse(GrStReadFlashFrom.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashAddr.Text.ToString());
+                long FlashLength = Int32.Parse(GrStReadFlashLen.Text.ToString(), System.Globalization.NumberStyles.HexNumber);//Convert.ToInt32(ReadFlashLen.Text.ToString());
+
+                if (FlashLength != 0)
+                {
+                    for (long StartAddr = FlashAddr; StartAddr < (FlashAddr + FlashLength); StartAddr += 16)
+                    {
+                        //  first command is "=9   " - responce send back to unit 9
+                        MsgUplink.Text += AddHexString("2=#9   F\x05\x03");
+                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(FlashAddr >> 16)));
+                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(((FlashAddr & 0xff00) >> 8))));
+                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)((FlashAddr & 0xff))));
+                        MsgUplink.Text += AddHexString("@\x10\x32");
+                    }
+                }
+            }
+            else
+            {
+                GrStReadFlashFrom.Text = "0000";
+                GrStReadFlashLen.Text  = "0010";
             }
         }
     }
