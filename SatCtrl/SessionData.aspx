@@ -5,9 +5,9 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <p>
-        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" 
-            AllowSorting="True" AutoGenerateColumns="False" 
+        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" 
             DataSourceID="SqlDataSource1" Width="1200px" Height="16px" 
+            onrowdatabound="CustomersGridView_RowDataBound"
             style="margin-bottom: 106px" HorizontalAlign="Center" PageSize="25">
             <Columns>
                 <asp:BoundField DataField="session_no" HeaderText="session" 
@@ -26,13 +26,13 @@
                     SortExpression="d_time" >
                 <ItemStyle Wrap="False" Width="150px" />
                 </asp:BoundField>
-                <asp:BoundField DataField="g_station" HeaderText="GrStn" 
+                <asp:BoundField DataField="g_station" HeaderText="GrSt" 
                     SortExpression="g_station" >
                 <ItemStyle Width="20px" />
                 </asp:BoundField>
                 <asp:BoundField DataField="gs_time" HeaderText="GrStn d&amp;t" 
                     SortExpression="gs_time" >
-                <ItemStyle Wrap="False" Width="150px" />
+                <ItemStyle Wrap="False" Width="80px" />
                 </asp:BoundField>
                 <asp:BoundField DataField="package" HeaderText="package" 
                     SortExpression="package" >

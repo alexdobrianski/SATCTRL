@@ -12,7 +12,7 @@
                 TextMode="MultiLine"></asp:TextBox>
                 <br />
                 <asp:Button ID="Button1" runat="server"  onclick="Button1_Click" Text="Send" />
-
+                simbols: '=' %3D
                 </td>
             <td class="style2">
                 <span class="style6"><strong>Cubesat/Craft&#39;s commands set:</strong></span><br />
