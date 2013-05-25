@@ -13,6 +13,43 @@ namespace SatCtrl
     public partial class _SessionData : System.Web.UI.Page
     {
         public long intMaxSessionN;
+        public bool wassize = false;
+        public String OutHexSmallSize( int BinDatai)
+        {
+            String strOut = "";
+            if ((BinDatai >= ' ') && (BinDatai <= '~'))
+            {
+                if (wassize == true)
+                    strOut += "</font>";
+                wassize = false;
+                //strOut += "<b>";
+                strOut += (char)BinDatai;
+                //strOut += "</b>";
+            }
+            else
+            {
+                if (wassize == false)
+                {
+                    strOut += "<font size=\"-4\">";
+                    wassize = true;
+                }
+                strOut += " ";
+                int Simb1 = (BinDatai >> 4) & 0x0f;
+                int Simb2 = BinDatai & 0x0f;
+                if (Simb1 >= 10)
+                    Simb1 = 'A' + Simb1 - 10;
+                else
+                    Simb1 = '0' + Simb1;
+                if (Simb2 >= 10)
+                    Simb2 = 'A' + Simb2 - 10;
+                else
+                    Simb2 = '0' + Simb2;
+                strOut += (char)Simb1;
+                strOut += (char)Simb2;
+                //strOut += "</font>";
+            }
+            return strOut;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
@@ -48,39 +85,60 @@ namespace SatCtrl
             {
                 e.Row.Cells[5].Text = "<font size=\"-3\">" + e.Row.Cells[5].Text.ToString().Substring(9) + "</font>";
                 String Original = e.Row.Cells[6].Text;
-                byte[] BinData = new byte[e.Row.Cells[6].Text.Length*2];
-                System.Buffer.BlockCopy(e.Row.Cells[6].Text.ToArray(), 0, BinData, 0, e.Row.Cells[6].Text.Length*2);
-
-                
                 String strOut = "";
+                wassize = false;
                 if (e.Row.Cells[1].Text.ToString() == "2") // that is from grouns station
                 {
+                    Original = Original.Replace("&quot;", "\'");
+                    Original = Original.Replace("&amp;", "&");
+                    Original = Original.Replace("&gt;", ">");
+                    byte[] BinData = new byte[Original.Length * 2];
+                    System.Buffer.BlockCopy(Original.ToArray(), 0, BinData, 0, Original.Length * 2);
+                    int Sim1 = 0;
+                    int Sim2 = 0;
+                    int Sim3 = 0;
                     for (int i = 0; i < BinData.Length; i+=2)
                     {
-                        if ((BinData[i] >= ' ') && (BinData[i] <= '~'))
+                        if (Sim1 < 0)
                         {
-                            //strOut += "<b>";
-                            strOut += (char)BinData[i];
-                            //strOut += "</b>";
+                            if (Sim2 < 0)
+                            {
+                                if (BinData[i] != ';')
+                                {
+                                    Sim3 *= 10;
+                                    Sim3 += BinData[i] - '0';
+                                }
+                                else
+                                {
+                                    strOut += OutHexSmallSize(Sim3);
+                                    Sim1 = 0;
+                                }
+                                continue;
+                            }
+                            if (BinData[i] == '#')
+                            {
+                                Sim2 = -1;
+                                Sim3 = 0;
+                            }
+                            else
+                            {
+                                strOut += "&";
+                                strOut += (char)BinData[i];
+                                Sim1 = 0;
+                            }
+                            continue;
                         }
-                        else
+                        if (BinData[i] == '&')
                         {
-                            strOut += "<font size=\"-3\"> ";
-                            int Simb1 = BinData[i] >> 4;
-                            int Simb2 = BinData[i] & 0x0f;
-                            if (Simb1 >= 10)
-                                Simb1 = 'A' + Simb1 - 10;
-                            else
-                                Simb1 = '0' + Simb1;
-                            if (Simb2 >= 10)
-                                Simb2 = 'A' + Simb2 - 10;
-                            else
-                                Simb2 = '0' + Simb2;
-                            strOut += (char)Simb1;
-                            strOut += (char)Simb2;
-                            strOut += "</font>";
+                            Sim1 = -1;
+                            Sim2 = 0;
+                            continue;
                         }
+                        strOut += OutHexSmallSize(BinData[i]);
                     }
+                    if (wassize == true)
+                        strOut += "</font>";
+                    wassize = false;
                     e.Row.Cells[6].Text = strOut;
                 }
                 if (e.Row.Cells[1].Text.ToString() == "1")
@@ -88,6 +146,8 @@ namespace SatCtrl
                     int Simb1 = 0;
                     int Simb2 = 0;
                     int FullByte = 0;
+                    byte[] BinData = new byte[Original.Length * 2];
+                    System.Buffer.BlockCopy(Original.ToArray(), 0, BinData, 0, Original.Length * 2);
                     for (int i = 0; i < BinData.Length; i += 2)
                     {
                         if (Simb1 < 0)
@@ -115,14 +175,22 @@ namespace SatCtrl
 
                             if ((FullByte >= ' ') && (FullByte <= '~'))
                             {
+                                if (wassize == true)
+                                    strOut += "</font>";
+                                wassize = false; 
                                 strOut += (char)FullByte;
                             }
                             else
                             {
-                                strOut += "<font size=\"-3\"> ";
+                                if (wassize == false)
+                                {
+                                    wassize = true;
+                                    strOut += "<font size=\"-4\">";
+                                }
+                                strOut += " ";
                                 strOut += (char)Simb1;
                                 strOut += (char)Simb2;
-                                strOut += "</font>";
+                                //strOut += "</font>";
                             }
                             continue;
                         }
@@ -132,8 +200,15 @@ namespace SatCtrl
                             continue;
                         }
                         else
+                        {
+                            if (wassize == true)
+                                strOut += "</font>";
                             strOut += (char)BinData[i];
+                        }
                     }
+                    if (wassize == true)
+                        strOut += "</font>";
+                    wassize = false;
                     e.Row.Cells[6].Text = strOut;
                 }
                 // TBD error packets has to be show in RED

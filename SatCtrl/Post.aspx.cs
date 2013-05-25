@@ -23,7 +23,59 @@ namespace SatCtrl
             String str_d_time = Page.Request.QueryString["d_time"];
             String str_g_station = Page.Request.QueryString["g_station"];
             String str_gs_time = Page.Request.QueryString["gs_time"];
-            String str_package = Page.Request.QueryString["package"];
+            String str_package = null;// Page.Request.QueryString["package"];
+            String str_originalUrl = Page.Request.RawUrl.ToString();
+            int iPackPosition = str_originalUrl.IndexOf("package=");
+            if (iPackPosition > 0)
+            {
+                str_package = str_originalUrl.Substring(iPackPosition + 8);
+                // manual convert
+                byte[] BinData = new byte[str_package.Length*2];
+                System.Buffer.BlockCopy(str_package.ToArray(), 0, BinData, 0, str_package.Length*2);
+                str_package = "";
+                int Simb1 = 0;
+                int Simb2 = 0;
+                for (int i = 0; i < BinData.Length; i+=2)
+                {
+                    int Orig = BinData[i];
+                    if (Simb1 < 0)
+                    {
+                        Simb1 = Orig;
+                        Simb2 = -1;
+                        continue;
+                    }
+                    if (Simb2 < 0)
+                    {
+                        Simb2 = Orig;
+                        if (Simb1 <= '9')
+                            Orig = Simb1 - '0';
+                        else if (Simb1 <= 'F')
+                            Orig = Simb1 - 'A' + 10;
+                        else
+                            Orig = Simb1 - 'a' + 10;
+                        Orig <<= 4;
+                        if (Simb2 <= '9')
+                            Orig |= Simb2 - '0';
+                        else if (Simb2 <= 'F')
+                            Orig |= Simb2 - 'A' + 10;
+                        else
+                            Orig |= Simb2 - 'a' + 10;
+                        switch (Orig)
+                        {
+                        case '>': str_package += "&gt;"; break;
+                        case '\'': str_package += "&#39;"; break;
+                        case '\"': str_package += "&#34;"; break;
+                        case '&': str_package += "&amp;"; break;
+                        default: str_package += (char)Orig;  break;
+                        }
+                        continue;
+                    }
+                    if (Orig != '%')
+                        str_package += (char)Orig;
+                    else
+                        Simb1 = -1;
+                }
+            }
             if ((str_session_no != null) &&
                 (str_packet_type != null) &&
                 (str_packet_no != null) &&
