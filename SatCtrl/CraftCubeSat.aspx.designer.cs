@@ -292,15 +292,6 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.TextBox TextBox12;
         
         /// <summary>
-        /// FileUpload1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
-        
-        /// <summary>
         /// CheckBoxAutoAntenna control.
         /// </summary>
         /// <remarks>
@@ -454,15 +445,6 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.Button Button6;
         
         /// <summary>
-        /// FileUpload2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload2;
-        
-        /// <summary>
         /// Button10 control.
         /// </summary>
         /// <remarks>
@@ -560,6 +542,33 @@ namespace SatCtrl {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox GrStReadFlashLen;
+        
+        /// <summary>
+        /// ButtonGrStFlasherace control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonGrStFlasherace;
+        
+        /// <summary>
+        /// GrStFileUploadFlash control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload GrStFileUploadFlash;
+        
+        /// <summary>
+        /// ButtonUploadGrStFlash control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonUploadGrStFlash;
         
         /// <summary>
         /// BackUpM10 control.

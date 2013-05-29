@@ -75,7 +75,7 @@
                     Enabled="False" />
 &nbsp;from:<asp:TextBox ID="TextBox12" runat="server" Width="90px" Enabled="False"></asp:TextBox>
 <br />
-                <asp:FileUpload ID="FileUpload1" runat="server" Width="220px" Enabled="False" />
+                
             </td>
             <td>
                 <span class="style6"><strong>Ground Station&#39;s commands set:</strong></span><br />
@@ -122,7 +122,6 @@
                 <asp:Button ID="Button6" runat="server" Text="Upload file to flush" 
                     Enabled="False" />
                 <br />
-                <asp:FileUpload ID="FileUpload2" runat="server" Enabled="False" />
                 <br />
                 <asp:Button ID="Button10" runat="server" Text="CD" Enabled="False" />
                 <asp:TextBox ID="TextBox17" runat="server" Enabled="False" Width="90px"></asp:TextBox>
@@ -148,6 +147,11 @@
                     &nbsp;len:<asp:TextBox ID="GrStReadFlashLen" runat="server" 
                     Width="90px"></asp:TextBox>
                 <br />
+                <asp:Button ID="ButtonGrStFlasherace" runat="server" 
+                    onclick="ButtonGrStFlasherace_Click" Text="Erace Intetrnal FLash" /><br />
+                <asp:FileUpload ID="GrStFileUploadFlash" runat="server" />
+                <asp:Button ID="ButtonUploadGrStFlash" runat="server" Text="Upload Flash File" 
+                       onclick="ButtonUploadGrStFlash_Click" />
                 </td>
         </tr>
         <tr>

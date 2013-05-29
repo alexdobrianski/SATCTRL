@@ -184,9 +184,9 @@ namespace SatCtrl
                             {
                                 if (wassize == false)
                                 {
-                                    wassize = true;
                                     strOut += "<font size=\"-4\">";
                                 }
+                                wassize = true;
                                 strOut += " ";
                                 strOut += (char)Simb1;
                                 strOut += (char)Simb2;
@@ -203,6 +203,7 @@ namespace SatCtrl
                         {
                             if (wassize == true)
                                 strOut += "</font>";
+                            wassize = false; 
                             strOut += (char)BinData[i];
                         }
                     }
