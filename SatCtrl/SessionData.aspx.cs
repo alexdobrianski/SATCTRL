@@ -83,7 +83,7 @@ namespace SatCtrl
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Cells[5].Text = "<font size=\"-3\">" + e.Row.Cells[5].Text.ToString().Substring(9) + "</font>";
+                e.Row.Cells[5].Text = "<font size=\"-4\">" + e.Row.Cells[5].Text.ToString().Substring(9) + "</font>";
                 String Original = e.Row.Cells[6].Text;
                 String strOut = "";
                 wassize = false;
