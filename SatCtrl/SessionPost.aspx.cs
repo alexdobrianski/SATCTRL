@@ -52,7 +52,7 @@ namespace SatCtrl
                 DateTime d = new DateTime();
                 d = DateTime.UtcNow;
 
-                tb.Text = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString();
+                tb.Text = d.ToString("yy/MM/dd HH:mm:ss") + "." + d.Millisecond.ToString();
 
 
             }
@@ -65,7 +65,7 @@ namespace SatCtrl
                     DateTime d = new DateTime();
                     d = DateTime.UtcNow;
 
-                    tb.Text = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString();
+                    tb.Text = d.ToString("yy/MM/dd HH:mm:ss") + "." + d.Millisecond.ToString();
 
 
 

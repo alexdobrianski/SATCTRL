@@ -7,14 +7,24 @@
     <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .style1
+        {
+            font-size: small;
+        }
+    </style>
 </head>
 <body>
+
     <form runat="server">
     <div class="page" style="width:auto">
         <div class="header">
             <div class="title">
                 <h1>
-                    Craft's /CubeSat's Mission Control 
+                    Yours Craft's /CubeSat's Mission Control&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="style1">
+                        <asp:Label ID="DateAndTime" runat="server" Text=""></asp:Label><span id="date_time"></span>
+</span>
                 </h1>
             </div>
             <div class="loginDisplay">
@@ -84,4 +94,49 @@
     </div>
     </form>
 </body>
+<script type="text/javascript">
+    var MissionCtrlDateUTC = new Date(<%=MissionYear %>, <%=MissionMonth %>,<%=MissionDay %>,<%=MissionHour %>, <%=MissionMin %>,<%=MissionSec %>,<%=MissionMls %>);
+    var LocalDateUTC = new Date(); // local time
+    var DifYear = MissionCtrlDateUTC.getFullYear() - LocalDateUTC.getUTCFullYear();
+    var DifMonth = MissionCtrlDateUTC.getMonth() - LocalDateUTC.getUTCMonth();
+    var DifDate = MissionCtrlDateUTC.getDate() - LocalDateUTC.getUTCDate();
+    var DifHour = MissionCtrlDateUTC.getHours() - LocalDateUTC.getUTCHours();
+    var DifMin = MissionCtrlDateUTC.getMinutes() - LocalDateUTC.getUTCMinutes();
+    var DifSec = MissionCtrlDateUTC.getSeconds() - LocalDateUTC.getUTCSeconds();
+    var DifMilliseconsr = MissionCtrlDateUTC.getMilliseconds() - LocalDateUTC.getUTCMilliseconds();
+
+    function date_time(id) {
+        date = new Date;
+        //date.setFullYear(date.getFullYear() + DifYear,date.getMonth()+DifMonth,date.getDate()+DifDate);
+        date.setHours(date.getHours() + DifHour);
+        date.setMinutes(date.getMinutes() + DifMin);
+        date.setSeconds(date.getSeconds()+DifSec);
+        date.getMilliseconds(date.getMilliseconds+DifMilliseconsr);
+        year = date.getFullYear()-2000;
+        month = date.getMonth(); if (month < 10) month = "0"+month;
+        //months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
+        d = date.getDate(); if (d <10) d="0"+d;
+        day = date.getDay();
+        //days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        h = date.getHours();   if (h < 10) h = "0" + h;
+        m = date.getMinutes(); if (m < 10) m = "0" + m;
+        s = date.getSeconds(); if (s < 10) s = "0" + s;
+        mls = date.getMilliseconds(); if (mls <10) mls = "00"+mls; else if (mls <100) mls = "0"+mls;
+        yearUTC = date.getUTCFullYear()-2000;
+        monthUTC = date.getUTCMonth();if (monthUTC < 10) monthUTC = "0"+monthUTC;
+        dUTC = date.getUTCDate();if (dUTC <10) dUTC="0"+dUTC;
+        hUTC = date.getUTCHours();if (hUTC < 10) hUTC = "0" + hUTC;
+        mUTC = date.getUTCMinutes();if (mUTC < 10) mUTC = "0" + mUTC;
+        sUTC = date.getUTCSeconds();if (sUTC < 10) sUTC = "0" + sUTC;
+        mlsUTC = date.getUTCMilliseconds();if (mlsUTC <10) mlsUTC = "00"+mlsUTC; else if (mlsUTC <100) mlsUTC = "0"+mlsUTC;
+        //result = '' + (year - 2000) + '/' + month + '/' + d;// + ' ' + h + ':' + m + ':' + s+'.' + mls;
+        result = 'Local time:' + year + '/'+month+'/'+d+' '+' '+h+':'+m+':'+s + '.' + mls+ '   UTC:' 
+        + yearUTC + '/'+monthUTC+'/'+dUTC+' '+' '+hUTC+':'+mUTC+':'+sUTC + '.' + mlsUTC;
+        document.getElementById(id).innerHTML = result;
+        setTimeout('date_time("' + id + '");', '1000');
+        return true;
+    }
+    date_time('date_time');
+</script>
+
 </html>

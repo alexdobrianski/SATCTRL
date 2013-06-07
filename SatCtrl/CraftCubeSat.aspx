@@ -3,7 +3,7 @@
 
 
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-<table style="width:100%;" frame="vsides">    
+    <table style="width:100%;" frame="vsides">    
         <tr>
             <td class="style1">
                 <span class="style6"><strong>sequence of a communication's commands
@@ -78,7 +78,7 @@
                 
             </td>
             <td>
-                <span class="style6"><strong>Ground Station&#39;s commands set:</strong></span><br />
+                <span class="style6"><strong>Ground Station&#39;s orientation commands set:</strong></span><br />
                 <asp:CheckBox ID="CheckBoxAutoAntenna" runat="server" 
                     oncheckedchanged="CheckBoxAutoAntenna_CheckedChanged" 
                     Text="Send constantly Antenna position" />
@@ -140,7 +140,7 @@
                     Enabled="False" />
             </td>
             <td class="style9">
-                <span class="style6"><strong>GrStn flash storage commands:</strong></span><br /><br />
+                <span class="style6"><strong>GrStn commands:</strong></span><br /><br />
                 <asp:Button ID="ButtonGrStReadFlash" runat="server" Text="Read GrStn Flash" 
                     onclick="ButtonGrStReadFlash_Click" />
                     &nbsp;from:<asp:TextBox ID="GrStReadFlashFrom" runat="server" Width="90px"></asp:TextBox>
@@ -152,7 +152,13 @@
                 <asp:FileUpload ID="GrStFileUploadFlash" runat="server" />
                 <asp:Button ID="ButtonUploadGrStFlash" runat="server" Text="Upload Flash File" 
                        onclick="ButtonUploadGrStFlash_Click" />
-                </td>
+                <br />
+                <asp:Button ID="ButtonSetClkGrStn" runat="server" 
+                    onclick="ButtonSetClkGrStn_Click" Text="SetClock " />
+                &lt;-from mission ctrl.
+                <asp:Button ID="ButtonGrStnGetClock" runat="server" 
+                    onclick="ButtonGrStnGetClock_Click" Text="GetClock" />
+&nbsp;-&gt;to mission ctrl</td>
         </tr>
         <tr>
             <td class="style3">

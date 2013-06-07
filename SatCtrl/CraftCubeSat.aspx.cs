@@ -88,7 +88,7 @@ namespace SatCtrl
                     DateTime d = new DateTime();
                     d = DateTime.UtcNow;
                     String szMils = d.Millisecond.ToString().PadLeft(3, '0');
-                    String str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + szMils;
+                    String str_d_time = d.ToString("yy/MM/dd HH:mm:ss") + "." + szMils;
 
                     String str_g_station = HttpContext.Current.Application["DefaultMainGrStn"].ToString();
                     String str_gs_time = str_d_time;
@@ -361,6 +361,16 @@ namespace SatCtrl
             {
                 //Label1.Text = "You have not specified a file.";
             }
+
+        }
+
+        protected void ButtonSetClkGrStn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonGrStnGetClock_Click(object sender, EventArgs e)
+        {
 
         }
         /*

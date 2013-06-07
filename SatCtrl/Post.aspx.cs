@@ -93,7 +93,7 @@ namespace SatCtrl
                     
                     DateTime d = new DateTime();
                     d = DateTime.UtcNow;
-                    str_d_time = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3,'0');
+                    str_d_time = d.ToString("yy/MM/dd HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3, '0');
                     //String ConnStr = System.Configuration.ConfigurationManager.ConnectionStrings.ConnectionStrings["missionlogConnectionString"];
 
                     //str_package = str_package.Substring(1);
