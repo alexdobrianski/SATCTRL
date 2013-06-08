@@ -8,6 +8,8 @@ using System.Net;
 using System.IO;
 using System.Text;
 using MySql.Data.MySqlClient;
+using System.Net.Cache;
+using System.Net.Cache;
 
 namespace SatCtrl
 {
@@ -36,21 +38,34 @@ namespace SatCtrl
             }
             return Str1;
         }
-        protected void Button1_Click(object sender, EventArgs e)
+        public void SendToStationPostToDB(string UpLoadMsg)
         {
+            DateTime CtrlDate = new DateTime();
+            DateTime Timesend = new DateTime();
+            DateTime TimeResp = new DateTime();
+            
+
             WebRequest request;
             Stream dataStream;
             intMaxSessionN = intMaxSessionN + 1;
             string strMaxSessionN = intMaxSessionN.ToString().PadLeft(10, '0');
             HttpContext.Current.Application["strMaxSessionN"] = strMaxSessionN;
-            string strUpLoadMsg = MsgUplink.Text.ToString();
+            if (UpLoadMsg == null)
+                return;
+            string strUpLoadMsg = UpLoadMsg;
             if (strUpLoadMsg.Length != 0)
             {
                 strUpLoadMsg = strUpLoadMsg.Replace("=", "%3d");
                 strUpLoadMsg = strUpLoadMsg.Replace("#", "%23");
                 strUpLoadMsg = strUpLoadMsg.Replace("&", "%26");
 
-                String url = HttpContext.Current.Application["StnURL"].ToString() + "cmd?session_no=" + strMaxSessionN + "&package=" + strUpLoadMsg + "&g_station=" + HttpContext.Current.Application["DefaultMainGrStn"].ToString();
+                CtrlDate = DateTime.UtcNow;
+                String szCtrlMils = CtrlDate.Millisecond.ToString().PadLeft(3, '0');
+                String str_Ctrl_time = CtrlDate.ToString("yy/MM/dd HH:mm:ss") + "." + szCtrlMils;
+                String Delta1 = "00/00/00 00:00:00.000";
+                String Delta2 = "00/00/00 00:00:00.000";
+                String url = HttpContext.Current.Application["StnURL"].ToString() + "cmd?session_no=" + strMaxSessionN + "&package=" + strUpLoadMsg + "&g_station=" + HttpContext.Current.Application["DefaultMainGrStn"].ToString() +
+                    "&ctrlt=" + str_Ctrl_time + "&dl1=" + Delta1 + "&dl2=" + Delta2;
                 /////////////////////////////////////////////////////////////////////////////////////////
                 // param
                 /////////////////////////////////////////////////////////////////////////////////////////
@@ -61,10 +76,15 @@ namespace SatCtrl
                 request.Method = "GET";
                 request.Timeout = 5000;
                 request.ContentType = "text/html";
+                HttpRequestCachePolicy noCachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+                request.CachePolicy = noCachePolicy;
+
                 string ResonseString = "";
                 try
                 {
+                    Timesend = DateTime.UtcNow;
                     WebResponse resp = request.GetResponse();
+                    TimeResp = DateTime.UtcNow;
                     long sizeresp = resp.ContentLength;
                     dataStream = resp.GetResponseStream();
                     byte[] byteArray = new byte[sizeresp];
@@ -77,6 +97,7 @@ namespace SatCtrl
                 catch (WebException)
                 {
                 }
+
                 if (ResonseString.IndexOf("Page OK") > 0)
                 {
                     // Uplink was download to Ground Station 
@@ -126,7 +147,7 @@ namespace SatCtrl
                                 }
                                 else if (str_package.Substring(i + iDelta - 2, 1) == "%") // 1
                                 {
-                                    iDelta-=2;
+                                    iDelta -= 2;
                                 }
                                 // last case 4
                             }
@@ -164,6 +185,11 @@ namespace SatCtrl
                     HttpContext.Current.Application["strMaxSessionN"] = strMaxSessionN;
                 }
             }
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string strUpLoadMsg = MsgUplink.Text.ToString();
+            SendToStationPostToDB(strUpLoadMsg);
         }
 
         protected void CheckBoxAutoAntenna_CheckedChanged(object sender, EventArgs e)
@@ -366,12 +392,33 @@ namespace SatCtrl
 
         protected void ButtonSetClkGrStn_Click(object sender, EventArgs e)
         {
-
+            // command 2tXSMHDMY2
+            DateTime d = new DateTime();
+            d = DateTime.UtcNow;
+            String szMils = d.Millisecond.ToString().PadLeft(3, '0');
+            int Mils1 = d.Millisecond/256;
+            int Mils2 = d.Millisecond - Mils1*256;
+            int Sec = d.Second; Sec = Sec / 10; Sec = Sec * 16 + (d.Second - Sec * 10); 
+            int Min = d.Minute; Min = Min / 10; Min = Min * 16 + (d.Minute - Min * 10);
+            int Hour = d.Hour; Hour = Hour / 10; Hour = Hour * 16 + (d.Hour - Hour * 10);
+            int Day = d.Day; Day = Day / 10; Day = Day * 16 + (d.Day - Day * 10);
+            int Month = d.Month; Month = Month / 10; Month = Month * 16 + (d.Month - Month * 10);
+            int Year = d.Year - 2000; Year = Year / 10; Year = Year * 16 + (d.Year - 2000 - Year * 10);
+            string message = "222t" + AddHexString(((char)(Mils1)).ToString());
+            message += AddHexString(((char)(Mils2)).ToString());
+            message += AddHexString(((char)(Sec)).ToString());
+            message += AddHexString(((char)(Min)).ToString());
+            message += AddHexString(((char)(Hour)).ToString());
+            message += AddHexString(((char)(Day)).ToString());
+            message += AddHexString(((char)(Month)).ToString());
+            message += AddHexString(((char)(Year)).ToString());
+            message += "2";
+            SendToStationPostToDB(message);
         }
 
         protected void ButtonGrStnGetClock_Click(object sender, EventArgs e)
         {
-
+            SendToStationPostToDB("222=#9 T2");
         }
         /*
         protected void ButtonUploadGrStFlash_Click(object sender, EventArgs e)

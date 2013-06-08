@@ -97,33 +97,35 @@
 <script type="text/javascript">
     var MissionCtrlDateUTC = new Date(<%=MissionYear %>, <%=MissionMonth %>,<%=MissionDay %>,<%=MissionHour %>, <%=MissionMin %>,<%=MissionSec %>,<%=MissionMls %>);
     var LocalDateUTC = new Date(); // local time
-    var DifYear = MissionCtrlDateUTC.getFullYear() - LocalDateUTC.getUTCFullYear();
-    var DifMonth = MissionCtrlDateUTC.getMonth() - LocalDateUTC.getUTCMonth();
-    var DifDate = MissionCtrlDateUTC.getDate() - LocalDateUTC.getUTCDate();
-    var DifHour = MissionCtrlDateUTC.getHours() - LocalDateUTC.getUTCHours();
-    var DifMin = MissionCtrlDateUTC.getMinutes() - LocalDateUTC.getUTCMinutes();
-    var DifSec = MissionCtrlDateUTC.getSeconds() - LocalDateUTC.getUTCSeconds();
-    var DifMilliseconsr = MissionCtrlDateUTC.getMilliseconds() - LocalDateUTC.getUTCMilliseconds();
+    var DifYear = LocalDateUTC.getUTCFullYear() - MissionCtrlDateUTC.getFullYear();
+    var DifMonth = LocalDateUTC.getUTCMonth() - MissionCtrlDateUTC.getMonth();
+    var DifDate =  LocalDateUTC.getUTCDate() - MissionCtrlDateUTC.getDate() ;
+    var DifHour =  LocalDateUTC.getUTCHours()- MissionCtrlDateUTC.getHours();
+    var DifMin =   LocalDateUTC.getUTCMinutes() - MissionCtrlDateUTC.getMinutes();
+    var DifSec =   LocalDateUTC.getUTCSeconds() - MissionCtrlDateUTC.getSeconds();
+    var DifMilliseconsr = LocalDateUTC.getUTCMilliseconds() - MissionCtrlDateUTC.getMilliseconds();
 
     function date_time(id) {
         date = new Date;
-        //date.setFullYear(date.getFullYear() + DifYear,date.getMonth()+DifMonth,date.getDate()+DifDate);
+        date.setFullYear(date.getFullYear() + DifYear);
+        date.setMonth(date.getMonth()+DifMonth);
+        date.setDate(date.getDate()+DifDate);
         date.setHours(date.getHours() + DifHour);
         date.setMinutes(date.getMinutes() + DifMin);
         date.setSeconds(date.getSeconds()+DifSec);
         date.getMilliseconds(date.getMilliseconds+DifMilliseconsr);
         year = date.getFullYear()-2000;
-        month = date.getMonth(); if (month < 10) month = "0"+month;
+        month = date.getMonth()+1; if (month < 10) month = "0"+month;
         //months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'Jully', 'August', 'September', 'October', 'November', 'December');
         d = date.getDate(); if (d <10) d="0"+d;
-        day = date.getDay();
+        //day = date.getDay();
         //days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
         h = date.getHours();   if (h < 10) h = "0" + h;
         m = date.getMinutes(); if (m < 10) m = "0" + m;
         s = date.getSeconds(); if (s < 10) s = "0" + s;
         mls = date.getMilliseconds(); if (mls <10) mls = "00"+mls; else if (mls <100) mls = "0"+mls;
         yearUTC = date.getUTCFullYear()-2000;
-        monthUTC = date.getUTCMonth();if (monthUTC < 10) monthUTC = "0"+monthUTC;
+        monthUTC = date.getUTCMonth()+1;if (monthUTC < 10) monthUTC = "0"+monthUTC;
         dUTC = date.getUTCDate();if (dUTC <10) dUTC="0"+dUTC;
         hUTC = date.getUTCHours();if (hUTC < 10) hUTC = "0" + hUTC;
         mUTC = date.getUTCMinutes();if (mUTC < 10) mUTC = "0" + mUTC;

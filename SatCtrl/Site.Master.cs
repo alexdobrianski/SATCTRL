@@ -28,8 +28,8 @@ namespace SatCtrl
             if (strDefaultMainGrStn == "1")
                 GrStName = "Vancouver";
             DateAndTime.Text = "Ground station "+ GrStName+ " - ";
-            MissionYear = d.ToString("yy");
-            MissionMonth = d.ToString("MM");
+            MissionYear = d.ToString("yyyy");
+            MissionMonth = (d.Month-1).ToString();
             MissionDay = d.ToString("dd");
             MissionHour = d.ToString("HH");
             MissionMin = d.ToString("mm");
