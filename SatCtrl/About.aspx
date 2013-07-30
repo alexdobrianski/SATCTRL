@@ -133,13 +133,15 @@
             <tr>
                 <td class="style2">
                     <img alt="" src="Img/tra_sim.JPG" width="320" /><br />
-                    Simulation engine - runs separatly<a href="tra.exe">1. click to download and save executable TRA.EXE</a>.<br />
-                    <a href="trabat.bat">2.Click to download and save TRABAT.BAT file</a> to run simulation in loop.<br />
-                    Batch file requare to adjust IP adress.<br />
-                    <a href="bin410.bin">3.Click to download JPL BIN410.BIN (sabe in same directory)</a><br />
-                </td>
+                    Simulation engine - runs separatly.
+                    <br />
+                    Click to download <a href="SetupTra.msi">SetupTra.MSI</a>
+                    <br />
+                    Orbit Calculation Engine. 
+                    <br />
+                   After install Run batch file from command menu</td>
                 <td class="style4">
-                    GPS satelites</td>
+                    GPS satelitess</td>
                 <td class="style3">
                     &lt;-&gt;</td>
                 <td class="style5">

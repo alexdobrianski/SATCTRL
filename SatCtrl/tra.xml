@@ -23,7 +23,7 @@
     <TRA:setting name="dStartJD0" value="11292.79166666" />
 
     <TRA:setting name="TRAVisual1" value="travisual.xml" />
-    <TRA:setting name="TRAVisual" value="http://192.168.0.102/SatCtrl/PostTra.aspx" />
+    <TRA:setting name="TRAVisual" value="http://24.84.38.192/SatCtrl/PostTra.aspx" />
 
     <TRA:setting name="RGBImageW" value="1280" />
     <TRA:setting name="RGBImageH" value="720" />
@@ -83,7 +83,7 @@
       <TRA:setting name="ProbKeplerLine3" value="2 20361 053.9268 181.3322 0019430 244.4880 265.7461 01.89174592158522" />
 
       <TRA:setting name="ProbKeplerLine1" value="0 NAVSTAR 18 (USA 50)" />
-      <TRA:setting name="ProbKeplerLine2" value="1 20452U 90008A   13114.88679440 -.00000028  00000-0  00000+0 0  6465" />
+      <TRA:setting name="ProbKeplerLine2" value="0 NAVSTAR 18 (USA 50)" />
       <TRA:setting name="ProbKeplerLine3" value="2 20452 055.9375 302.3040 0010546 215.8509 286.6389 01.89596331165219" />
 
          <TRA:setting name="GRSTNNAME" value="vancouver" />

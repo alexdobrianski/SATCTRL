@@ -26,7 +26,8 @@
             <tr>
                 <td class="style1">
         <a href="http://java3d.java.net/binary-builds.html">Requare install of Java 3D - 
-        click to install</a><br /><br /><br />
+        click to install</a><br />(Navigation hold Left mouse button to rotate the universe, Alt+ Left mouse to zoom 
+                    Alt+Right mouse to move)<br /><br />
     <APPLET ARCHIVE="/SatCtrl/visualtra.jar" CODE=visualtra.class WIDTH=640 HEIGHT=480>
       <PARAM name="URLSOURCE" value="<%=ParamURLApplet %>">
 
