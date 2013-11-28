@@ -5,6 +5,7 @@
     <style type="text/css">
     .style2
     {
+
         width: 163px;
     }
     .style3
