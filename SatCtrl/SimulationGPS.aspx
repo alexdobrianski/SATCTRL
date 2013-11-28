@@ -42,28 +42,32 @@
                     <asp:RadioButton ID="RBGPSObtain" runat="server" Text="Obtain latest" 
                         GroupName="Obtain" />
 
-                <br />GPS1:<asp:TextBox ID="GPS1Line1" runat="server" 
+                <br />Sat1: <asp:TextBox ID="GPS1Line1" runat="server" 
                         ontextchanged="GPS1Line1_TextChanged"></asp:TextBox>
                     <br />Line2 :<asp:TextBox ID="GPS1Line2" runat="server" Width="588px" 
                         ontextchanged="GPS1Line2_TextChanged"></asp:TextBox>
                     <br />Line3 :<asp:TextBox ID="GPS1Line3" runat="server" Width="588px" 
                         ontextchanged="GPS1Line3_TextChanged"></asp:TextBox>
                     <br />
-                <br />GPS2:<asp:TextBox ID="GPS2Line1" runat="server"></asp:TextBox>
+                <br />Sat2:&nbsp; <asp:TextBox ID="GPS2Line1" runat="server"></asp:TextBox>
                     <br />Line2 :<asp:TextBox ID="GPS2Line2" runat="server" Width="588px"></asp:TextBox>
                     <br />Line3 :<asp:TextBox ID="GPS2Line3" runat="server" Width="588px"></asp:TextBox>
                     <br />
-                <br />GPS3:<asp:TextBox ID="GPS3Line1" runat="server"></asp:TextBox>
+                <br />Sat3:&nbsp; <asp:TextBox ID="GPS3Line1" runat="server"></asp:TextBox>
                     <br />Line2 :<asp:TextBox ID="GPS3Line2" runat="server" Width="588px"></asp:TextBox>
                     <br />Line3 :<asp:TextBox ID="GPS3Line3" runat="server" Width="588px"></asp:TextBox>
                     <br />
-                <br />GPS4:<asp:TextBox ID="GPS4Line1" runat="server"></asp:TextBox>
+                <br />Sat4:&nbsp; <asp:TextBox ID="GPS4Line1" runat="server"></asp:TextBox>
                     <br />Line2 :<asp:TextBox ID="GPS4Line2" runat="server" Width="588px"></asp:TextBox>
                     <br />Line3 :<asp:TextBox ID="GPS4Line3" runat="server" Width="588px"></asp:TextBox>
                     <br />
-                <br />GPS5:<asp:TextBox ID="GPS5Line1" runat="server"></asp:TextBox>
+                <br />Sat5:&nbsp; <asp:TextBox ID="GPS5Line1" runat="server"></asp:TextBox>
                     <br />Line2 :<asp:TextBox ID="GPS5Line2" runat="server" Width="588px"></asp:TextBox>
                     <br />Line3 :<asp:TextBox ID="GPS5Line3" runat="server" Width="588px"></asp:TextBox>
+                    <br />
+                <br />Sat6:&nbsp; <asp:TextBox ID="GPS6Line1" runat="server"></asp:TextBox>
+                    <br />Line2 :<asp:TextBox ID="GPS6Line2" runat="server" Width="588px"></asp:TextBox>
+                    <br />Line3 :<asp:TextBox ID="GPS6Line3" runat="server" Width="588px"></asp:TextBox>
                     <br />
 
                     </td>

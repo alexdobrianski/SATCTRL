@@ -89,7 +89,7 @@ namespace SatCtrl
             }
             for (int iCount = 1; iCount < 6; iCount++)
             {
-                IsIt = HttpContext.Current.Application["GPS" + iCount + "ProbKeplerLine2"];
+                IsIt = HttpContext.Current.Application["GPS" + iCount + "ProbKeplerLine1"];
                 object IsIt2 = HttpContext.Current.Application["GPS" + iCount + "ProbKeplerLine2"];
                 object IsIt3 = HttpContext.Current.Application["GPS" + iCount + "ProbKeplerLine3"];
                 if ((IsIt != null) && (IsIt2 != null) && (IsIt3 != null))
@@ -104,6 +104,7 @@ namespace SatCtrl
                         case 3: GPS3Line1.Text = SVal1.ToString(); GPS3Line2.Text = SVal2.ToString(); GPS3Line3.Text = SVal3.ToString(); break;
                         case 4: GPS4Line1.Text = SVal1.ToString(); GPS4Line2.Text = SVal2.ToString(); GPS4Line3.Text = SVal3.ToString(); break;
                         case 5: GPS5Line1.Text = SVal1.ToString(); GPS5Line2.Text = SVal2.ToString(); GPS5Line3.Text = SVal3.ToString(); break;
+                        case 6: GPS6Line1.Text = SVal1.ToString(); GPS6Line2.Text = SVal2.ToString(); GPS6Line3.Text = SVal3.ToString(); break;
                     }
                 }
                 else

@@ -118,7 +118,7 @@ namespace SatCtrl
             string SVal1 = null;
             string SVal2 = null;
             string SVal3 = null;
-            object IsIt = HttpContext.Current.Application["ProbKeplerLine1"];
+            object IsIt = null;// HttpContext.Current.Application["ProbKeplerLine1"];
             if (IsIt == null)
             {
                 String xml = null;

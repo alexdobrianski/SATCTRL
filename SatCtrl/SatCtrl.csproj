@@ -227,6 +227,7 @@
     <Content Include="Tiny.Master" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SetupTra.msi" />
     <None Include="trabat.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
