@@ -80,6 +80,7 @@
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="tra.exe" />
+    <Content Include="TraCalc.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -211,6 +212,13 @@
     </Compile>
     <Compile Include="Tiny.Master.designer.cs">
       <DependentUpon>Tiny.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TraCalc.aspx.cs">
+      <DependentUpon>TraCalc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TraCalc.aspx.designer.cs">
+      <DependentUpon>TraCalc.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

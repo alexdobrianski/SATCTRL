@@ -78,6 +78,9 @@
                             <asp:MenuItem NavigateUrl="~/SessionPost.aspx" Text="Session Post" 
                                 Value="Session Post"></asp:MenuItem>
                         </asp:MenuItem>
+                        <asp:MenuItem Text="Trajectory Calculations" Value="Trajectory Calculations" 
+                            NavigateUrl="~/TraCalc.aspx">
+                        </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
                     </Items>
                 </asp:Menu>
