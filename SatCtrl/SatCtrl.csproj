@@ -63,11 +63,13 @@
     <Content Include="GrStn.exe" />
     <Content Include="Img\cubesat_ctrl.JPG" />
     <Content Include="Img\GrStn.JPG" />
+    <Content Include="Img\lunarnearsidelarge.jpg" />
     <Content Include="Img\mission_ctrl.JPG" />
     <Content Include="Img\planb.jpg" />
     <Content Include="Img\SDC10316.JPG" />
     <Content Include="Img\sessionDB.JPG" />
     <Content Include="Img\tra_sim.JPG" />
+    <Content Include="LunarMapGen.aspx" />
     <Content Include="Post.aspx" />
     <Content Include="PostTra.aspx" />
     <Content Include="SessionData.aspx" />
@@ -81,6 +83,9 @@
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="tra.exe" />
     <Content Include="TraCalc.aspx" />
+    <Content Include="TraCalcCraft.aspx" />
+    <Content Include="TraCalcOrbit.aspx" />
+    <Content Include="TraCalcTarget.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -156,6 +161,13 @@
     <Compile Include="GroundStation.aspx.designer.cs">
       <DependentUpon>GroundStation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="LunarMapGen.aspx.cs">
+      <DependentUpon>LunarMapGen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LunarMapGen.aspx.designer.cs">
+      <DependentUpon>LunarMapGen.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Post.aspx.cs">
       <DependentUpon>Post.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -219,6 +231,27 @@
     </Compile>
     <Compile Include="TraCalc.aspx.designer.cs">
       <DependentUpon>TraCalc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TraCalcCraft.aspx.cs">
+      <DependentUpon>TraCalcCraft.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TraCalcCraft.aspx.designer.cs">
+      <DependentUpon>TraCalcCraft.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TraCalcOrbit.aspx.cs">
+      <DependentUpon>TraCalcOrbit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TraCalcOrbit.aspx.designer.cs">
+      <DependentUpon>TraCalcOrbit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TraCalcTarget.aspx.cs">
+      <DependentUpon>TraCalcTarget.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TraCalcTarget.aspx.designer.cs">
+      <DependentUpon>TraCalcTarget.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

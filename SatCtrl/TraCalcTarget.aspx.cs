@@ -16,7 +16,7 @@ using System.Drawing.Drawing2D;
 
 namespace SatCtrl
 {
-    public partial class _TraCalc : System.Web.UI.Page
+    public partial class _TraCalcTarget : System.Web.UI.Page
     {
         public long intMaxSessionN;
         double dX;
@@ -60,7 +60,7 @@ namespace SatCtrl
                 HttpContext.Current.Application["TargetLatitude"] = TextBoxLatitude.Text.ToString();
             }
             
-            HttpContext.Current.Application["strPageUsed"] = "TraCalc";
+            HttpContext.Current.Application["strPageUsed"] = "TraCalcTarget";
             // number of distributed nodes
             LabelNodes.Text = "0";
             // status of distributed calculations

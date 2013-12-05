@@ -16,7 +16,7 @@ using System.Drawing.Drawing2D;
 
 namespace SatCtrl
 {
-    public partial class _TraCalc : System.Web.UI.Page
+    public partial class _TraCalcOrbit : System.Web.UI.Page
     {
         public long intMaxSessionN;
         double dX;
@@ -27,7 +27,6 @@ namespace SatCtrl
         {
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
-            RadioButtonTargetLL.Checked = true;
             object IsList = HttpContext.Current.Application["TargetLongitude"];
             if (IsList != null)
             {
@@ -41,8 +40,6 @@ namespace SatCtrl
             }
             else
             {
-                TextBoxLongitude.Text = "E15";
-                HttpContext.Current.Application["TargetLongitude"] = TextBoxLongitude.Text.ToString();
             }
             IsList = HttpContext.Current.Application["TargetLatitude"];
             if (IsList != null)
@@ -56,21 +53,19 @@ namespace SatCtrl
             }
             else
             {
-                TextBoxLatitude.Text = "S2";
-                HttpContext.Current.Application["TargetLatitude"] = TextBoxLatitude.Text.ToString();
             }
             
             HttpContext.Current.Application["strPageUsed"] = "TraCalc";
             // number of distributed nodes
-            LabelNodes.Text = "0";
+            //LabelNodes.Text = "0";
             // status of distributed calculations
             TraStatus = "non avalable";
-            LabelStatus.Text = TraStatus;
-            HttpContext.Current.Application["TraDistStatus"] = TraStatus;
+            //LabelStatus.Text = TraStatus;
+            //HttpContext.Current.Application["TraDistStatus"] = TraStatus;
             if (TraStatus == "non avalable")
             {
-                ButtonImpOptimization.Enabled = false;
-                ButtonFindImp.Enabled = false;
+            //    ButtonImpOptimization.Enabled = false;
+            //    ButtonFindImp.Enabled = false;
             }
         }
         protected String AddHexString(String Str2)
@@ -91,31 +86,5 @@ namespace SatCtrl
             return Str1;
         }
 
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
-        {
-            double X = e.X;
-            double Y = e.Y;
-            double Height = ImageLunarMap.Height.Value;
-            double Width = ImageLunarMap.Width.Value;
-            X /= Width; X -= 0.5; X *=360;
-            Y /= Height; Y -= 0.5; Y *=180;
-            if (X < 0.0)
-            {
-                X = -X;
-                TextBoxLongitude.Text = "W" + X.ToString("F5");
-            }
-            else
-                TextBoxLongitude.Text = "E" + X.ToString("F5");
-            if (Y < 0.0)
-            {
-                Y = -Y;
-                TextBoxLatitude.Text = "N" + Y.ToString("F5");
-            }
-            else
-                TextBoxLatitude.Text = "S" + Y.ToString("F5");
-            HttpContext.Current.Application["TargetLatitude"] = TextBoxLatitude.Text.ToString();
-            HttpContext.Current.Application["TargetLongitude"] = TextBoxLongitude.Text.ToString();
-
-        }
     }
 }

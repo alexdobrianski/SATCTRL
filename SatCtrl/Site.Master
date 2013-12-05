@@ -80,6 +80,12 @@
                         </asp:MenuItem>
                         <asp:MenuItem Text="Trajectory Calculations" Value="Trajectory Calculations" 
                             NavigateUrl="~/TraCalc.aspx">
+                            <asp:MenuItem NavigateUrl="~/TraCalcCraft.aspx" Text="Craft settings" 
+                                Value="Craft settings"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/TraCalcOrbit.aspx" Text="Initial orbit settings" 
+                                Value="Craft settings"></asp:MenuItem>
+                            <asp:MenuItem NavigateUrl="~/TraCalcTarget.aspx" Text="Target settings" 
+                                Value="Craft settings"></asp:MenuItem>
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
                     </Items>
@@ -107,6 +113,7 @@
     var DifMin =   LocalDateUTC.getUTCMinutes() - MissionCtrlDateUTC.getMinutes();
     var DifSec =   LocalDateUTC.getUTCSeconds() - MissionCtrlDateUTC.getSeconds();
     var DifMilliseconsr = LocalDateUTC.getUTCMilliseconds() - MissionCtrlDateUTC.getMilliseconds();
+    //var PageName = window.location.href;
 
     function date_time(id) {
         date = new Date;
@@ -137,6 +144,8 @@
         //result = '' + (year - 2000) + '/' + month + '/' + d;// + ' ' + h + ':' + m + ':' + s+'.' + mls;
         result = 'Local time:' + year + '/'+month+'/'+d+' '+' '+h+':'+m+':'+s + '.' + mls+ '   UTC:' 
         + yearUTC + '/'+monthUTC+'/'+dUTC+' '+' '+hUTC+':'+mUTC+':'+sUTC + '.' + mlsUTC;
+        
+        //b = PageName.lastIndexOf("/");
         document.getElementById(id).innerHTML = result;
         setTimeout('date_time("' + id + '");', '1000');
         return true;
