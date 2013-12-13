@@ -17,12 +17,13 @@
         </tr>
         <tr>
             <td class="style8">
-                TLE1:<asp:TextBox ID="TextBox3" runat="server" Width="842px"></asp:TextBox>
+                TLE1:<asp:TextBox ID="TextBoxTLE1" runat="server" 
+                    Width="842px"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="style4">
-                TLE2:<asp:TextBox ID="TextBox4" 
+                TLE2:<asp:TextBox ID="TextBoxTLE2" 
                     runat="server" Width="843px"></asp:TextBox>
             </td>
         </tr>

@@ -40,22 +40,22 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.RadioButton RadioButton3;
         
         /// <summary>
-        /// TextBox3 control.
+        /// TextBoxTLE1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxTLE1;
         
         /// <summary>
-        /// TextBox4 control.
+        /// TextBoxTLE2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox4;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxTLE2;
         
         /// <summary>
         /// TextBox5 control.
