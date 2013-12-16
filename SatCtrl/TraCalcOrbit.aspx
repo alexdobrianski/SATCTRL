@@ -6,66 +6,105 @@
     <table style="width:100%;" frame="vsides">    
         <tr>
             <td class="style2">
-                Initial Orbit
-                <asp:RadioButton ID="RadioButton1" runat="server" Text="Two Line Element" 
-                    GroupName="InitialOrbbit" />
-                <asp:RadioButton ID="RadioButton2" runat="server" Text="Inc/Pe/Ap" 
-                    GroupName="InitialOrbbit" />
-                <asp:RadioButton ID="RadioButton3" runat="server" Text="Speed and vel" 
-                    GroupName="InitialOrbbit" />
+                Initial Orbit settings (a)
+                <asp:RadioButton ID="RadioButtonTLE" runat="server" AutoPostBack="True" 
+                    GroupName="TypeOrbit" oncheckedchanged="RadioButton1_CheckedChanged" 
+                    Text="TLE" />
+                &nbsp; (b)
+                <asp:RadioButton ID="RadioButtonOrbita" runat="server" AutoPostBack="True" 
+                    GroupName="TypeOrbit" oncheckedchanged="RadioButton2_CheckedChanged" 
+                    Text="Orbital Parameters" />
+                &nbsp; (c)
+                <asp:RadioButton ID="RadioButtonXYZ" runat="server" AutoPostBack="True" 
+                    GroupName="TypeOrbit" oncheckedchanged="RadioButton3_CheckedChanged" 
+                    Text="Position / Velocity" />
+                <asp:Button ID="ButtonConvertXYZ" runat="server" Text="to XYZ VxVyVz" 
+                    onclick="ButtonConvertXYZ_Click" />
+                <asp:Button ID="ButtonToOrbital" runat="server" Text="to Orbital Prm" />
+                <asp:Button ID="ButtonToTLE" runat="server" Text="to TLE" />
+</td>
+        </tr>
+        <tr>
+            <td class="style4">
+                <hr />
             </td>
         </tr>
         <tr>
             <td class="style8">
-                TLE1:<asp:TextBox ID="TextBoxTLE1" runat="server" 
-                    Width="842px"></asp:TextBox>
+                TLE1:<asp:TextBox ID="TextBoxTLE1" runat="server" Width="679px"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="style4">
                 TLE2:<asp:TextBox ID="TextBoxTLE2" 
-                    runat="server" Width="843px"></asp:TextBox>
+                    runat="server" Width="679px"></asp:TextBox>
+                &nbsp;&nbsp;
             </td>
         </tr>
+        <tr>
+            <td class="style4">
+                <hr />
+            </td>
+        </tr>
+
         <tr>
             <td class="style4">
                 Orbital parameters:</td>
         </tr>
         <tr>
             <td class="style4">
-                inclination
-                <asp:TextBox ID="TextBox5" runat="server" Width="100px"></asp:TextBox>
+                inclination&nbsp;&nbsp;
+                <asp:TextBox ID="TextBoxOrbitInc" runat="server" Width="100px" ></asp:TextBox>
                 <br />
-                perigee&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBox6" 
-                    runat="server" Width="103px"></asp:TextBox>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; apogee<asp:TextBox ID="TextBox7" runat="server" Width="104px"></asp:TextBox>
+                perigee&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                <asp:TextBox ID="TextBoxOrbitPerigee" 
+                    runat="server" Width="100px"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; apogee<asp:TextBox 
+                    ID="TextBoxApogee" runat="server" Width="100px"></asp:TextBox>
                 &nbsp;&nbsp;
-                Period(check):
-                <asp:TextBox ID="TextBox9" runat="server" Width="99px"></asp:TextBox>
+                Period (check value):
+                <asp:TextBox ID="TextBoxOrbitPeriod" runat="server" Width="100px"></asp:TextBox>
                 <br />
-                perigee time<asp:TextBox ID="TextBox10" runat="server" Width="87px"></asp:TextBox>
-&nbsp;perigee longitude<asp:TextBox ID="TextBox11" runat="server" Width="97px"></asp:TextBox>
+                perigee time<asp:TextBox ID="TextBoxOrbitPereegeTime" runat="server" 
+                    Width="116px" Font-Size="X-Small"></asp:TextBox>
+&nbsp;perigee longitude<asp:TextBox ID="TextBoxOrbitLongitude" runat="server" Width="100px"></asp:TextBox>
 &nbsp;</td>
         </tr>
         <tr>
             <td class="style4">
-                Position/Speed</td>
-        </tr>
-        <tr>
-            <td class="style4">
-                X :<asp:TextBox ID="TextBox12" runat="server" Width="86px"></asp:TextBox>
-                &nbsp;
-                Y:<asp:TextBox ID="TextBox13" runat="server" Width="99px"></asp:TextBox>
-                &nbsp;
-                Z<asp:TextBox ID="TextBox14" runat="server" Width="80px"></asp:TextBox>
+                <hr />
             </td>
         </tr>
         <tr>
             <td class="style4">
-                Vx<asp:TextBox ID="TextBox15" runat="server" Width="91px"></asp:TextBox>
-                Vy<asp:TextBox ID="TextBox16" runat="server" Width="98px"></asp:TextBox>
-                Vz<asp:TextBox ID="TextBox17" runat="server" Width="85px"></asp:TextBox>
+                Position/Speed at:<asp:CheckBox ID="CheckBoxCurTime" runat="server" 
+                    oncheckedchanged="CheckBoxCurTime_CheckedChanged" Text="Curent time" 
+                    AutoPostBack="True" CausesValidation="True" />
+&nbsp; at:
+                <asp:TextBox ID="TextBoxTimeCalc" runat="server" Font-Size="X-Small" 
+                    Width="116px">07/05/13 08:28:00:000</asp:TextBox>
             </td>
+        </tr>
+        <tr>
+            <td class="style4">
+                &nbsp;
+                X :&nbsp;<asp:TextBox ID="TextBoxX" runat="server" Width="86px"></asp:TextBox>
+                &nbsp;&nbsp;
+                Y:&nbsp;<asp:TextBox ID="TextBoxY" runat="server" Width="99px"></asp:TextBox>
+                &nbsp;&nbsp;
+                Z:&nbsp;<asp:TextBox ID="TextBoxZ" runat="server" Width="80px"></asp:TextBox>
+                &nbsp;&nbsp;
+                Vx:&nbsp;<asp:TextBox ID="TextBoxVx" runat="server" Width="91px"></asp:TextBox>
+                &nbsp;&nbsp;
+                Vy:&nbsp;<asp:TextBox ID="TextBoxVy" runat="server" Width="98px"></asp:TextBox>
+                &nbsp;&nbsp;
+                Vz:&nbsp;<asp:TextBox ID="TextBoxVz" runat="server" Width="85px"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="style4">
+                <hr />
+                </td>
         </tr>
         <tr>
             <td class="style4">

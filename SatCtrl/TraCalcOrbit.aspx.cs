@@ -18,6 +18,9 @@ namespace SatCtrl
 {
     public partial class _TraCalcOrbit : System.Web.UI.Page
     {
+        ///////////////////////////////////////////////////////////////////////
+        // space track retort 3 was source -> converted to c -> converted to C#
+        ///////////////////////////////////////////////////////////////////////
         // in FORTARN variable with a name begining with I is an integer variable 
         // The function subroutine FMOD2P is
         // passed an angle in radians and returns the angle in radians within the range of 0 to 2 PI.
@@ -84,8 +87,8 @@ namespace SatCtrl
         double XDOT;
         double YDOT;
         double ZDOT;
+        double XMNPDA = 24.0 * 60.0;
 
-        // space track retort 3 was source -> converted to c -> converted to C#
         // original, more acurate, takes account about drag == according Aksenov needs to use exact formulas from SGP4 to correctly process
         // data. Backwards formulas should applied before everything 
         // Read comments: (do) RECOVER ORIGINAL MEAN MOTION (XNODP) AND SEMIMAJOR AXIS (AODP) FROM INPUT ELEMENTS
@@ -365,8 +368,367 @@ namespace SatCtrl
         //RETURN
         //END
         }
+        DateTime ThatTime;
+        protected void ConvertJulianDayToDateAndTime(double JulianDay)
+        {
+            long daysfrom2000 = (long)(JulianDay - 2451544.5);
+            double flInDay = (JulianDay - 2451544.5) - (double)daysfrom2000;
+            long iYear = 0;
+            daysfrom2000 += 1; // 1Jan must be 1;
+            while (daysfrom2000 > 366)
+            {
+                switch (iYear)
+                {
+                    case 24: daysfrom2000 -= 366; break;
+                    case 23: daysfrom2000 -= 365; break;
+                    case 22: daysfrom2000 -= 365; break;
+                    case 21: daysfrom2000 -= 365; break;
+                    case 20: daysfrom2000 -= 366; break;
+                    case 19: daysfrom2000 -= 365; break;
+                    case 18: daysfrom2000 -= 365; break;
+                    case 17: daysfrom2000 -= 365; break;
+                    case 16: daysfrom2000 -= 366; break;
+                    case 15: daysfrom2000 -= 365; break;
+                    case 14: daysfrom2000 -= 365; break;
+                    case 13: daysfrom2000 -= 365; break;
+                    case 12: daysfrom2000 -= 366; break;
+                    case 11: daysfrom2000 -= 365; break;
+                    case 10: daysfrom2000 -= 365; break;
+                    case 9: daysfrom2000 -= 365; break;
+                    case 8: daysfrom2000 -= 366; break;
+                    case 7: daysfrom2000 -= 365; break;
+                    case 6: daysfrom2000 -= 365; break;
+                    case 5: daysfrom2000 -= 365; break;
+                    case 4: daysfrom2000 -= 366; break;
+                    case 3: daysfrom2000 -= 365; break;
+                    case 2: daysfrom2000 -= 365; break;
+                    case 1: daysfrom2000 -= 365; break;
+                    case 0: daysfrom2000 -= 366; break;
+                }
+                iYear++;
+            }
+            long ThatTimewYear = iYear + 2000;
+            long iMonth = 1;
+            long iComp=0;
+            long iDecr =0;
+            while (1==1)
+            {
+                switch (iMonth)
+                {
+                    case 1: iComp = 31; iDecr = 31; break; // jan
+                    case 2: if (iYear % 4 == 0) //leap year    //feb
+                        {
+                            iComp = 29; iDecr = 29;
+                        }
+                        else
+                        {
+                            iComp = 28; iDecr = 28;
+                        }
+                        break;
+                    case 3: iComp = 31; iDecr = 31; break; // mar
+                    case 4: iComp = 30; iDecr = 30; break; // apr
+                    case 5: iComp = 31; iDecr = 31; break; // may
+                    case 6: iComp = 30; iDecr = 30; break; // jun
+                    case 7: iComp = 31; iDecr = 31; break; //jul
+                    case 8: iComp = 31; iDecr = 31; break; // aug
+                    case 9: iComp = 30; iDecr = 30; break; //sep
+                    case 10: iComp = 31; iDecr = 31; break; // oct
+                    case 11: iComp = 30; iDecr = 30; break; // nov
+                }
+                if (daysfrom2000 < iComp)
+                    break;
+                daysfrom2000 -= iDecr;
+                if (++iMonth == 12) // what ?? getout!!!
+                    break;
+            }
+            int iDay = (int)daysfrom2000;//+1;
 
+            int iHour = (int)(flInDay * 24);
+            int iMinutes = (int)(((flInDay - ((double)iHour) / 24.0)) * (24.0 * 60.0));
+            int iSec = (int)(((flInDay - ((double)iHour) / 24.0) - ((double)iMinutes) / (24.0 * 60.0)) * (24.0 * 60.0 * 60.0));
+            int iMils = (int)((flInDay - ((double)iHour) / (24.0) - ((double)iMinutes) / (24.0 * 60.0) - ((double)iSec) / (24.0 * 60.0 * 60.0)) * (24.0 * 60.0 * 60.0 * 1000.0));
+            int ThatTimewMonth = (int)iMonth;
+            int ThatTimewDay = iDay;
+            int ThatTimewHour = iHour;
+            int ThatTimewMinute = iMinutes;
+            int ThatTimewSecond = iSec;
+            int ThatTimewMilliseconds = iMils;
+            //int ThatTimewDayOfWeek = 0;
+            ThatTime = new DateTime((int)ThatTimewYear, ThatTimewMonth, ThatTimewDay,
+                ThatTimewHour, ThatTimewMinute, ThatTimewSecond, ThatTimewMilliseconds);
+        }
+        protected int iDayOfTheYearZeroBase(int iDay, int iMonth, int iYear)
+        {
+            int iDays = iDay - 1;
+            for (int i = iMonth - 1; i > 0; i--)
+            {
+                switch (i)
+                {
+                    case 11:// november
+                        iDays += 30;break;
+                    case 10:// october
+                        iDays += 31;break;
+                    case 9:// september
+                        iDays += 30;break;
+                    case 8://august
+                        iDays += 31;break;
+                    case 7:// july
+                        iDays += 31;break;
+                    case 6:// june
+                        iDays += 30;break;
+                    case 5:// may
+                        iDays += 31;break;
+                    case 4:// april
+                        iDays += 30;break;
+                    case 3:// march
+                        iDays += 31;break;
+                    case 2:// february
+                        if ((iYear % 4) == 0) // leap year
+                            iDays += 29;
+                        else
+                            iDays += 28;
+                        break;
+                    case 1: iDays += 31; // january
+                        break;
+                    case 0: iDays += 0;
+                        break;
+                }
+            }
+            //switch (iMonth - 1)
+            //{
+            //    case 11:// november
+            //        iDays += 30;
+            //    case 10:// october
+            //        iDays += 31;
+            //    case 9:// september
+            //        iDays += 30;
+            //    case 8://august
+            //        iDays += 31;
+            //    case 7:// july
+            //        iDays += 31;
+            //    case 6:// june
+            //        iDays += 30;
+            //    case 5:// may
+            //        iDays += 31;
+            //    case 4:// april
+            //        iDays += 30;
+            //    case 3:// march
+            //        iDays += 31;
+            //    case 2:// february
+            //        if ((iYear % 4) == 0) // leap year
+            //            iDays += 29;
+            //        else
+            //            iDays += 28;
+            //    case 1: iDays += 31; // january
+            //    case 0: iDays += 0;
+            //        break;
+            //}
+            return iDays;
+        }
 
+        protected double ConvertDateTimeToTLEEpoch(int iDay, int iMonth, int iYear, int iHour, int iMin, int iSec, int iMills)
+        {
+            // An epoch of 98001.00000000 corresponds to 0000 UT on 1998 January 01—in other words, 
+            // midnight between 1997 December 31 and 1998 January 01. 
+            // An epoch of 98000.00000000 would actually correspond to the beginning of 1997 December 31—strange as that might seem. 
+            // Note that the epoch day starts at UT midnight (not noon) and that all times are measured mean solar rather than sidereal time units.
+            int mYear = iYear-2000;
+            int mDays = iDayOfTheYearZeroBase(iDay, iMonth, iYear)+1;
+	        long mCurSec = iHour * 60*60;
+            mCurSec += iMin *60;
+            mCurSec += iSec;
+	        double dEpoch = mYear *1000.0 + mDays;
+	        dEpoch += (((double)mCurSec)+ ((double)iMills/1000.0))/ (24.0*60.0*60.0);
+            return dEpoch;
+        }
+
+        protected double ConverEpochDate2JulianDay(double KeplerDate)
+        {
+            // TLE elements is 1 day based - needs to minus at the end one day
+            int iYear = (int)KeplerDate /1000;
+            // date as it is = 2000/01/01     2451544.5, 2451910.5, 2452275.5, 2452640.5, 2453005.5, 2453371.5, 2453736.5, 2013-2456293.5
+            // 
+            double t2000_01_01_01 = 2451544.5;
+            switch (iYear)
+            {
+                case 0: t2000_01_01_01 += 1; break;
+            }
+            for (int i = iYear; i > 0; i--)
+            {
+                if ((i - 1) % 4 == 0) t2000_01_01_01 += 366; else t2000_01_01_01 += 365;
+            }
+            //switch(iYear)
+            //{
+            //    // add years = if you still alive !!! or just put formula if ((iYear-1)%4 == 0) t2000_01_01_01+=366; else t2000_01_01_01+=365;
+            //    case 24: t2000_01_01_01 += 365;
+            //    case 23:t2000_01_01_01+=365;
+            //    case 22:t2000_01_01_01+=365;
+            //    case 21:t2000_01_01_01+=366;
+            //    case 20:t2000_01_01_01+=365;
+            //    case 19:t2000_01_01_01+=365;
+            //    case 18:t2000_01_01_01+=365;
+            //    case 17:t2000_01_01_01+=366;
+            //    case 16:t2000_01_01_01+=365;
+            //    case 15:t2000_01_01_01+=365;
+            //    case 14:t2000_01_01_01+=365;
+            //    case 13:t2000_01_01_01+=366;
+            //    case 12:t2000_01_01_01+=365;
+            //    case 11:t2000_01_01_01+=365;
+            //    case 10:t2000_01_01_01+=365;
+            //    case  9:t2000_01_01_01+=366;
+            //    case  8:t2000_01_01_01+=365;
+            //    case  7:t2000_01_01_01+=365;
+            //    case  6:t2000_01_01_01+=365;
+            //    case  5:t2000_01_01_01+=366;
+            //    case  4:t2000_01_01_01+=365;
+            //    case  3:t2000_01_01_01+=365;
+            //    case  2:t2000_01_01_01+=365;
+            //    case  1:t2000_01_01_01+=366;
+            //    case  0:;
+            //// minus years = add if you interesting in anything from last century or use formala!!
+            //}
+            //long it2000_01_01_01 = t2000_01_01_01;
+        //double RestOfTheDay = t2000_01_01_01 - (double)it2000_01_01_01;
+            return t2000_01_01_01// - RestOfTheDay 
+                    + KeplerDate - ((double)(iYear*1000))
+                    -1; // epoch date is 1== 1 Jan - needs to adjust date.
+        }
+
+        protected double COPYKEPLER(String b1, int c1)
+        {
+            double a1;
+            
+            String szTempo = b1.Substring(c1+3);
+            String szTempo0 = b1.Substring(c1,1);
+            String szTempo1 = b1.Substring(c1+1, 1);
+            String szTempo2 = b1.Substring(c1+2, 1);
+            if (szTempo0 == " ")
+            {
+                szTempo = "0";
+                if (szTempo1 == " ")
+                {
+                    szTempo1 = "0";
+                    if (szTempo2 == " ")
+                    {
+                        szTempo2 = "0";
+                    }
+                }
+            }
+            szTempo = szTempo0 + szTempo1 + szTempo2 + szTempo;
+            a1 = Convert.ToDouble(szTempo);
+            return a1;
+        }
+        double ProbEpoch;
+        double ProbEpochS;
+        double ProbFirstDervMeanMotion;
+        double ProbSecondDervmeanMotion;
+        double ProbDragterm;
+	    int ProbElementSetType;
+	    double ProbIncl;
+	    double ProbAscNode;
+        double ProbEcc;
+        double ProbArgPer;
+        double ProbMeanAnom;
+        double ProbTPeriod;
+        double ProbMeanMotion;
+        double ProbTDays;
+        double ProbTSec;
+        double ProbRevAtEpoch;
+
+        
+        protected void ProcessTLE(string TLE2, string TLE3)
+        {
+            //#define COPYKEPLER(a1,b1,c1) memset(szTempo, 0, sizeof(szTempo)); memcpy(szTempo, b1, c1);  if (szTempo[0] == ' ') {szTempo[0] = '0';if (szTempo[1] == ' ') {szTempo[1] ='0';if (szTempo[2] == ' '){szTempo[2] ='0';}}}a1 = atof(szTempo);
+
+            int iYear;
+            int iDays;
+            double dflTemp;
+            //strcpy(Sat.Kepler1[0], szProbKeplerLine1);
+            //strcpy(Sat.Kepler2[0], szProbKeplerLine2);
+            //strcpy(Sat.Kepler3[0], szProbKeplerLine3);
+	        //0         1         2         3         4         5         6         7
+			//01234567890123456789012345678901234567890123456789012345678901234567890
+            //1 25544U 98067A   04236.56031392  .00020137  00000-0  16538-3 0  5135\
+            //2 25544  51.6335 341.7760 0007976 126.2523 325.9359 15.70406856328903"
+            // format readings from FORTRAN:
+            // 702 FORMAT(18X,D14.8,1X,F10.8,2(1X,F6.5,I2),/,7X,2(1X,F8.4),1X,F7.7,2(1X,F8.4),1X,F11.8)
+            //
+		    // "04236.56031392" Element Set Epoch (UTC) D14.8
+			//  04                   - year
+			//    236.56031392       - day
+            //Sat.ProbEpoch[Sat.Elem] = atof(&Sat.Kepler2[Sat.Elem][18]);
+            string My = TLE2.Substring(18);My = My.Substring(0, My.IndexOf(' '));
+            
+            ProbEpoch = Convert.ToDouble(My);
+
+            //Sat.ProbEpochS[Sat.Elem] = Sat.ProbEpoch[Sat.Elem] =ConverEpochDate2JulianDay(Sat.ProbEpoch[Sat.Elem]);
+            ProbEpochS = ProbEpoch =ConverEpochDate2JulianDay(ProbEpoch);
+			ProbEpochS *=  60*60*24;
+            // now for initial step asign emulation starting time:
+			// if nothing is set then starting point is a last satellite epoch
+            //if (dStartJD == 0.0)
+            //{
+            //    dStartJD = ConverEpochDate2JulianDay(Sat.ProbEpoch[Sat.Elem]);
+            //}
+			//  "_.00020137"      1st Derivative of the Mean Motion with respect to Time F10.8
+			//double ProbFirstDervMeanMotion; XNDT2O
+			ProbFirstDervMeanMotion = COPYKEPLER(TLE2.Substring(33),10);
+			// "_00000-0"        2nd Derivative of the Mean Motion with respect to Time (decimal point assumed) 1X,F6.5,I2
+			//double ProbSecondDervmeanMotion;,XNDD6O,IEXP
+			String szTempo = ""; 
+            szTempo += TLE2.Substring(44,1); if (szTempo==" ") szTempo = "0";
+			szTempo += "."; 
+            szTempo += TLE2.Substring(45, 5);
+            ProbSecondDervmeanMotion = Convert.ToDouble(szTempo);
+			if (TLE2.Substring(50,1) == "-")
+				ProbSecondDervmeanMotion *= Math.Pow(10.0, Convert.ToDouble(TLE2.Substring(51,1)));
+			else //if (Sat.Kepler2[Sat.Elem][50] == '+') //is it corect ??
+				ProbSecondDervmeanMotion *= Math.Pow(10.0, Convert.ToDouble(TLE2.Substring(51,1)));
+			//// "_16538-3"        B* Drag Term 1X,F6.5,I2
+			//double ProbDragterm; ,BSTAR,IBEXP
+			szTempo = ""; 
+            szTempo += TLE2.Substring(53,1); if (szTempo==" ") szTempo = "0";
+			szTempo +=  "."; 
+            szTempo += TLE2.Substring(54, 5);
+            ProbDragterm = Convert.ToDouble(szTempo);
+			if (TLE2.Substring(59,1) == "-")
+				ProbDragterm *= Math.Pow(10.0, - Convert.ToDouble(TLE2.Substring(60,1)));
+			// "0"              Element Set Type
+			ProbElementSetType = Convert.ToInt32(TLE2.Substring(62,1));
+			// "_513"            Element Number
+			// "5"              Checksum
+			//                        The checksum is the sum of all of the character in the data line, modulo 10. 
+			//                        In this formula, the following non-numeric characters are assigned the indicated values: 
+			//                        Blanks, periods, letters, '+' signs -> 0
+			//                        '-' signs -> 1
+			// "2"             Line Number
+			// "25544"         Object Identification Number
+			// "_51.6335"       Orbit Inclination (degrees) 1X,F8.4
+			ProbIncl = COPYKEPLER(TLE3.Substring(8),8);
+            ProbIncl = Math.PI * ProbIncl/180.0;
+			// "341.7760"      Right Ascension of Ascending Node (degrees) 1X,F8.4
+			ProbAscNode = COPYKEPLER(TLE3.Substring(17),8);
+			ProbAscNode = Math.PI * ProbAscNode/180.0;
+			// "0007976"       Eccentricity (decimal point assumed) F7.7
+            szTempo = "."; 
+            szTempo += TLE3.Substring(26, 7);
+            ProbEcc = Convert.ToDouble(szTempo);
+			// "126.2523"      Argument of Perigee (degrees) 1X,F8.4
+			ProbArgPer = COPYKEPLER(TLE3.Substring(34),8);
+			ProbArgPer = Math.PI * ProbArgPer/180.0;
+			// "325.9359"      Mean Anomaly (degrees) 1X,F8.4
+			ProbMeanAnom = COPYKEPLER(TLE3.Substring(43),8);
+			ProbMeanAnom = Math.PI * ProbMeanAnom/180.0;
+			// "15.70406856"    Mean Motion (revolutions/day)F11.8
+			ProbTPeriod = COPYKEPLER(TLE3.Substring(52),11);
+			ProbMeanMotion = ProbTPeriod;
+			
+            
+            ProbTDays = 1.0/ProbTPeriod;
+            ProbTSec = ProbTDays * 24.0 * 60.0 * 60.0;
+			// "328903"        Revolution Number at Epoch
+			ProbRevAtEpoch = COPYKEPLER(TLE3.Substring(63),6);
+        }
         protected String GetValue(String xml, String SearchStr, int iInstance)
         {
             String MySearch = "\"" + SearchStr + "\"";
@@ -390,6 +752,64 @@ namespace SatCtrl
             }
             return null;
         }
+
+        private void SetType(int Itype)
+        {
+            bool TypeTLE = true;
+            bool TypeOrbit = false;
+            bool typeXYZ = false;
+            if (Itype == 0)
+            {
+                TypeTLE = true;
+                TypeOrbit = false;
+                typeXYZ = false;
+                ButtonConvertXYZ.Enabled = true;
+                ButtonToOrbital.Enabled = true;
+                ButtonToTLE.Enabled = false;
+            }
+            else if (Itype == 1)
+            {
+                TypeTLE = false;
+                TypeOrbit = true;
+                typeXYZ = false;
+                ButtonConvertXYZ.Enabled = true;
+                ButtonToOrbital.Enabled = false;
+                ButtonToTLE.Enabled = true;
+
+            }
+            else if (Itype == 2)
+            {
+                TypeTLE = false;
+                TypeOrbit = false;
+                typeXYZ = true;
+                ButtonConvertXYZ.Enabled = false;
+                ButtonToOrbital.Enabled = true;
+                ButtonToTLE.Enabled = true;
+            }
+            RadioButtonTLE.Checked = TypeTLE;
+            RadioButtonOrbita.Checked = TypeOrbit;
+            RadioButtonXYZ.Checked = typeXYZ;
+
+
+
+            TextBoxTLE1.Enabled = TypeTLE;
+            TextBoxTLE2.Enabled = TypeTLE;
+            TextBoxOrbitInc.Enabled = TypeOrbit;
+            TextBoxOrbitPerigee.Enabled = TypeOrbit;
+            TextBoxApogee.Enabled = TypeOrbit;
+            TextBoxOrbitPeriod.Enabled = TypeOrbit;
+            TextBoxOrbitPereegeTime.Enabled = TypeOrbit;
+            TextBoxOrbitLongitude.Enabled = TypeOrbit;
+            TextBoxX.Enabled = typeXYZ;
+            TextBoxY.Enabled = typeXYZ;
+            TextBoxZ.Enabled = typeXYZ;
+            TextBoxVx.Enabled = typeXYZ;
+            TextBoxVy.Enabled = typeXYZ;
+            TextBoxVz.Enabled = typeXYZ;
+
+        }
+
+
         public long intMaxSessionN;
         double dX;
         double dY;
@@ -398,6 +818,7 @@ namespace SatCtrl
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            SetType(0);
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
             object IsList = HttpContext.Current.Application["TargetLongitude"];
@@ -495,6 +916,76 @@ namespace SatCtrl
                 }
             }
             return Str1;
+        }
+
+        protected void CheckBoxCurTime_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBoxCurTime.Checked)
+            {
+                TextBoxTimeCalc.Enabled = false;
+                DateTime d = new DateTime();
+                d = DateTime.UtcNow;
+                String str_d_time = d.ToString("yy/MM/dd HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3, '0');
+                TextBoxTimeCalc.Text = str_d_time;
+            }
+            else
+                TextBoxTimeCalc.Enabled = true;
+        }
+
+        protected void RadioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            SetType(0);
+        }
+
+        protected void RadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            SetType(1);
+        }
+
+        protected void RadioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            SetType(2);
+        }
+
+        protected void ButtonConvertXYZ_Click(object sender, EventArgs e)
+        {
+            DateTime d;
+            if (CheckBoxCurTime.Checked)
+            {
+                TextBoxTimeCalc.Enabled = false;
+                d = new DateTime();
+                d = DateTime.UtcNow;
+                String str_d_time = d.ToString("yy/MM/dd HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3, '0');
+                TextBoxTimeCalc.Text = str_d_time;
+/*
+                ProcessTLE(TextBoxTLE1.Text.ToString(),TextBoxTLE2.Text.ToString());
+			    double XKMPER = 6378.1350; //XKMPER kilometers/Earth radii 6378.135
+                double AE = 1.0;
+                double TEMP=2*Math.PI/XMNPDA/XMNPDA; // 2*pi / (1440 **2)
+                double XNO=ProbMeanMotion*TEMP*XMNPDA; // rotation per day * 2*pi /1440 == rotation per day on 1 unit (1 min)
+			    double XNDT2O=ProbFirstDervMeanMotion*TEMP;
+			    double XNDD6O=ProbSecondDervmeanMotion*TEMP/XMNPDA;
+                double BSTAR=ProbDragterm/AE;
+                double dDate =ConvertDateTimeToTLEEpoch(d.Day, d.Month, d.Year, d.Hour, d.Minute, d.Second, d.Millisecond);
+
+                SGP4((dDate - ProbEpoch)*XMNPDA, XNDT2O,XNDD6O,BSTAR,ProbIncl, ProbAscNode,ProbEcc, 
+                     ProbArgPer, ProbMeanAnom,XNO);
+			    double tProbX=X*XKMPER/AE*1000.0;
+			    double tProbY=Y*XKMPER/AE*1000.0;
+			    double tProbZ=Z*XKMPER/AE*1000.0;
+			    double tProbVX=XDOT*XKMPER/AE*XMNPDA/86400.0*1000.0;
+			    double tProbVY=YDOT*XKMPER/AE*XMNPDA/86400.0*1000.0;
+			    double tProbVZ=ZDOT*XKMPER/AE*XMNPDA/86400.0*1000.0;
+                TextBoxX.Text = Convert.ToString(tProbX);
+                TextBoxY.Text = Convert.ToString(tProbY);
+                TextBoxZ.Text = Convert.ToString(tProbZ);
+
+                TextBoxVx.Text = Convert.ToString(tProbVX);
+                TextBoxVy.Text = Convert.ToString(tProbVY);
+                TextBoxVz.Text = Convert.ToString(tProbVZ);
+*/
+            }
+
         }
 
     }
