@@ -555,7 +555,10 @@ namespace SatCtrl
             }
             for (int i = iYear; i > 0; i--)
             {
-                if ((i - 1) % 4 == 0) t2000_01_01_01 += 366; else t2000_01_01_01 += 365;
+                if ((i - 1) % 4 == 0) 
+                    t2000_01_01_01 += 366; 
+                else 
+                    t2000_01_01_01 += 365;
             }
             //switch(iYear)
             //{
@@ -597,14 +600,15 @@ namespace SatCtrl
         protected double COPYKEPLER(String b1, int c1)
         {
             double a1;
-            
-            String szTempo = b1.Substring(c1+3);
-            String szTempo0 = b1.Substring(c1,1);
-            String szTempo1 = b1.Substring(c1+1, 1);
-            String szTempo2 = b1.Substring(c1+2, 1);
+            String szA1 = b1.Substring(0, c1);
+
+            String szTempo = szA1.Substring(3);
+            String szTempo0 = szA1.Substring(0, 1);
+            String szTempo1 = szA1.Substring(1, 1);
+            String szTempo2 = szA1.Substring(2, 1);
             if (szTempo0 == " ")
             {
-                szTempo = "0";
+                szTempo0 = "0";
                 if (szTempo1 == " ")
                 {
                     szTempo1 = "0";
@@ -681,7 +685,7 @@ namespace SatCtrl
             szTempo += TLE2.Substring(45, 5);
             ProbSecondDervmeanMotion = Convert.ToDouble(szTempo);
 			if (TLE2.Substring(50,1) == "-")
-				ProbSecondDervmeanMotion *= Math.Pow(10.0, Convert.ToDouble(TLE2.Substring(51,1)));
+				ProbSecondDervmeanMotion *= Math.Pow(10.0, - Convert.ToDouble(TLE2.Substring(51,1)));
 			else //if (Sat.Kepler2[Sat.Elem][50] == '+') //is it corect ??
 				ProbSecondDervmeanMotion *= Math.Pow(10.0, Convert.ToDouble(TLE2.Substring(51,1)));
 			//// "_16538-3"        B* Drag Term 1X,F6.5,I2
@@ -791,6 +795,13 @@ namespace SatCtrl
             RadioButtonXYZ.Checked = typeXYZ;
 
 
+            ButtonSetTLE.Enabled = TypeTLE;
+            ButtonRestoreTLE.Enabled = TypeTLE;
+            ButtonSetOrbital.Enabled = TypeOrbit;
+            ButtonRestoreOrbital.Enabled = TypeOrbit;
+            ButtonSetXYZ.Enabled = typeXYZ;
+            ButtonRestoreXYZ.Enabled = typeXYZ;
+
 
             TextBoxTLE1.Enabled = TypeTLE;
             TextBoxTLE2.Enabled = TypeTLE;
@@ -861,11 +872,17 @@ namespace SatCtrl
             //    ButtonImpOptimization.Enabled = false;
             //    ButtonFindImp.Enabled = false;
             }
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                szUsername = Page.User.Identity.Name.ToString();
+            }
+            LabelUserName.Text = szUsername;
+
 
             string SVal1 = null;
             string SVal2 = null;
             string SVal3 = null;
-            object IsIt = HttpContext.Current.Application["InitOrbitKeplerLine1" + szUsername];
+            object IsIt = HttpContext.Current.Application["InitKeplerLine1" + szUsername];
             if (IsIt == null)
             {
                 String xml = null;
@@ -957,7 +974,7 @@ namespace SatCtrl
                 d = DateTime.UtcNow;
                 String str_d_time = d.ToString("yy/MM/dd HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3, '0');
                 TextBoxTimeCalc.Text = str_d_time;
-/*
+
                 ProcessTLE(TextBoxTLE1.Text.ToString(),TextBoxTLE2.Text.ToString());
 			    double XKMPER = 6378.1350; //XKMPER kilometers/Earth radii 6378.135
                 double AE = 1.0;
@@ -983,8 +1000,68 @@ namespace SatCtrl
                 TextBoxVx.Text = Convert.ToString(tProbVX);
                 TextBoxVy.Text = Convert.ToString(tProbVY);
                 TextBoxVz.Text = Convert.ToString(tProbVZ);
-*/
+
             }
+
+        }
+
+        protected void ButtonToOrbital_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonSetTLE_Click(object sender, EventArgs e)
+        {
+            String SVal1 = szUsername;
+            HttpContext.Current.Application["InitKeplerLine1" + szUsername] = SVal1;
+            String SVal2 = TextBoxTLE1.Text.ToString();
+            HttpContext.Current.Application["InitKeplerLine2" + szUsername] = SVal2;
+            String SVal3 = TextBoxTLE2.Text.ToString();
+            HttpContext.Current.Application["InitKeplerLine3" + szUsername] = SVal3;
+
+        }
+
+        protected void ButtonRestoreTLE_Click(object sender, EventArgs e)
+        {
+            string SVal1 = null;
+            string SVal2 = null;
+            string SVal3 = null;
+            object IsIt = HttpContext.Current.Application["InitKeplerLine1" + szUsername];
+            if (IsIt == null)
+            {
+            }
+            else
+            {
+                IsIt = HttpContext.Current.Application["InitKeplerLine1" + szUsername];
+                object IsIt2 = HttpContext.Current.Application["InitKeplerLine2" + szUsername];
+                object IsIt3 = HttpContext.Current.Application["InitKeplerLine3" + szUsername];
+                if ((IsIt != null) && (IsIt2 != null) && (IsIt3 != null))
+                {
+                    SVal1 = IsIt.ToString();
+                    SVal2 = IsIt2.ToString();
+                    SVal3 = IsIt3.ToString();
+                    TextBoxTLE1.Text = SVal2.ToString(); TextBoxTLE2.Text = SVal3.ToString();
+                }
+            }
+        }
+
+        protected void ButtonSetOrbital_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonRestoreOrbital_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonSetXYZ_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonRestoreXYZ_Click(object sender, EventArgs e)
+        {
 
         }
 

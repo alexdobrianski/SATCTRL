@@ -20,8 +20,11 @@
                     Text="Position / Velocity" />
                 <asp:Button ID="ButtonConvertXYZ" runat="server" Text="to XYZ VxVyVz" 
                     onclick="ButtonConvertXYZ_Click" />
-                <asp:Button ID="ButtonToOrbital" runat="server" Text="to Orbital Prm" />
+                <asp:Button ID="ButtonToOrbital" runat="server" Text="to Orbital Param" 
+                    onclick="ButtonToOrbital_Click" />
                 <asp:Button ID="ButtonToTLE" runat="server" Text="to TLE" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calculation for the user:
+                <asp:Label ID="LabelUserName" runat="server" Text="Label"></asp:Label>
 </td>
         </tr>
         <tr>
@@ -39,6 +42,10 @@
                 TLE2:<asp:TextBox ID="TextBoxTLE2" 
                     runat="server" Width="679px"></asp:TextBox>
                 &nbsp;&nbsp;
+                <asp:Button ID="ButtonSetTLE" runat="server" onclick="ButtonSetTLE_Click" 
+                    Text="Set" />
+                <asp:Button ID="ButtonRestoreTLE" runat="server" 
+                    onclick="ButtonRestoreTLE_Click" Text="Restore" />
             </td>
         </tr>
         <tr>
@@ -59,7 +66,7 @@
                 perigee&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                 <asp:TextBox ID="TextBoxOrbitPerigee" 
                     runat="server" Width="100px"></asp:TextBox>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; apogee<asp:TextBox 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; apogee<asp:TextBox 
                     ID="TextBoxApogee" runat="server" Width="100px"></asp:TextBox>
                 &nbsp;&nbsp;
                 Period (check value):
@@ -68,7 +75,12 @@
                 perigee time<asp:TextBox ID="TextBoxOrbitPereegeTime" runat="server" 
                     Width="116px" Font-Size="X-Small"></asp:TextBox>
 &nbsp;perigee longitude<asp:TextBox ID="TextBoxOrbitLongitude" runat="server" Width="100px"></asp:TextBox>
-&nbsp;</td>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Button ID="ButtonSetOrbital" runat="server" 
+                    onclick="ButtonSetOrbital_Click" Text="Set" />
+                <asp:Button ID="ButtonRestoreOrbital" runat="server" 
+                    onclick="ButtonRestoreOrbital_Click" Text="Restore" />
+            </td>
         </tr>
         <tr>
             <td class="style4">
@@ -89,16 +101,20 @@
             <td class="style4">
                 &nbsp;
                 X :&nbsp;<asp:TextBox ID="TextBoxX" runat="server" Width="86px"></asp:TextBox>
-                &nbsp;&nbsp;
+                m&nbsp;&nbsp;
                 Y:&nbsp;<asp:TextBox ID="TextBoxY" runat="server" Width="99px"></asp:TextBox>
-                &nbsp;&nbsp;
+                m&nbsp;&nbsp;
                 Z:&nbsp;<asp:TextBox ID="TextBoxZ" runat="server" Width="80px"></asp:TextBox>
-                &nbsp;&nbsp;
+                m&nbsp;&nbsp;
                 Vx:&nbsp;<asp:TextBox ID="TextBoxVx" runat="server" Width="91px"></asp:TextBox>
-                &nbsp;&nbsp;
+                m/s&nbsp;&nbsp;
                 Vy:&nbsp;<asp:TextBox ID="TextBoxVy" runat="server" Width="98px"></asp:TextBox>
-                &nbsp;&nbsp;
+                m/s&nbsp;&nbsp;
                 Vz:&nbsp;<asp:TextBox ID="TextBoxVz" runat="server" Width="85px"></asp:TextBox>
+                m/s<asp:Button ID="ButtonSetXYZ" runat="server" onclick="ButtonSetXYZ_Click" 
+                    Text="Set" />
+                <asp:Button ID="ButtonRestoreXYZ" runat="server" 
+                    onclick="ButtonRestoreXYZ_Click" Text="Restore" />
             </td>
         </tr>
         <tr>

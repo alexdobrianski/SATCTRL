@@ -56,9 +56,13 @@
     <Content Include="Account\ChangePassword.aspx" />
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
+    <Content Include="Account\PasswordRecovery.aspx" />
+    <Content Include="Account\Register1.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="Account\userEmailReg.txt" />
     <Content Include="CraftCubeSat.aspx" />
     <Content Include="CraftCubeSatStatus.aspx" />
+    <Content Include="Default.aspx" />
     <Content Include="GroundStation.aspx" />
     <Content Include="GrStn.exe" />
     <Content Include="Img\cubesat_ctrl.JPG" />
@@ -123,6 +127,20 @@
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Account\PasswordRecovery.aspx.cs">
+      <DependentUpon>PasswordRecovery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\PasswordRecovery.aspx.designer.cs">
+      <DependentUpon>PasswordRecovery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Register1.aspx.cs">
+      <DependentUpon>Register1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register1.aspx.designer.cs">
+      <DependentUpon>Register1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -143,6 +161,13 @@
     </Compile>
     <Compile Include="CraftCubeSatStatus.aspx.designer.cs">
       <DependentUpon>CraftCubeSatStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Empty.Master.cs">
       <DependentUpon>Empty.Master</DependentUpon>

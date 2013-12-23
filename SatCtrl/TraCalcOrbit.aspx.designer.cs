@@ -67,6 +67,15 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.Button ButtonToTLE;
         
         /// <summary>
+        /// LabelUserName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelUserName;
+        
+        /// <summary>
         /// TextBoxTLE1 control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,24 @@ namespace SatCtrl {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxTLE2;
+        
+        /// <summary>
+        /// ButtonSetTLE control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonSetTLE;
+        
+        /// <summary>
+        /// ButtonRestoreTLE control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonRestoreTLE;
         
         /// <summary>
         /// TextBoxOrbitInc control.
@@ -137,6 +164,24 @@ namespace SatCtrl {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxOrbitLongitude;
+        
+        /// <summary>
+        /// ButtonSetOrbital control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonSetOrbital;
+        
+        /// <summary>
+        /// ButtonRestoreOrbital control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonRestoreOrbital;
         
         /// <summary>
         /// CheckBoxCurTime control.
@@ -209,5 +254,23 @@ namespace SatCtrl {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxVz;
+        
+        /// <summary>
+        /// ButtonSetXYZ control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonSetXYZ;
+        
+        /// <summary>
+        /// ButtonRestoreXYZ control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonRestoreXYZ;
     }
 }
