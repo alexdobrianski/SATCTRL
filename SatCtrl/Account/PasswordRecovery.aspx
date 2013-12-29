@@ -7,7 +7,8 @@
     Forgot Password</span></h1>
 <p>
     <asp:PasswordRecovery ID="PasswordRecovery1" runat="server">
-        <MailDefinition CC="adobri@shaw.ca" From="adobri@shaw.ca" 
+        <MailDefinition CC="adobri@shaw.ca" From="adobri@shaw.ca"
+        BodyFileName="~/Account/userPassrecovery.txt" 
             Subject="reset password">
         </MailDefinition>
     </asp:PasswordRecovery>

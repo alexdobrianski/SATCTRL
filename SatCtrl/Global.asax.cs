@@ -123,6 +123,12 @@ namespace SatCtrl
             {
                 String xml = null;
                 String MapPath = Server.MapPath("Tra.xml");
+                int iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
+                if (iDirAccound > 0) // it is dir "account"
+                {
+                    MapPath = MapPath.Substring(0, iDirAccound );
+                    MapPath += "\\SatCtrl\\\\SatCtrl\\\\Tra.xml";
+                }
                 try
                 {
                     xml = File.ReadAllText(MapPath);

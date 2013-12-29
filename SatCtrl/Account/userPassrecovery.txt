@@ -1,0 +1,5 @@
+Your account was reset for new password:
+
+    Username:   <%UserName%>
+    Password:   <%Password%>
+

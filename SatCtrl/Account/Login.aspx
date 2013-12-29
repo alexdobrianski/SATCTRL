@@ -41,9 +41,14 @@
                     </p>
                 </fieldset>
                 <p class="submitButton">
-                    <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="LoginUserValidationGroup"/>
+                    <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" 
+                        ValidationGroup="LoginUserValidationGroup" onclick="LoginButton_Click"/>
                 </p>
             </div>
         </LayoutTemplate>
     </asp:Login>
+    <br />
+    Forget user name/password 
+    <asp:HyperLink ID="Recovery" runat="server" EnableViewState="False" 
+    NavigateUrl="~/Account/PasswordRecovery.aspx">click for recovery</asp:HyperLink>
 </asp:Content>
