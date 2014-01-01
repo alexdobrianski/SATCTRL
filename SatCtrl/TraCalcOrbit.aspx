@@ -23,7 +23,7 @@
                 <asp:Button ID="ButtonToOrbital" runat="server" Text="to Orbital Param" 
                     onclick="ButtonToOrbital_Click" />
                 <asp:Button ID="ButtonToTLE" runat="server" Text="to TLE" />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calculation for the user:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calculation:
                 <asp:Label ID="LabelUserName" runat="server" Text="Label"></asp:Label>
 </td>
         </tr>

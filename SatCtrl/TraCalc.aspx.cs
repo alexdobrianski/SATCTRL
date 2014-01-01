@@ -22,6 +22,7 @@ namespace SatCtrl
         double dX;
         double dY;
         string TraStatus;
+        string szUsername = "Main";
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -72,6 +73,11 @@ namespace SatCtrl
                 ButtonImpOptimization.Enabled = false;
                 ButtonFindImp.Enabled = false;
             }
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                szUsername = Page.User.Identity.Name.ToString();
+            }
+            LabelUserName.Text = szUsername;
         }
         protected String AddHexString(String Str2)
         {

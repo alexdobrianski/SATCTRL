@@ -23,6 +23,8 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="Button4" runat="server" Enabled="False" Text="Cancel" 
                     ToolTip="Cancel Finding impulses or impulses optimization" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calculation:
+                <asp:Label ID="LabelUserName" runat="server" Text="Label"></asp:Label>
                 </td>
         </tr>
         <tr>

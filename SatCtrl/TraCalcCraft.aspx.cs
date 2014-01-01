@@ -16,10 +16,16 @@ namespace SatCtrl
     public partial class _TraCalcCraft : System.Web.UI.Page
     {
         public long intMaxSessionN;
+        string szUsername = "Main";
         protected void Page_Load(object sender, EventArgs e)
         {
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                szUsername = Page.User.Identity.Name.ToString();
+            }
+            LabelUserName.Text = szUsername;
         }
         protected String AddHexString(String Str2)
         {

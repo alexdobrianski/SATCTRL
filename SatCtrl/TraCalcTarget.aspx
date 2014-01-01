@@ -14,6 +14,9 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="Button4" runat="server" Enabled="False" Text="Cancel" 
                     ToolTip="Cancel Finding impulses or impulses optimization" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                Calculation:
+                <asp:Label ID="LabelUserName" runat="server" Text="Label"></asp:Label>
                 </td>
         </tr>
         <tr>
@@ -107,23 +110,9 @@
         {
             width: 432px;
         }
-        .style2
-        {
-            width: 522px;
-        }
-        .style4
-        {
-            width: 522px;
-            height: 20px;
-        }
         .style5
         {
             height: 20px;
-        }
-        .style8
-        {
-            width: 522px;
-            height: 12px;
         }
         .style9
         {
