@@ -13,12 +13,13 @@
         </tr>
         <tr>
             <td class="style7">
-                Total mass<asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                Total mass<asp:TextBox ID="TextBoxProbM" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="style11">
-                Landed mass<asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
+                Landed mass<asp:TextBox 
+                    ID="TextBoxProbMTarget" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>

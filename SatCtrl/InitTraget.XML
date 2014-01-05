@@ -1,0 +1,3 @@
+<!-- target point on the Moon -->
+    <TRA:setting name="Targetlongitude" value="-15" />
+    <TRA:setting name="Targetlatitude" value="-2" />

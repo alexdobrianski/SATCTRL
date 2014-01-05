@@ -12,6 +12,7 @@ namespace SatCtrl
 
     public class Global : System.Web.HttpApplication
     {
+        
         protected String GetValue(String xml, String SearchStr, int iInstance)
         {
             String MySearch = "\"" + SearchStr + "\"";
@@ -42,6 +43,7 @@ namespace SatCtrl
             long intMaxSessionN = 0;
             string strMaxPacketNumber = "0";
             long MaxPacketNumber = 0;
+            String szUsername = "main";
 
             MySqlConnection conn =
                 new MySqlConnection("server=127.0.0.1;User Id=root;password=azura2samtak;Persist Security Info=True;database=missionlog");
@@ -122,12 +124,13 @@ namespace SatCtrl
             if (IsIt == null)
             {
                 String xml = null;
-                String MapPath = Server.MapPath("Tra.xml");
+                String NameFile = "Tra.xml";
+                String MapPath = Server.MapPath(NameFile);
                 int iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
                 if (iDirAccound > 0) // it is dir "account"
                 {
                     MapPath = MapPath.Substring(0, iDirAccound );
-                    MapPath += "\\SatCtrl\\\\SatCtrl\\\\Tra.xml";
+                    MapPath += "\\SatCtrl\\\\SatCtrl\\\\"+NameFile;
                 }
                 try
                 {

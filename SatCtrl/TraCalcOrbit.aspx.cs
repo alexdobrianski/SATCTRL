@@ -830,12 +830,18 @@ namespace SatCtrl
         protected void Page_Load(object sender, EventArgs e)
         {
             SetType(0);
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                szUsername = Page.User.Identity.Name.ToString();
+            }
+            LabelUserName.Text = szUsername;
+
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
-            object IsList = HttpContext.Current.Application["TargetLongitude"];
+            object IsList = HttpContext.Current.Application["TargetLongitude" + szUsername];
             if (IsList != null)
             {
-                string strLongitude = HttpContext.Current.Application["TargetLongitude"].ToString();
+                string strLongitude = HttpContext.Current.Application["TargetLongitude" + szUsername].ToString();
 
                 string strEW = strLongitude.Substring(0, 1);
                 if (strEW == "W")
@@ -846,10 +852,10 @@ namespace SatCtrl
             else
             {
             }
-            IsList = HttpContext.Current.Application["TargetLatitude"];
+            IsList = HttpContext.Current.Application["TargetLatitude" + szUsername];
             if (IsList != null)
             {
-                string strLatitude = HttpContext.Current.Application["TargetLatitude"].ToString();
+                string strLatitude = HttpContext.Current.Application["TargetLatitude" + szUsername].ToString();
                 string strNS = strLatitude.Substring(0, 1);
                 if (strNS == "N")
                     dX = -Convert.ToDouble(strLatitude.Substring(1));
@@ -859,8 +865,8 @@ namespace SatCtrl
             else
             {
             }
-            
-            HttpContext.Current.Application["strPageUsed"] = "TraCalc";
+
+            HttpContext.Current.Application["strPageUsed" + szUsername] = "TraCalc";
             // number of distributed nodes
             //LabelNodes.Text = "0";
             // status of distributed calculations
@@ -872,11 +878,6 @@ namespace SatCtrl
             //    ButtonImpOptimization.Enabled = false;
             //    ButtonFindImp.Enabled = false;
             }
-            if (Page.User.Identity.IsAuthenticated)
-            {
-                szUsername = Page.User.Identity.Name.ToString();
-            }
-            LabelUserName.Text = szUsername;
 
 
             string SVal1 = null;
@@ -886,7 +887,15 @@ namespace SatCtrl
             if (IsIt == null)
             {
                 String xml = null;
-                String MapPath = Server.MapPath("InitOrbit.xml");
+                String NameFile = "InitOrbit" + szUsername + ".xml";
+                String MapPath = Server.MapPath(NameFile);
+                int iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
+                if (iDirAccound > 0) // it is dir "account"
+                {
+                    MapPath = MapPath.Substring(0, iDirAccound);
+                    MapPath += "\\SatCtrl\\\\SatCtrl\\\\"+ NameFile;
+                }
+
                 try
                 {
                     xml = File.ReadAllText(MapPath);

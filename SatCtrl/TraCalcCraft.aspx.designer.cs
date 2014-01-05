@@ -22,22 +22,22 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.Label LabelUserName;
         
         /// <summary>
-        /// TextBox9 control.
+        /// TextBoxProbM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox9;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxProbM;
         
         /// <summary>
-        /// TextBox10 control.
+        /// TextBoxProbMTarget control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox10;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxProbMTarget;
         
         /// <summary>
         /// CheckBox1 control.

@@ -23,61 +23,141 @@ namespace SatCtrl
         double dY;
         string TraStatus;
         string szUsername = "Main";
+        protected String GetValue(String xml, String SearchStr, int iInstance)
+        {
+            String MySearch = "\"" + SearchStr + "\"";
+            int FirstLine = xml.IndexOf(MySearch);
+            int iCount = 0;
+
+            if (FirstLine > 0)
+            {
+                do
+                {
+                    if (iCount == iInstance)
+                    {
+                        int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
+                        int LastValue = xml.IndexOf('\"', FirstValue) - 1;
+                        return xml.Substring(FirstValue, LastValue - FirstValue + 1);
+                    }
+                    FirstLine = xml.IndexOf(MySearch, FirstLine + 1);
+                    iCount += 1;
+                }
+                while (FirstLine > 0);
+            }
+            return null;
+        }
+
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
-            intMaxSessionN = Convert.ToInt32(strMaxSessionN);
-            RadioButtonTargetLL.Checked = true;
-            object IsList = HttpContext.Current.Application["TargetLongitude"];
-            if (IsList != null)
-            {
-                string strLongitude = HttpContext.Current.Application["TargetLongitude"].ToString();
+            String strEW;
+            String strLongitude;
+            String strLatitude;
+            String strNS;
 
-                string strEW = strLongitude.Substring(0, 1);
-                if (strEW == "W")
-                    dX = -Convert.ToDouble(strLongitude.Substring(1));
-                else
-                    dX = Convert.ToDouble(strLongitude.Substring(1));
-            }
-            else
-            {
-                TextBoxLongitude.Text = "E15";
-                HttpContext.Current.Application["TargetLongitude"] = TextBoxLongitude.Text.ToString();
-            }
-            IsList = HttpContext.Current.Application["TargetLatitude"];
-            if (IsList != null)
-            {
-                string strLatitude = HttpContext.Current.Application["TargetLatitude"].ToString();
-                string strNS = strLatitude.Substring(0, 1);
-                if (strNS == "N")
-                    dX = -Convert.ToDouble(strLatitude.Substring(1));
-                else
-                    dX = Convert.ToDouble(strLatitude.Substring(1));
-            }
-            else
-            {
-                TextBoxLatitude.Text = "S2";
-                HttpContext.Current.Application["TargetLatitude"] = TextBoxLatitude.Text.ToString();
-            }
-            
-            HttpContext.Current.Application["strPageUsed"] = "TraCalcTarget";
-            // number of distributed nodes
-            LabelNodes.Text = "0";
-            // status of distributed calculations
-            TraStatus = "non avalable";
-            LabelStatus.Text = TraStatus;
-            HttpContext.Current.Application["TraDistStatus"] = TraStatus;
-            if (TraStatus == "non avalable")
-            {
-                ButtonImpOptimization.Enabled = false;
-                ButtonFindImp.Enabled = false;
-            }
             if (Page.User.Identity.IsAuthenticated)
             {
                 szUsername = Page.User.Identity.Name.ToString();
             }
             LabelUserName.Text = szUsername;
+
+            string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
+            intMaxSessionN = Convert.ToInt32(strMaxSessionN);
+
+            RadioButtonTargetLL.Checked = true;
+
+            object IsList = HttpContext.Current.Application["TargetLongitude" + szUsername];
+            if (IsList == null)
+            {
+                String xml = null;
+                String NameFile = "InitTraget" + szUsername + ".xml";
+                String MapPath = Server.MapPath(NameFile);
+                int iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
+                if (iDirAccound > 0) // it is dir "account"
+                {
+                    MapPath = MapPath.Substring(0, iDirAccound);
+                    MapPath += "\\SatCtrl\\\\SatCtrl\\\\"+NameFile;
+                }
+
+                try
+                {
+                    xml = File.ReadAllText(MapPath);
+                }
+                catch (Exception Exs)
+                {
+                    xml = null;
+                }
+                if (xml != null)
+                {
+                    strLongitude = GetValue(xml, "Targetlongitude", 0);
+                    strEW = strLongitude.Substring(0, 1);
+                    if (strEW == "-") // east
+                        strLongitude = "E" + strLongitude.Substring(1);
+                    else
+                        strLongitude = "W" + strLongitude;
+                    HttpContext.Current.Application["Targetlongitude" + szUsername] = strLongitude;
+                    
+                    strLatitude = GetValue(xml, "Targetlatitude", 0);
+                    strNS = strLatitude.Substring(0, 1);
+                    if (strNS == "-") // south
+                        strLatitude = "S" + strLatitude.Substring(1);
+                    else
+                        strLatitude = "N" + strLatitude;
+                    HttpContext.Current.Application["Targetlatitude" + szUsername] = strLatitude;
+
+                }
+                else // file with initial data do not exsists
+                {
+                    TextBoxLongitude.Text = "E15";
+                    HttpContext.Current.Application["TargetLongitude" + szUsername] = TextBoxLongitude.Text.ToString();
+                    TextBoxLatitude.Text = "S2";
+                    HttpContext.Current.Application["TargetLatitude"] = TextBoxLatitude.Text.ToString();
+                }
+                IsList = HttpContext.Current.Application["TargetLongitude" + szUsername];
+            }
+
+            if (IsList != null)
+            {
+                strLongitude = IsList.ToString();// HttpContext.Current.Application["TargetLongitude" + szUsername].ToString();
+
+                strEW = strLongitude.Substring(0, 1);
+                if (strEW == "W")
+                    dX = -Convert.ToDouble(strLongitude.Substring(1));
+                else
+                    dX = Convert.ToDouble(strLongitude.Substring(1));
+                TextBoxLongitude.Text = strLongitude;
+            }
+
+
+            IsList = HttpContext.Current.Application["TargetLatitude" + szUsername];
+            if (IsList != null)
+            {
+                strLatitude = IsList.ToString();// HttpContext.Current.Application["TargetLatitude" + szUsername].ToString();
+                strNS = strLatitude.Substring(0, 1);
+                if (strNS == "N")
+                    dX = -Convert.ToDouble(strLatitude.Substring(1));
+                else
+                    dX = Convert.ToDouble(strLatitude.Substring(1));
+                TextBoxLatitude.Text = strLatitude;
+            }
+            else /// just in case == nothong more
+            {
+                TextBoxLatitude.Text = "S2";
+                HttpContext.Current.Application["TargetLatitude" + szUsername] = TextBoxLatitude.Text.ToString();
+            }
+
+            HttpContext.Current.Application["strPageUsed" + szUsername] = "TraCalcTarget";
+            // number of distributed nodes
+            LabelNodes.Text = "0";
+            // status of distributed calculations
+            TraStatus = "non avalable";
+            LabelStatus.Text = TraStatus;
+            HttpContext.Current.Application["TraDistStatus" + szUsername] = TraStatus;
+            if (TraStatus == "non avalable")
+            {
+                ButtonImpOptimization.Enabled = false;
+                ButtonFindImp.Enabled = false;
+            }
         }
         protected String AddHexString(String Str2)
         {
@@ -119,8 +199,8 @@ namespace SatCtrl
             }
             else
                 TextBoxLatitude.Text = "S" + Y.ToString("F5");
-            HttpContext.Current.Application["TargetLatitude"] = TextBoxLatitude.Text.ToString();
-            HttpContext.Current.Application["TargetLongitude"] = TextBoxLongitude.Text.ToString();
+            HttpContext.Current.Application["TargetLatitude" + szUsername] = TextBoxLatitude.Text.ToString();
+            HttpContext.Current.Application["TargetLongitude" + szUsername] = TextBoxLongitude.Text.ToString();
 
         }
     }

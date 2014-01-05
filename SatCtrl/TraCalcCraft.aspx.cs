@@ -17,8 +17,33 @@ namespace SatCtrl
     {
         public long intMaxSessionN;
         string szUsername = "Main";
+        protected String GetValue(String xml, String SearchStr, int iInstance)
+        {
+            String MySearch = "\"" + SearchStr + "\"";
+            int FirstLine = xml.IndexOf(MySearch);
+            int iCount = 0;
+
+            if (FirstLine > 0)
+            {
+                do
+                {
+                    if (iCount == iInstance)
+                    {
+                        int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
+                        int LastValue = xml.IndexOf('\"', FirstValue) - 1;
+                        return xml.Substring(FirstValue, LastValue - FirstValue + 1);
+                    }
+                    FirstLine = xml.IndexOf(MySearch, FirstLine + 1);
+                    iCount += 1;
+                }
+                while (FirstLine > 0);
+            }
+            return null;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+            String strProbM;
+            String strProbMTarget;
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
             if (Page.User.Identity.IsAuthenticated)
@@ -26,6 +51,60 @@ namespace SatCtrl
                 szUsername = Page.User.Identity.Name.ToString();
             }
             LabelUserName.Text = szUsername;
+            object IsList = HttpContext.Current.Application["ProbM" + szUsername];
+            if (IsList == null)
+            {
+                String xml = null;
+                String NameFile = "InitCraft" + szUsername + ".xml";
+                String MapPath = Server.MapPath(NameFile);
+                int iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
+                if (iDirAccound > 0) // it is dir "account"
+                {
+                    MapPath = MapPath.Substring(0, iDirAccound);
+                    MapPath += "\\SatCtrl\\\\SatCtrl\\\\" + NameFile;
+                }
+
+                try
+                {
+                    xml = File.ReadAllText(MapPath);
+                }
+                catch (Exception Exs)
+                {
+                    xml = null;
+                }
+                if (xml != null)
+                {
+                    strProbM = GetValue(xml, "ProbM", 0);
+                    HttpContext.Current.Application["ProbM" + szUsername] = strProbM;
+
+                    strProbMTarget = GetValue(xml, "ProbMTarget", 0);
+                    HttpContext.Current.Application["ProbMTarget" + szUsername] = strProbMTarget;
+
+                }
+                else // file with initial data do not exsists
+                {
+                    strProbM = "255";
+                    HttpContext.Current.Application["ProbM" + szUsername] = strProbM;
+                    strProbMTarget = "4";
+                    HttpContext.Current.Application["ProbMTarget"] = strProbMTarget;
+                }
+                IsList = HttpContext.Current.Application["ProbM" + szUsername];
+            }
+
+            if (IsList != null)
+            {
+                strProbM = IsList.ToString();
+                TextBoxProbM.Text = strProbM;
+            }
+
+
+            IsList = HttpContext.Current.Application["ProbMTarget" + szUsername];
+            if (IsList != null)
+            {
+                strProbMTarget = IsList.ToString();
+                TextBoxProbMTarget.Text = strProbMTarget;
+            }
+
         }
         protected String AddHexString(String Str2)
         {

@@ -1,0 +1,140 @@
+    <TRA:setting name="ProbM" value="30.0" />
+    <TRA:setting name="ProbMTarget" value="4.0" />
+
+<CT:setting name="EngineImpuse" value="1.0" />
+   <CT:setting name="Weight" value="17.157" />
+   <CT:setting name="FrameWeight" value="7.0" />
+ 
+    <!-- set engine type
+        -1 = fixed 
+         N = variable point on a plot describing impules value
+                 -->
+    <CT:setting name="EngineType" value="-1.0" />
+
+    <!-- set engine Throttle  value (0.0 - 1.0) -->    
+    <CT:setting name="Throttle" value="1.0" />
+
+
+    <!-- iteration per sec from engine's plot -->
+    <CT:setting name="DeltaT" value="5.0" />
+
+    <CT:setting name="ImplVal" value="0.0" />
+    <CT:setting name="ImplVal" value="3400.0" />
+    <CT:setting name="ImplVal" value="3000.0" />
+    <CT:setting name="ImplVal" value="3100.0" />
+    <CT:setting name="ImplVal" value="3500.0" />
+
+    <CT:setting name="ImplVal" value="3550.0" />
+    <CT:setting name="ImplVal" value="3600.0" />
+    <CT:setting name="ImplVal" value="3600.0" />
+    <CT:setting name="ImplVal" value="3700.0" />
+    <CT:setting name="ImplVal" value="3750.0" />
+
+    <CT:setting name="ImplVal" value="3800.0" />
+    <CT:setting name="ImplVal" value="3850.0" />
+    <CT:setting name="ImplVal" value="3900.0" />                                      
+    <CT:setting name="ImplVal" value="3950.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+       
+    <CT:setting name="ImplVal" value="3980.0" />
+    <CT:setting name="ImplVal" value="3960.0" />
+    <CT:setting name="ImplVal" value="3940.0" />
+    <CT:setting name="ImplVal" value="3920.0" />
+    <CT:setting name="ImplVal" value="3900.0" />
+
+    <CT:setting name="ImplVal" value="3885.0" />
+    <CT:setting name="ImplVal" value="3850.0" />
+    <CT:setting name="ImplVal" value="3815.0" />
+    <CT:setting name="ImplVal" value="3780.0" />
+    <CT:setting name="ImplVal" value="3745.0" />
+
+    <CT:setting name="ImplVal" value="3710.0" />
+    <CT:setting name="ImplVal" value="3695.0" />
+    <CT:setting name="ImplVal" value="3680.0" />
+    <CT:setting name="ImplVal" value="3665.0" />
+    <CT:setting name="ImplVal" value="3650.0" />
+
+    <CT:setting name="ImplVal" value="3600.0" />
+    <CT:setting name="ImplVal" value="3500.0" />
+    <CT:setting name="ImplVal" value="3500.0" />
+    <CT:setting name="ImplVal" value="3400.0" />
+    <CT:setting name="ImplVal" value="3150.0" />
+
+    <CT:setting name="ImplVal" value="2000.0" />
+    <CT:setting name="ImplVal" value="250.0" />
+    <CT:setting name="ImplVal" value="0.0" />
+
+<CT:setting name="EngineImpuse" value="2.0" />
+   <CT:setting name="Weight" value="17.157" />
+   <CT:setting name="FrameWeight" value="7.0" />
+ 
+    <!-- set engine type
+        -1 = fixed 
+         N = variable point on a plot describing impules value
+                 -->
+    <CT:setting name="EngineType" value="-1.0" />
+
+    <!-- set engine Throttle  value (0.0 - 1.0) -->    
+    <CT:setting name="Throttle" value="1.0" />
+
+
+    <!-- iteration per sec from engine's plot -->
+    <CT:setting name="DeltaT" value="5.0" />
+
+    <CT:setting name="ImplVal" value="0.0" />
+    <CT:setting name="ImplVal" value="3400.0" />
+    <CT:setting name="ImplVal" value="3000.0" />
+    <CT:setting name="ImplVal" value="3100.0" />
+    <CT:setting name="ImplVal" value="3500.0" />
+
+    <CT:setting name="ImplVal" value="3550.0" />
+    <CT:setting name="ImplVal" value="3600.0" />
+    <CT:setting name="ImplVal" value="3600.0" />
+    <CT:setting name="ImplVal" value="3700.0" />
+    <CT:setting name="ImplVal" value="3750.0" />
+
+    <CT:setting name="ImplVal" value="3800.0" />
+    <CT:setting name="ImplVal" value="3850.0" />
+    <CT:setting name="ImplVal" value="3900.0" />                                      
+    <CT:setting name="ImplVal" value="3950.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+    <CT:setting name="ImplVal" value="4000.0" />
+       
+    <CT:setting name="ImplVal" value="3980.0" />
+    <CT:setting name="ImplVal" value="3960.0" />
+    <CT:setting name="ImplVal" value="3940.0" />
+    <CT:setting name="ImplVal" value="3920.0" />
+    <CT:setting name="ImplVal" value="3900.0" />
+
+    <CT:setting name="ImplVal" value="3885.0" />
+    <CT:setting name="ImplVal" value="3850.0" />
+    <CT:setting name="ImplVal" value="3815.0" />
+    <CT:setting name="ImplVal" value="3780.0" />
+    <CT:setting name="ImplVal" value="3745.0" />
+
+    <CT:setting name="ImplVal" value="3710.0" />
+    <CT:setting name="ImplVal" value="3695.0" />
+    <CT:setting name="ImplVal" value="3680.0" />
+    <CT:setting name="ImplVal" value="3665.0" />
+    <CT:setting name="ImplVal" value="3650.0" />
+
+    <CT:setting name="ImplVal" value="3600.0" />
+    <CT:setting name="ImplVal" value="3500.0" />
+    <CT:setting name="ImplVal" value="3500.0" />
+    <CT:setting name="ImplVal" value="3400.0" />
+    <CT:setting name="ImplVal" value="3150.0" />
+
+    <CT:setting name="ImplVal" value="2000.0" />
+    <CT:setting name="ImplVal" value="250.0" />
+    <CT:setting name="ImplVal" value="0.0" />

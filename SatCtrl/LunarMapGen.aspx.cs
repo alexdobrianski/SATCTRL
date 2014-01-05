@@ -14,15 +14,21 @@ namespace SatCtrl
     {
         double dX;
         double dY;
+        String szUsername = "Main";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Page.User.Identity.IsAuthenticated)
+            {
+                szUsername = Page.User.Identity.Name.ToString();
+            }
+
             int iBrushSize = 1;
             double dLinelen = 20;
             string NameMap = "Img/lunarnearsidelarge3.jpg";
-            object IsList = HttpContext.Current.Application["strPageUsed"];
+            object IsList = HttpContext.Current.Application["strPageUsed" + szUsername];
             if (IsList != null)
             {
-                string strMaxSessionN = HttpContext.Current.Application["strPageUsed"].ToString();
+                string strMaxSessionN = HttpContext.Current.Application["strPageUsed" + szUsername].ToString();
                 if (strMaxSessionN == "TraCalc")
                 {
                     iBrushSize = 10;
@@ -35,10 +41,10 @@ namespace SatCtrl
             Graphics graphicImage = Graphics.FromImage(bitMapImage);
             Color MyColor = System.Drawing.Color.Red;
             SolidBrush myBrush = new SolidBrush(Color.Red);
-            IsList = HttpContext.Current.Application["TargetLatitude"];
+            IsList = HttpContext.Current.Application["TargetLatitude"+szUsername];
             if (IsList != null)
             {
-                string strLongitude = HttpContext.Current.Application["TargetLongitude"].ToString();
+                string strLongitude = HttpContext.Current.Application["TargetLongitude" + szUsername].ToString();
 
                 string strEW = strLongitude.Substring(0, 1);
                 if (strEW == "W")
@@ -49,10 +55,10 @@ namespace SatCtrl
             else
                 dX = 15.0;
 
-            IsList = HttpContext.Current.Application["TargetLongitude"];
+            IsList = HttpContext.Current.Application["TargetLongitude" + szUsername];
             if (IsList != null)
             {
-                string strLatitude = HttpContext.Current.Application["TargetLatitude"].ToString();
+                string strLatitude = HttpContext.Current.Application["TargetLatitude" + szUsername].ToString();
                 string strNS = strLatitude.Substring(0, 1);
                 if (strNS == "N")
                     dY = -Convert.ToDouble(strLatitude.Substring(1));
