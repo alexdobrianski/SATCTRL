@@ -60,12 +60,14 @@
     <Content Include="Account\Register1.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\userEmailReg.txt" />
+    <Content Include="EngineJpgGen.aspx" />
     <Content Include="CraftCubeSat.aspx" />
     <Content Include="CraftCubeSatStatus.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="GroundStation.aspx" />
     <Content Include="GrStn.exe" />
     <Content Include="Img\cubesat_ctrl.JPG" />
+    <Content Include="Img\engineblank.JPG" />
     <Content Include="Img\GrStn.JPG" />
     <Content Include="Img\lunarnearsidelarge.jpg" />
     <Content Include="Img\mission_ctrl.JPG" />
@@ -147,6 +149,13 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EngineJpgGen.aspx.cs">
+      <DependentUpon>EngineJpgGen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EngineJpgGen.aspx.designer.cs">
+      <DependentUpon>EngineJpgGen.aspx</DependentUpon>
     </Compile>
     <Compile Include="CraftCubeSat.aspx.cs">
       <DependentUpon>CraftCubeSat.aspx</DependentUpon>

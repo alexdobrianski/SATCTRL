@@ -1,514 +1,233 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeBehind="TraCalcCraft.aspx.cs" Inherits="SatCtrl._TraCalcCraft" %>
+    CodeBehind="TraCalcCraft.aspx.cs" Inherits="SatCtrl._TraCalcCraft" validateRequest="false" %>
 
 
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <table style="width:100%;" frame="vsides">    
         <tr>
-            <td class="style10">
-                Craft&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            <td class="style12">
+                Craft 
+            </td>
+            <td>
                 Calculation:
                 <asp:Label ID="LabelUserName" runat="server" Text="Label"></asp:Label>
+
             </td>
         </tr>
         <tr>
-            <td class="style7">
-                Total mass<asp:TextBox ID="TextBoxProbM" runat="server"></asp:TextBox>
-            </td>
+            <td class="style12">
+                Total mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBoxProbM" runat="server"></asp:TextBox>
+            &nbsp;kg</td>
         </tr>
         <tr>
-            <td class="style11">
-                Landed mass<asp:TextBox 
+            <td class="style12">
+                Landed mass&nbsp; <asp:TextBox 
                     ID="TextBoxProbMTarget" runat="server"></asp:TextBox>
-            </td>
+            &nbsp;kg</td>
         </tr>
         <tr>
-            <td class="style11">
+            <td class="style12">
                 &nbsp;</td>
         </tr>
 
         <tr>
-            <td class="style11">
-                Engine (1 impulse) profile:<asp:CheckBox 
-                    ID="CheckBox1" runat="server" />
+            <td class="style12">
+                <asp:Label ID="LabelImpl1" runat="server" Text="Engine (1 impulse) profile:"></asp:Label>
+                <asp:CheckBox 
+                    ID="CheckBoxImp1" runat="server" Text="use" AutoPostBack="True" 
+                    oncheckedchanged="CheckBoxImp1_CheckedChanged" />
+            &nbsp;</td>
+            <td>
+                <asp:Button ID="ButtonDeleteImp1" runat="server" 
+                    onclick="ButtonDeleteImp1_Click" Text="Delete" />
+                <asp:Button ID="ButtonUpdateImp1" runat="server" 
+                    onclick="ButtonUpdateImp1_Click" Text="Update" />
             </td>
         </tr>
         <tr>
-            <td class="style11">
-                    <img alt="" src="" style="width: 441px; height: 237px" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:FileUpload ID="FileUpload1" runat="server" />
+            <td class="style12">
+                    
+                    <asp:HyperLink ID="HyperLinkImpl1" runat="server" NavigateUrl="EngineJpgGen.aspx?n=1" >
+                    <asp:Image ID="ImageImpl1" runat="server" Height="200px" 
+                        ImageUrl="~/Img/engineblank.JPG" Width="350px"  />
+                    
+                    </asp:HyperLink>
+                    
+            </td>        
+            <td>
+                    <asp:TextBox ID="TextBoxEngineXML1" runat="server" Height="200px" ReadOnly="True" 
+                    Rows="2" TextMode="MultiLine" Width="430px" Wrap="False" 
+                    style="margin-bottom: 0px"></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td class="style11">
-                    <asp:TextBox ID="TextBox8" runat="server" Height="71px" ReadOnly="True" 
-            Rows="2" TextMode="MultiLine" Width="920px" Wrap="False" 
-                    style="margin-bottom: 0px">&lt;CT:setting name=&quot;EngineImpuse&quot; value=&quot;1.0&quot; /&gt;
-    &lt;CT:setting name=&quot;EngineOnSatellite&quot; value=&quot;0&quot; /&gt;
-    &lt;CT:setting name=&quot;PropCoeff&quot; value=&quot;0.25&quot; /&gt;
-    &lt;!-- search for ==1 Apogee ==0 Perigee --&gt;
-    &lt;CT:setting name=&quot;SearchFor&quot; value=&quot;1.0&quot; /&gt;
-    &lt;!-- set impulses in a time --&gt;
-    &lt;CT:setting name=&quot;Weight&quot; value=&quot;17.157&quot; /&gt;
-    &lt;!-- iteration per sec from engine&#39;s plot --&gt;
-    &lt;CT:setting name=&quot;DeltaT&quot; value=&quot;5.0&quot; /&gt;
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;19000.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;18845.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;16109.0&quot; /&gt;   
-
-
-    &lt;!-- first angle from center of closest body to fire direction 
-         in plane over centre and vector velocity --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;90.0&quot; /&gt;
-    &lt;!-- second angle from vector of velocity  
-         in plane perpendicular to direction centre of body --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3100.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3550.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3700.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3750.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3800.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;                                      
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3950.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-       
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3980.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3960.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3940.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3920.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3885.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3815.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3780.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3745.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3710.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3695.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3680.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3665.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3650.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3150.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;2000.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;250.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-  </asp:TextBox>
-                <input id="Button2" type="button" value="edit" /></td>
+            <td class="style12">
+                &nbsp;</td>
         </tr>
         <tr>
-            <td class="style11">
+            <td class="style13">
+                </td>
+        </tr>
+
+        <tr>
+            <td class="style12">
+                <asp:Label ID="LabelImpl2" runat="server" Text="Engine (2 impulse) profile:"></asp:Label>
+                <asp:CheckBox 
+                    ID="CheckBoxImp2" runat="server" AutoPostBack="True" 
+                    oncheckedchanged="CheckBoxImp2_CheckedChanged" Text="use" />
+            </td>
+            <td>
+                <asp:Button ID="ButtonDeleteImp2" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonAddImp2" runat="server" Text="Add" 
+                    ToolTip="Add another impulse" />
+                <asp:Button ID="ButtonUpdateImp2" runat="server" Text="Update" />
+            </td>
+
+        </tr>
+        <tr>
+            <td class="style12">
+                    <asp:HyperLink ID="HyperLinkImpl2" runat="server" NavigateUrl="EngineJpgGen.aspx?n=2" >
+                    <asp:Image ID="ImageImpl2" runat="server" Height="200px" 
+                        ImageUrl="~/Img/engineblank.JPG" Width="350px" />
+                        </asp:HyperLink>
+                    </td>
+            <td>
+                    <asp:TextBox ID="TextBoxEngineXML2" runat="server" Height="200px" ReadOnly="True" 
+            Rows="2" TextMode="MultiLine" Width="430px" Wrap="False" 
+                    style="margin-bottom: 0px"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="style12">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td class="style12">
                 &nbsp;</td>
         </tr>
 
         <tr>
-            <td class="style11">
-                Engine (2 impulse) profile:<asp:CheckBox 
-                    ID="CheckBox2" runat="server" />
+            <td class="style12">
+                <asp:Label ID="LabelImpl3" runat="server" Text="Engine (3 impulse) profile:"></asp:Label>
+                <asp:CheckBox 
+                    ID="CheckBoxImp3" runat="server" AutoPostBack="True" 
+                    oncheckedchanged="CheckBoxImp3_CheckedChanged" Text="use" />
             </td>
-        </tr>
-        <tr>
-            <td class="style11">
-                    <img alt="" src="" style="width: 441px; height: 237px" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:FileUpload ID="FileUpload2" runat="server" />
+            <td>
+                <asp:Button ID="ButtonDeleteImp3" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonAddImp3" runat="server" Text="Add" 
+                    ToolTip="Add another impulse" />
+                <asp:Button ID="ButtonUpdateImp3" runat="server" Text="Update" />
             </td>
+
         </tr>
         <tr>
-            <td class="style11">
-                    <asp:TextBox ID="TextBox11" runat="server" Height="71px" ReadOnly="True" 
-            Rows="2" TextMode="MultiLine" Width="920px" Wrap="False" 
-                    style="margin-bottom: 0px">&lt;CT:setting name=&quot;EngineImpuse&quot; value=&quot;1.0&quot; /&gt;
-    &lt;CT:setting name=&quot;EngineOnSatellite&quot; value=&quot;0&quot; /&gt;
-    &lt;CT:setting name=&quot;PropCoeff&quot; value=&quot;0.25&quot; /&gt;
-    &lt;!-- search for ==1 Apogee ==0 Perigee --&gt;
-    &lt;CT:setting name=&quot;SearchFor&quot; value=&quot;1.0&quot; /&gt;
-    &lt;!-- set impulses in a time --&gt;
-    &lt;CT:setting name=&quot;Weight&quot; value=&quot;17.157&quot; /&gt;
-    &lt;!-- iteration per sec from engine&#39;s plot --&gt;
-    &lt;CT:setting name=&quot;DeltaT&quot; value=&quot;5.0&quot; /&gt;
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;19000.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;18845.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;16109.0&quot; /&gt;   
+            <td class="style12">
+                    <asp:HyperLink ID="HyperLinkImpl3" runat="server" NavigateUrl="EngineJpgGen.aspx?n=3" >
+                    <asp:Image ID="ImageImpl3" runat="server" Height="200px" 
+                        ImageUrl="~/Img/engineblank.JPG" Width="350px" />
+                        </asp:HyperLink>
+                    </td>
+            <td>
+                    <asp:TextBox ID="TextBoxEngineXML3" runat="server" Height="200px" ReadOnly="True" 
+            Rows="2" TextMode="MultiLine" Width="430px" Wrap="False" 
+                    style="margin-bottom: 0px"></asp:TextBox>
+            </td>
 
-
-    &lt;!-- first angle from center of closest body to fire direction 
-         in plane over centre and vector velocity --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;90.0&quot; /&gt;
-    &lt;!-- second angle from vector of velocity  
-         in plane perpendicular to direction centre of body --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3100.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3550.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3700.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3750.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3800.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;                                      
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3950.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-       
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3980.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3960.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3940.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3920.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3885.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3815.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3780.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3745.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3710.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3695.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3680.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3665.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3650.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3150.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;2000.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;250.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-  </asp:TextBox>
-                <input id="Button3" type="button" value="edit" /></td>
         </tr>
         <tr>
-            <td class="style11">
+            <td class="style12">
+                &nbsp;</td>
+
+        </tr>
+
+        <tr>
+            <td class="style12">
                 &nbsp;</td>
         </tr>
 
         <tr>
-            <td class="style11">
-                Engine (3 impulse) profile:<asp:CheckBox 
-                    ID="CheckBox3" runat="server" />
+            <td class="style12">
+                <asp:Label ID="LabelImpl4" runat="server" Text="Engine (4 impulse) profile:"></asp:Label>
+                <asp:CheckBox 
+                    ID="CheckBoxImp4" runat="server" AutoPostBack="True" 
+                    oncheckedchanged="CheckBoxImp4_CheckedChanged" Text="use" />
+            </td>
+            <td>
+                <asp:Button ID="ButtonDeleteImp4" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonAddImp4" runat="server" Text="Add" 
+                    ToolTip="Add another impulse" />
+                <asp:Button ID="ButtonUpdateImp4" runat="server" Text="Update" />
             </td>
         </tr>
         <tr>
-            <td class="style11">
-                    <img alt="" src="" style="width: 441px; height: 237px" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:FileUpload ID="FileUpload3" runat="server" />
+            <td class="style12">
+                    <asp:HyperLink ID="HyperLinkImpl4" runat="server" NavigateUrl="EngineJpgGen.aspx?n=4" >
+                    <asp:Image ID="ImageImpl4" runat="server" Height="200px" 
+                        ImageUrl="~/Img/engineblank.JPG" Width="350px" />
+                        </asp:HyperLink>
+                    </td>
+            <td>
+                    <asp:TextBox ID="TextBoxEngineXML4" runat="server" Height="200px" ReadOnly="True" 
+            Rows="2" TextMode="MultiLine" Width="430px" Wrap="False" 
+                    style="margin-bottom: 0px"></asp:TextBox>
             </td>
+
         </tr>
         <tr>
-            <td class="style11">
-                    <asp:TextBox ID="TextBox12" runat="server" Height="71px" ReadOnly="True" 
-            Rows="2" TextMode="MultiLine" Width="920px" Wrap="False" 
-                    style="margin-bottom: 0px">&lt;CT:setting name=&quot;EngineImpuse&quot; value=&quot;1.0&quot; /&gt;
-    &lt;CT:setting name=&quot;EngineOnSatellite&quot; value=&quot;0&quot; /&gt;
-    &lt;CT:setting name=&quot;PropCoeff&quot; value=&quot;0.25&quot; /&gt;
-    &lt;!-- search for ==1 Apogee ==0 Perigee --&gt;
-    &lt;CT:setting name=&quot;SearchFor&quot; value=&quot;1.0&quot; /&gt;
-    &lt;!-- set impulses in a time --&gt;
-    &lt;CT:setting name=&quot;Weight&quot; value=&quot;17.157&quot; /&gt;
-    &lt;!-- iteration per sec from engine&#39;s plot --&gt;
-    &lt;CT:setting name=&quot;DeltaT&quot; value=&quot;5.0&quot; /&gt;
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;19000.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;18845.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;16109.0&quot; /&gt;   
+            <td class="style12">
+                &nbsp;</td>
 
-
-    &lt;!-- first angle from center of closest body to fire direction 
-         in plane over centre and vector velocity --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;90.0&quot; /&gt;
-    &lt;!-- second angle from vector of velocity  
-         in plane perpendicular to direction centre of body --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3100.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3550.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3700.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3750.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3800.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;                                      
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3950.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-       
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3980.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3960.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3940.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3920.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3885.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3815.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3780.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3745.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3710.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3695.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3680.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3665.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3650.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3150.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;2000.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;250.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-  </asp:TextBox>
-                <input id="Button4" type="button" value="edit" /></td>
         </tr>
-
         <tr>
-            <td class="style11">
+            <td class="style12">
                 &nbsp;</td>
         </tr>
 
         <tr>
-            <td class="style11">
-                Engine (4 impulse) profile:<asp:CheckBox 
-                    ID="CheckBox4" runat="server" />
+            <td class="style12">
+                <asp:Label ID="LabelImpl5" runat="server" Text="Engine (5 impulse) profile:"></asp:Label>
+                <asp:CheckBox 
+                    ID="CheckBoxImp5" runat="server" AutoPostBack="True" 
+                    oncheckedchanged="CheckBoxImp5_CheckedChanged" Text="use" />
+            </td>
+            <td>
+                <asp:Button ID="ButtonDeleteImp5" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonAddImp5" runat="server" Text="Add" 
+                    ToolTip="Add another impulse" />
+                <asp:Button ID="ButtonUpdateImp5" runat="server" Text="Update" />
             </td>
         </tr>
         <tr>
-            <td class="style11">
-                    <img alt="" src="" style="width: 441px; height: 237px" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:FileUpload ID="FileUpload4" runat="server" />
+            <td class="style12">
+                    <asp:HyperLink ID="HyperLinkImpl5" runat="server" NavigateUrl="EngineJpgGen.aspx?n=5" >
+                    <asp:Image ID="ImageImpl5" runat="server" Height="200px" 
+                        ImageUrl="~/Img/engineblank.JPG" Width="350px" />
+                        </asp:HyperLink>
+                    </td>
+            <td>
+                    <asp:TextBox ID="TextBoxEngineXML5" runat="server" Height="200px" ReadOnly="True" 
+            Rows="2" TextMode="MultiLine" Width="430px" Wrap="False" 
+                    style="margin-bottom: 0px"></asp:TextBox>
             </td>
+
         </tr>
+
         <tr>
-            <td class="style11">
-                    <asp:TextBox ID="TextBox13" runat="server" Height="71px" ReadOnly="True" 
-            Rows="2" TextMode="MultiLine" Width="920px" Wrap="False" 
-                    style="margin-bottom: 0px">&lt;CT:setting name=&quot;EngineImpuse&quot; value=&quot;1.0&quot; /&gt;
-    &lt;CT:setting name=&quot;EngineOnSatellite&quot; value=&quot;0&quot; /&gt;
-    &lt;CT:setting name=&quot;PropCoeff&quot; value=&quot;0.25&quot; /&gt;
-    &lt;!-- search for ==1 Apogee ==0 Perigee --&gt;
-    &lt;CT:setting name=&quot;SearchFor&quot; value=&quot;1.0&quot; /&gt;
-    &lt;!-- set impulses in a time --&gt;
-    &lt;CT:setting name=&quot;Weight&quot; value=&quot;17.157&quot; /&gt;
-    &lt;!-- iteration per sec from engine&#39;s plot --&gt;
-    &lt;CT:setting name=&quot;DeltaT&quot; value=&quot;5.0&quot; /&gt;
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;19000.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;18845.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;16109.0&quot; /&gt;   
-
-
-    &lt;!-- first angle from center of closest body to fire direction 
-         in plane over centre and vector velocity --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;90.0&quot; /&gt;
-    &lt;!-- second angle from vector of velocity  
-         in plane perpendicular to direction centre of body --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3100.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3550.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3700.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3750.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3800.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;                                      
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3950.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-       
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3980.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3960.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3940.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3920.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3885.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3815.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3780.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3745.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3710.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3695.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3680.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3665.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3650.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3150.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;2000.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;250.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-  </asp:TextBox>
-                <input id="Button5" type="button" value="edit" /></td>
-        </tr>
-        <tr>
-            <td class="style11">
+            <td class="style12">
                 &nbsp;</td>
-        </tr>
 
-        <tr>
-            <td class="style11">
-                Engine (5 impulse) profile:<asp:CheckBox 
-                    ID="CheckBox5" runat="server" />
-            </td>
         </tr>
         <tr>
-            <td class="style11">
-                    <img alt="" src="" style="width: 441px; height: 237px" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:FileUpload ID="FileUpload5" runat="server" />
-            </td>
-        </tr>
-
-        <tr>
-            <td class="style11">
-                    <asp:TextBox ID="TextBox14" runat="server" Height="71px" ReadOnly="True" 
-            Rows="2" TextMode="MultiLine" Width="920px" Wrap="False" 
-                    style="margin-bottom: 0px">&lt;CT:setting name=&quot;EngineImpuse&quot; value=&quot;1.0&quot; /&gt;
-    &lt;CT:setting name=&quot;EngineOnSatellite&quot; value=&quot;0&quot; /&gt;
-    &lt;CT:setting name=&quot;PropCoeff&quot; value=&quot;0.25&quot; /&gt;
-    &lt;!-- search for ==1 Apogee ==0 Perigee --&gt;
-    &lt;CT:setting name=&quot;SearchFor&quot; value=&quot;1.0&quot; /&gt;
-    &lt;!-- set impulses in a time --&gt;
-    &lt;CT:setting name=&quot;Weight&quot; value=&quot;17.157&quot; /&gt;
-    &lt;!-- iteration per sec from engine&#39;s plot --&gt;
-    &lt;CT:setting name=&quot;DeltaT&quot; value=&quot;5.0&quot; /&gt;
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;19000.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;18845.0&quot; /&gt;   
-    &lt;CT:setting name=&quot;FireTime&quot; value=&quot;16109.0&quot; /&gt;   
-
-
-    &lt;!-- first angle from center of closest body to fire direction 
-         in plane over centre and vector velocity --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;90.0&quot; /&gt;
-    &lt;!-- second angle from vector of velocity  
-         in plane perpendicular to direction centre of body --&gt;
-    &lt;CT:setting name=&quot;FireAng1&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3100.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3550.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3700.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3750.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3800.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;                                      
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3950.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-    &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;4000.0&quot; /&gt;
-       
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3980.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3960.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3940.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3920.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3900.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3885.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3850.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3815.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3780.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3745.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3710.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3695.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3680.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3665.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3650.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3600.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3500.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3400.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;3150.0&quot; /&gt;
-
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;2000.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;250.0&quot; /&gt;
-  &lt;CT:setting name=&quot;ImplVal&quot; value=&quot;0.0&quot; /&gt;
-  </asp:TextBox>
-                <input id="Button6" type="button" value="edit" /></td>
-        </tr>
-        <tr>
-            <td class="style11">
+            <td class="style12">
                 &nbsp;</td>
         </tr>
         <tr>
-            <td class="style11">
+            <td class="style12">
                 &nbsp;</td>
         </tr>
         <tr>
-            <td class="style11">
+            <td class="style12">
                 &nbsp;</td>
         </tr>
 
@@ -516,6 +235,15 @@
     </table>
 &nbsp; 
     
+    <script language="javascript" type="text/javascript">
+// <![CDATA[
+
+        function ButtonUpdateIm1_onclick() {
+
+        }
+
+// ]]>
+    </script>
 </asp:Content>
 <asp:Content ID="Content1" runat="server" contentplaceholderid="HeadContent">
     <style type="text/css">
@@ -528,16 +256,6 @@
         {
             width: 432px;
         }
-        .style7
-        {
-            width: 1285px;
-            height: 12px;
-        }
-        .style10
-        {
-            width: 1285px;
-            font-size: small;
-        }
         #TextArea1
         {
             width: 236px;
@@ -546,9 +264,13 @@
         {
             width: 144px;
         }
-        .style11
+        .style12
         {
-            width: 1285px;
+            width: 459px;
+        }
+        .style13
+        {
+            width: 459px;
             height: 20px;
         }
     </style>
