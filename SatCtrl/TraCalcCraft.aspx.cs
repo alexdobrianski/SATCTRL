@@ -80,7 +80,7 @@ namespace SatCtrl
                     ButtonUpdateImp2.Visible = false;
                     TextBoxEngineXML2.Visible = false;
                     LabelImpl2.Visible = false;
-                    ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
+                    //ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
                     HyperLinkImpl5.Visible = false;
                     HyperLinkImpl4.Visible = false;
                     HyperLinkImpl3.Visible = false;
@@ -114,7 +114,7 @@ namespace SatCtrl
                     ButtonUpdateImp2.Visible = true;
                     TextBoxEngineXML2.Visible = true;
                     LabelImpl2.Visible = true;
-                    ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
+                    //ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
                     ButtonDeleteImp2.Visible = !CheckBoxImp2.Checked;
 
                     HyperLinkImpl5.Visible = false;
@@ -151,7 +151,7 @@ namespace SatCtrl
                     ButtonUpdateImp2.Visible = true;
                     TextBoxEngineXML2.Visible = true;
                     LabelImpl2.Visible = true;
-                    ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
+                    //ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
                     ButtonDeleteImp2.Visible = !CheckBoxImp2.Checked;
                     ButtonDeleteImp3.Visible = !CheckBoxImp3.Checked;
 
@@ -189,7 +189,7 @@ namespace SatCtrl
                     ButtonUpdateImp2.Visible = true;
                     TextBoxEngineXML2.Visible = true;
                     LabelImpl2.Visible = true;
-                    ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
+                    //ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
                     ButtonDeleteImp2.Visible = !CheckBoxImp2.Checked;
                     ButtonDeleteImp3.Visible = !CheckBoxImp3.Checked;
                     ButtonDeleteImp4.Visible = !CheckBoxImp4.Checked;
@@ -229,7 +229,7 @@ namespace SatCtrl
                     ButtonUpdateImp2.Visible = true;
                     TextBoxEngineXML2.Visible = true;
                     LabelImpl2.Visible = true;
-                    ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
+                    //ButtonDeleteImp1.Visible = !CheckBoxImp1.Checked;
                     ButtonDeleteImp2.Visible = !CheckBoxImp2.Checked;
                     ButtonDeleteImp3.Visible = !CheckBoxImp3.Checked;
                     ButtonDeleteImp4.Visible = !CheckBoxImp4.Checked;
@@ -279,31 +279,211 @@ namespace SatCtrl
             }
             return strXML;
         }
-        protected void Page_Load(object sender, EventArgs e)
+        double TotalWeight = 0.0;
+        protected int ProcessOneImpl(String xml, int iEngineImpuse, int iTotalIteration, int iEngineImpuseUpdt, bool update = false)
         {
-            String strProbM;
-            String strProbMTarget;
             String strImpNumber;
+            String strEngineImpuse;
+            String strWeight;
+            String strEngineType;
+            String strThrottle;
+            String strDeltaT;
+            String strFrameWeight;
+
             double dEngineImpuse;
             double dWeight;
             double FrameWeight;
             double EngineType;
             double dThrottle;
             double dDeltaT;
-            String strEngineImpuse;
-            String strFrameWeight;
-            String strWeight;
-            String strEngineType;
-            String strThrottle;
-            String strDeltaT;
+
+            {
+                // read engine profiles
+                String strImplVal = null;
+                double dImplVal = 0;
+
+                int iIteration = 0;
+                do
+                {
+                    strImplVal = GetValue(xml, "ImplVal", iTotalIteration);
+                    iTotalIteration += 1;
+                    iIteration += 1;
+                    if (strImplVal != null)
+                    {
+                        dImplVal = Convert.ToDouble(strImplVal);
+                        if (dImplVal == 0.0 && iIteration > 1) // next engine's impulse
+                        {
+
+                            ListImpulseVal.Add(dImplVal);
+                            strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
+                            HttpContext.Current.Application[strImpNumber] = ListImpulseVal;
+
+                            //<TRA:setting name="EngineImpuse" value="1.0" />
+                            strEngineImpuse = GetValue(xml, "EngineImpuse", iEngineImpuseUpdt);
+                            dEngineImpuse = Convert.ToDouble(strEngineImpuse);
+                            if (update)
+                                ListEngineImpuse[iEngineImpuse] = dEngineImpuse;
+                            else
+                                ListEngineImpuse.Add(dEngineImpuse);
+                            // <TRA:setting name="Weight" value="17.157" />
+                            strWeight = GetValue(xml, "Weight", iEngineImpuseUpdt);
+                            dWeight = Convert.ToDouble(strWeight);
+                            TotalWeight += dWeight;
+                            if (update)
+                                ListWeight[iEngineImpuse] = dWeight;
+                            else
+                                ListWeight.Add(dWeight);
+                            // <TRA:setting name="FrameWeight" value="7.0" />
+                            strFrameWeight = GetValue(xml, "FrameWeight", iEngineImpuseUpdt);
+                            FrameWeight = Convert.ToDouble(strFrameWeight);
+                            ListFrameWeight.Add(FrameWeight);
+                            // <!-- set engine type
+                            //      -1 = fixed 
+                            //      N = variable point on a plot describing impules value
+                            //          -->
+                            //<TRA:setting name="EngineType" value="-1.0" />
+                            strEngineType = GetValue(xml, "EngineType", iEngineImpuseUpdt);
+                            EngineType = Convert.ToDouble(strEngineType);
+                            if (update)
+                                ListEngineType[iEngineImpuse] = EngineType;
+                            else
+                                ListEngineType.Add(EngineType);
+                            //<!-- set engine Throttle  value (0.0 - 1.0) -->    
+                            //<TRA:setting name="Throttle" value="1.0" />
+                            strThrottle = GetValue(xml, "Throttle", iEngineImpuseUpdt);
+                            dThrottle = Convert.ToDouble(strThrottle);
+
+                            if (update)
+                                ListThrottle[iEngineImpuse] = dThrottle;
+                            else
+                                ListThrottle.Add(dThrottle);
+                            //<!-- iteration per sec from engine's plot -->
+                            //<TRA:setting name="DeltaT" value="5.0" />
+                            strDeltaT = GetValue(xml, "DeltaT", iEngineImpuseUpdt);
+                            dDeltaT = Convert.ToDouble(strDeltaT);
+                            if (update)
+                                ListDeltaT[iEngineImpuse] = dDeltaT;
+                            else
+                                ListDeltaT.Add(dDeltaT);
+                            return iTotalIteration;
+                        }
+                        else
+                        {
+                            ListImpulseVal.Add(dImplVal);
+                        }
+
+                    }
+
+                }
+                while (strImplVal != null);
+            }
+
+            return 0;
+        }
+        protected void GetFromApplication(object IsList)
+        {
+            String strProbM;
+            String strProbMTarget;
+            String strImpNumber;
             String strEngineXML;
-            double TotalWeight = 0.0;
+
+
+            strProbM = IsList.ToString();
+            TextBoxProbM.Text = strProbM;
+            IsList = HttpContext.Current.Application["ProbMTarget" + szUsername];
+            if (IsList != null)
+            {
+                strProbMTarget = IsList.ToString();
+                TextBoxProbMTarget.Text = strProbMTarget;
+            }
+            int iEngineImpuse = 0;
+            ListEngineImpuse = (List<double>)HttpContext.Current.Application["EngineImpuse" + szUsername];
+            if (ListEngineImpuse.Count > 0)
+            {
+                for (iEngineImpuse = 0; iEngineImpuse < ListEngineImpuse.Count; iEngineImpuse++)
+                {
+                    strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
+                    ListImpulseVal = (List<double>)HttpContext.Current.Application[strImpNumber];
+                    ListWeight = (List<double>)HttpContext.Current.Application["Weight" + szUsername];
+                    ListFrameWeight = (List<double>)HttpContext.Current.Application["FrameWeight" + szUsername];
+                    ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + szUsername];
+                    ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + szUsername];
+                    ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + szUsername];
+
+                    strEngineXML = MakeEngineXMLFile(ListImpulseVal, ListEngineImpuse.ElementAt(iEngineImpuse), ListWeight.ElementAt(iEngineImpuse),
+                        ListFrameWeight.ElementAt(iEngineImpuse), ListEngineType.ElementAt(iEngineImpuse), ListThrottle.ElementAt(iEngineImpuse), ListDeltaT.ElementAt(iEngineImpuse));
+                    switch (iEngineImpuse)
+                    {
+                        case 0:
+                            TextBoxEngineXML1.Text = strEngineXML;
+                            ImageImpl1.ImageUrl = "EngineJpgGen.aspx?n=0";
+                            //CheckBoxImp1.Checked = true;
+                            break;
+                        case 1:
+                            TextBoxEngineXML2.Text = strEngineXML;
+                            ImageImpl2.ImageUrl = "EngineJpgGen.aspx?n=1";
+                            //CheckBoxImp2.Checked = true;
+                            break;
+                        case 2:
+                            TextBoxEngineXML3.Text = strEngineXML;
+                            ImageImpl3.ImageUrl = "EngineJpgGen.aspx?n=2";
+                            //CheckBoxImp3.Checked = true;
+                            break;
+                        case 3:
+                            TextBoxEngineXML4.Text = strEngineXML;
+                            ImageImpl4.ImageUrl = "EngineJpgGen.aspx?n=3";
+                            //CheckBoxImp4.Checked = true;
+                            break;
+                        case 4:
+                            TextBoxEngineXML5.Text = strEngineXML;
+                            ImageImpl5.ImageUrl = "EngineJpgGen.aspx?n=4";
+                            //CheckBoxImp5.Checked = true;
+                            break;
+                    }
+
+                }
+            }
+        }
+        String TextBoxEngineXML1Value;
+        String TextBoxEngineXML2Value;
+        String TextBoxEngineXML3Value;
+        String TextBoxEngineXML4Value;
+        String TextBoxEngineXML5Value;
+        String TextBoxProbMTargetValue;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            String strProbM;
+            String strProbMTarget;
+            String strImpNumber;
+            String strEngineXML;
+
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
             if (Page.User.Identity.IsAuthenticated)
             {
                 szUsername = Page.User.Identity.Name.ToString();
+                TextBoxEngineXML1.ReadOnly = false;
+                TextBoxEngineXML2.ReadOnly = false;
+                TextBoxEngineXML3.ReadOnly = false;
+                TextBoxEngineXML4.ReadOnly = false;
+                TextBoxEngineXML5.ReadOnly = false;
+                TextBoxProbMTarget.ReadOnly = false;
+                LabelTextToLogin.Visible = false;
+                HyperLinkLogin.Visible = false;
             }
+            else
+            {
+                LabelTextToLogin.Visible = true;
+                HyperLinkLogin.Visible = true;
+            }
+            TextBoxEngineXML1Value = TextBoxEngineXML1.Text.ToString();
+            TextBoxEngineXML2Value = TextBoxEngineXML2.Text.ToString();
+            TextBoxEngineXML3Value = TextBoxEngineXML3.Text.ToString();
+            TextBoxEngineXML4Value = TextBoxEngineXML4.Text.ToString();
+            TextBoxEngineXML5Value = TextBoxEngineXML5.Text.ToString();
+            TextBoxProbMTargetValue = TextBoxProbMTarget.Text.ToString();
+
             LabelUserName.Text = szUsername;
             object IsList = HttpContext.Current.Application["ProbM" + szUsername];
             if (IsList == null)
@@ -326,101 +506,67 @@ namespace SatCtrl
                 {
                     xml = null;
                 }
+                if (xml == null) // Init file is absent try ti use main:
+                {
+                    NameFile = "InitCraft" + "Main.xml";
+                    MapPath = Server.MapPath(NameFile);
+                    iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
+                    if (iDirAccound > 0) // it is dir "account"
+                    {
+                        MapPath = MapPath.Substring(0, iDirAccound);
+                        MapPath += "\\SatCtrl\\\\SatCtrl\\\\" + NameFile;
+                    }
+
+                    try
+                    {
+                        xml = File.ReadAllText(MapPath);
+                    }
+                    catch (Exception Exs)
+                    {
+                        xml = null;
+                    }
+                }
                 if (xml != null)
                 {
+                    ListImpulseVal = new List<double>();
                     strProbM = GetValue(xml, "ProbM", 0);
                     HttpContext.Current.Application["ProbM" + szUsername] = strProbM;
 
                     strProbMTarget = GetValue(xml, "ProbMTarget", 0);
                     HttpContext.Current.Application["ProbMTarget" + szUsername] = strProbMTarget;
+
                     TotalWeight = Convert.ToDouble(strProbMTarget);
                     // now need to read all engines profiles
-                    String strImplVal = null;
-                    double dImplVal = 0;
                     
-                    int iIteration = 0;
                     int iTotalIteration = 0;
                     int iEngineImpuse = 0;
+                    int iEngineImpuseUpdt = 0;
                     do
                     {
-                        strImplVal = GetValue(xml, "ImplVal", iTotalIteration);
-                        iTotalIteration += 1;
-                        iIteration += 1;
-                        if (strImplVal != null)
+                        iTotalIteration = ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, iEngineImpuseUpdt);
+                        switch (iEngineImpuse)
                         {
-                            dImplVal = Convert.ToDouble(strImplVal);
-                            if (dImplVal == 0.0 && iIteration > 1) // next engine's impulse
-                            {
-                                
-                                ListImpulseVal.Add(dImplVal);
-                                strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
-                                HttpContext.Current.Application[strImpNumber] = ListImpulseVal;
-                                
-                                
-                                //<TRA:setting name="EngineImpuse" value="1.0" />
-                                strEngineImpuse = GetValue(xml, "EngineImpuse", iEngineImpuse);
-                                dEngineImpuse = Convert.ToDouble(strEngineImpuse);
-                                ListEngineImpuse.Add(dEngineImpuse);
-                                // <TRA:setting name="Weight" value="17.157" />
-                                strWeight = GetValue(xml, "Weight", iEngineImpuse);
-                                dWeight = Convert.ToDouble(strWeight);
-                                TotalWeight += dWeight;
-                                ListWeight.Add(dWeight);
-                                // <TRA:setting name="FrameWeight" value="7.0" />
-                                strFrameWeight = GetValue(xml, "FrameWeight", iEngineImpuse);
-                                FrameWeight = Convert.ToDouble(strFrameWeight);
-                                ListFrameWeight.Add(FrameWeight);
-                                // <!-- set engine type
-                                //      -1 = fixed 
-                                //      N = variable point on a plot describing impules value
-                                //          -->
-                                //<TRA:setting name="EngineType" value="-1.0" />
-                                strEngineType = GetValue(xml, "EngineType", iEngineImpuse);
-                                EngineType = Convert.ToDouble(strEngineType);
-                                ListEngineType.Add(EngineType);
-                                //<!-- set engine Throttle  value (0.0 - 1.0) -->    
-                                //<TRA:setting name="Throttle" value="1.0" />
-                                strThrottle = GetValue(xml, "Throttle", iEngineImpuse);
-                                dThrottle = Convert.ToDouble(strThrottle);
-
-                                ListThrottle.Add(dThrottle);
-                                //<!-- iteration per sec from engine's plot -->
-                                //<TRA:setting name="DeltaT" value="5.0" />
-                                strDeltaT = GetValue(xml, "DeltaT", iEngineImpuse);
-                                dDeltaT = Convert.ToDouble(strDeltaT);
-                                ListDeltaT.Add(dDeltaT);
-                                switch (iEngineImpuse)
-                                {
-                                    case 0:
-                                        CheckBoxImp1.Checked = true;
-                                        break;
-                                    case 1:
-                                        CheckBoxImp2.Checked = true;
-                                        break;
-                                    case 2:
-                                        CheckBoxImp3.Checked = true;
-                                        break;
-                                    case 3:
-                                        CheckBoxImp4.Checked = true;
-                                        break;
-                                    case 4:
-                                        CheckBoxImp5.Checked = true;
-                                        break;
-                                }
-
-                                iEngineImpuse += 1;
-                                ListImpulseVal = new List<double>(); 
-                                iIteration = 0;
-                            }
-                            else
-                            {
-                                ListImpulseVal.Add(dImplVal);
-                            }
-
+                            case 0:
+                                CheckBoxImp1.Checked = true;
+                                break;
+                            case 1:
+                                CheckBoxImp2.Checked = true;
+                                break;
+                            case 2:
+                                CheckBoxImp3.Checked = true;
+                                break;
+                            case 3:
+                                CheckBoxImp4.Checked = true;
+                                break;
+                            case 4:
+                                CheckBoxImp5.Checked = true;
+                                break;
                         }
-
+                        iEngineImpuse += 1;
+                        iEngineImpuseUpdt += 1;
+                        ListImpulseVal = new List<double>(); 
                     }
-                    while (strImplVal != null);
+                    while (iTotalIteration != 0);
 
                     HttpContext.Current.Application["EngineImpuse" + szUsername] = ListEngineImpuse;
                     HttpContext.Current.Application["Weight" + szUsername] = ListWeight;
@@ -446,61 +592,7 @@ namespace SatCtrl
             // no take everything
             if (IsList != null)
             {
-                strProbM = IsList.ToString();
-                TextBoxProbM.Text = strProbM;
-                IsList = HttpContext.Current.Application["ProbMTarget" + szUsername];
-                if (IsList != null)
-                {
-                    strProbMTarget = IsList.ToString();
-                    TextBoxProbMTarget.Text = strProbMTarget;
-                }
-                int iEngineImpuse = 0;
-                ListEngineImpuse = (List<double>) HttpContext.Current.Application["EngineImpuse" + szUsername];
-                if (ListEngineImpuse.Count > 0)
-                {
-                    for (iEngineImpuse = 0; iEngineImpuse < ListEngineImpuse.Count; iEngineImpuse++)
-                    {
-                        strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
-                        ListImpulseVal = (List<double>)HttpContext.Current.Application[strImpNumber];
-                        ListWeight = (List<double>)HttpContext.Current.Application["Weight" + szUsername];
-                        ListFrameWeight = (List<double>)HttpContext.Current.Application["FrameWeight" + szUsername];
-                        ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + szUsername];
-                        ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + szUsername];
-                        ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + szUsername];
-
-                        strEngineXML = MakeEngineXMLFile(ListImpulseVal, ListEngineImpuse.ElementAt(iEngineImpuse), ListWeight.ElementAt(iEngineImpuse),
-                            ListFrameWeight.ElementAt(iEngineImpuse), ListEngineType.ElementAt(iEngineImpuse), ListThrottle.ElementAt(iEngineImpuse), ListDeltaT.ElementAt(iEngineImpuse));
-                        switch (iEngineImpuse)
-                        {
-                            case 0:
-                                TextBoxEngineXML1.Text = strEngineXML;
-                                ImageImpl1.ImageUrl = "EngineJpgGen.aspx?n=1";
-                                //CheckBoxImp1.Checked = true;
-                                break;
-                            case 1:
-                                TextBoxEngineXML2.Text = strEngineXML;
-                                ImageImpl2.ImageUrl = "EngineJpgGen.aspx?n=2";
-                                //CheckBoxImp2.Checked = true;
-                                break;
-                            case 2:
-                                TextBoxEngineXML3.Text = strEngineXML;
-                                ImageImpl3.ImageUrl = "EngineJpgGen.aspx?n=3";
-                                //CheckBoxImp3.Checked = true;
-                                break;
-                            case 3:
-                                TextBoxEngineXML4.Text = strEngineXML;
-                                ImageImpl4.ImageUrl = "EngineJpgGen.aspx?n=4";
-                                //CheckBoxImp4.Checked = true;
-                                break;
-                            case 4:
-                                TextBoxEngineXML5.Text = strEngineXML;
-                                ImageImpl5.ImageUrl = "EngineJpgGen.aspx?n=5";
-                                //CheckBoxImp5.Checked = true;
-                                break;
-                        }
-
-                    }
-                }
+                GetFromApplication(IsList);
             }
             UpdateVisibility();
         }
@@ -522,25 +614,18 @@ namespace SatCtrl
             return Str1;
         }
 
+        
+
+        
+
+        
+
+        
+
         protected void CheckBoxImp1_CheckedChanged(object sender, EventArgs e)
         {
             UpdateVisibility();
         }
-
-        protected void ButtonUpdateImp1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void ButtonAddImp1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void ButtonDeleteImp1_Click(object sender, EventArgs e)
-        {
-        }
-
         protected void CheckBoxImp2_CheckedChanged(object sender, EventArgs e)
         {
             UpdateVisibility();
@@ -559,6 +644,146 @@ namespace SatCtrl
         protected void CheckBoxImp5_CheckedChanged(object sender, EventArgs e)
         {
             UpdateVisibility();
+        }
+        /// <summary>
+        /// update group
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ButtonUpdateImp1_Click(object sender, EventArgs e)
+        {
+            ListImpulseVal = new List<double>();
+            String xml = TextBoxEngineXML1Value;
+            int iEngineImpuse = 0;
+            int iTotalIteration = 0;
+            iTotalIteration = ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
+            object IsList = HttpContext.Current.Application["ProbM" + szUsername];
+            if (IsList != null)
+            {
+                GetFromApplication(IsList);
+            }
+            UpdateVisibility();
+        }
+
+        protected void ButtonUpdateImp2_Click(object sender, EventArgs e)
+        {
+            ListImpulseVal = new List<double>();
+            String xml = TextBoxEngineXML2Value;
+            int iEngineImpuse = 1;
+            int iTotalIteration = 0;
+            iTotalIteration = ProcessOneImpl(xml, iEngineImpuse, iTotalIteration,0,true);
+            object IsList = HttpContext.Current.Application["ProbM" + szUsername];
+            if (IsList != null)
+            {
+                GetFromApplication(IsList);
+            }
+            UpdateVisibility();
+        }
+
+        protected void ButtonUpdateImp3_Click(object sender, EventArgs e)
+        {
+            ListImpulseVal = new List<double>();
+            String xml = TextBoxEngineXML3Value;
+            int iEngineImpuse = 2;
+            int iTotalIteration = 0;
+            iTotalIteration = ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
+            object IsList = HttpContext.Current.Application["ProbM" + szUsername];
+            if (IsList != null)
+            {
+                GetFromApplication(IsList);
+            }
+            UpdateVisibility();
+        }
+
+        protected void ButtonUpdateImp4_Click(object sender, EventArgs e)
+        {
+            ListImpulseVal = new List<double>();
+            String xml = TextBoxEngineXML4Value;
+            int iEngineImpuse = 2;
+            int iTotalIteration = 0;
+            iTotalIteration = ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
+            object IsList = HttpContext.Current.Application["ProbM" + szUsername];
+            if (IsList != null)
+            {
+                GetFromApplication(IsList);
+            }
+            UpdateVisibility();
+        }
+
+        protected void ButtonUpdateImp5_Click(object sender, EventArgs e)
+        {
+            ListImpulseVal = new List<double>();
+            String xml = TextBoxEngineXML5Value;
+            int iEngineImpuse = 2;
+            int iTotalIteration = 0;
+            iTotalIteration = ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
+            object IsList = HttpContext.Current.Application["ProbM" + szUsername];
+            if (IsList != null)
+            {
+                GetFromApplication(IsList);
+            }
+            UpdateVisibility();
+        }
+
+        ///////
+        // added impulse goup
+        protected void ButtonAddImp1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonAddImp2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonAddImp3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonAddImp4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonAddImp5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// delete impulse group
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void ButtonDeleteImp1_Click(object sender, EventArgs e)
+        {
+        }
+
+        protected void ButtonDeleteImp2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonDeleteImp3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonDeleteImp4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ButtonDeleteImp5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

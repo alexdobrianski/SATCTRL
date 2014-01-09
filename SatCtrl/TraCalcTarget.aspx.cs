@@ -87,6 +87,25 @@ namespace SatCtrl
                 {
                     xml = null;
                 }
+                if (xml == null)
+                {
+                    NameFile = "InitTraget" + "Main.xml";
+                    MapPath = Server.MapPath(NameFile);
+                    iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
+                    if (iDirAccound > 0) // it is dir "account"
+                    {
+                        MapPath = MapPath.Substring(0, iDirAccound);
+                        MapPath += "\\SatCtrl\\\\SatCtrl\\\\" + NameFile;
+                    }
+                    try
+                    {
+                        xml = File.ReadAllText(MapPath);
+                    }
+                    catch (Exception Exs)
+                    {
+                        xml = null;
+                    }
+                }
                 if (xml != null)
                 {
                     strLongitude = GetValue(xml, "Targetlongitude", 0);

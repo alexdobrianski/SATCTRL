@@ -9,21 +9,30 @@
                 Craft 
             </td>
             <td>
-                Calculation:
+                Calculation 
+                by:
                 <asp:Label ID="LabelUserName" runat="server" Text="Label"></asp:Label>
 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Label ID="LabelTextToLogin" runat="server" Text="To edit fields need to "></asp:Label>
+                <asp:HyperLink ID="HyperLinkLogin" runat="server" 
+                    NavigateUrl="~/Account/Login.aspx">Login</asp:HyperLink>
             </td>
         </tr>
         <tr>
             <td class="style12">
-                Total mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBoxProbM" runat="server"></asp:TextBox>
+                Total mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBoxProbM" 
+                    runat="server" ReadOnly="True"></asp:TextBox>
             &nbsp;kg</td>
         </tr>
         <tr>
             <td class="style12">
-                Landed mass&nbsp; <asp:TextBox 
-                    ID="TextBoxProbMTarget" runat="server"></asp:TextBox>
-            &nbsp;kg</td>
+                Landed mass&nbsp; 
+                <asp:TextBox 
+                    ID="TextBoxProbMTarget" runat="server" ReadOnly="True"></asp:TextBox>
+            &nbsp;kg<asp:Button ID="ButtonSetLandedMass" runat="server" onclick="Button1_Click" 
+                    Text="Set Landed mass" />
+            </td>
         </tr>
         <tr>
             <td class="style12">
@@ -34,12 +43,10 @@
             <td class="style12">
                 <asp:Label ID="LabelImpl1" runat="server" Text="Engine (1 impulse) profile:"></asp:Label>
                 <asp:CheckBox 
-                    ID="CheckBoxImp1" runat="server" Text="use" AutoPostBack="True" 
+                    ID="CheckBoxImp1" runat="server" Text="use in calculations" AutoPostBack="True" 
                     oncheckedchanged="CheckBoxImp1_CheckedChanged" />
             &nbsp;</td>
             <td>
-                <asp:Button ID="ButtonDeleteImp1" runat="server" 
-                    onclick="ButtonDeleteImp1_Click" Text="Delete" />
                 <asp:Button ID="ButtonUpdateImp1" runat="server" 
                     onclick="ButtonUpdateImp1_Click" Text="Update" />
             </td>
@@ -47,7 +54,7 @@
         <tr>
             <td class="style12">
                     
-                    <asp:HyperLink ID="HyperLinkImpl1" runat="server" NavigateUrl="EngineJpgGen.aspx?n=1" >
+                    <asp:HyperLink ID="HyperLinkImpl1" runat="server" NavigateUrl="EngineJpgGen.aspx?n=0" >
                     <asp:Image ID="ImageImpl1" runat="server" Height="200px" 
                         ImageUrl="~/Img/engineblank.JPG" Width="350px"  />
                     
@@ -74,19 +81,22 @@
                 <asp:Label ID="LabelImpl2" runat="server" Text="Engine (2 impulse) profile:"></asp:Label>
                 <asp:CheckBox 
                     ID="CheckBoxImp2" runat="server" AutoPostBack="True" 
-                    oncheckedchanged="CheckBoxImp2_CheckedChanged" Text="use" />
+                    oncheckedchanged="CheckBoxImp2_CheckedChanged" 
+                    Text="use in calculations" />
             </td>
             <td>
-                <asp:Button ID="ButtonDeleteImp2" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonDeleteImp2" runat="server" Text="Delete" 
+                    onclick="ButtonDeleteImp2_Click" />
                 <asp:Button ID="ButtonAddImp2" runat="server" Text="Add" 
-                    ToolTip="Add another impulse" />
-                <asp:Button ID="ButtonUpdateImp2" runat="server" Text="Update" />
+                    ToolTip="Add another impulse" onclick="ButtonAddImp2_Click" />
+                <asp:Button ID="ButtonUpdateImp2" runat="server" Text="Update" 
+                    onclick="ButtonUpdateImp2_Click" />
             </td>
 
         </tr>
         <tr>
             <td class="style12">
-                    <asp:HyperLink ID="HyperLinkImpl2" runat="server" NavigateUrl="EngineJpgGen.aspx?n=2" >
+                    <asp:HyperLink ID="HyperLinkImpl2" runat="server" NavigateUrl="EngineJpgGen.aspx?n=1" >
                     <asp:Image ID="ImageImpl2" runat="server" Height="200px" 
                         ImageUrl="~/Img/engineblank.JPG" Width="350px" />
                         </asp:HyperLink>
@@ -111,19 +121,22 @@
                 <asp:Label ID="LabelImpl3" runat="server" Text="Engine (3 impulse) profile:"></asp:Label>
                 <asp:CheckBox 
                     ID="CheckBoxImp3" runat="server" AutoPostBack="True" 
-                    oncheckedchanged="CheckBoxImp3_CheckedChanged" Text="use" />
+                    oncheckedchanged="CheckBoxImp3_CheckedChanged" 
+                    Text="use in calculations" />
             </td>
             <td>
-                <asp:Button ID="ButtonDeleteImp3" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonDeleteImp3" runat="server" Text="Delete" 
+                    onclick="ButtonDeleteImp3_Click" />
                 <asp:Button ID="ButtonAddImp3" runat="server" Text="Add" 
-                    ToolTip="Add another impulse" />
-                <asp:Button ID="ButtonUpdateImp3" runat="server" Text="Update" />
+                    ToolTip="Add another impulse" onclick="ButtonAddImp3_Click" />
+                <asp:Button ID="ButtonUpdateImp3" runat="server" Text="Update" 
+                    onclick="ButtonUpdateImp3_Click" />
             </td>
 
         </tr>
         <tr>
             <td class="style12">
-                    <asp:HyperLink ID="HyperLinkImpl3" runat="server" NavigateUrl="EngineJpgGen.aspx?n=3" >
+                    <asp:HyperLink ID="HyperLinkImpl3" runat="server" NavigateUrl="EngineJpgGen.aspx?n=2" >
                     <asp:Image ID="ImageImpl3" runat="server" Height="200px" 
                         ImageUrl="~/Img/engineblank.JPG" Width="350px" />
                         </asp:HyperLink>
@@ -151,18 +164,21 @@
                 <asp:Label ID="LabelImpl4" runat="server" Text="Engine (4 impulse) profile:"></asp:Label>
                 <asp:CheckBox 
                     ID="CheckBoxImp4" runat="server" AutoPostBack="True" 
-                    oncheckedchanged="CheckBoxImp4_CheckedChanged" Text="use" />
+                    oncheckedchanged="CheckBoxImp4_CheckedChanged" 
+                    Text="use in calculations" />
             </td>
             <td>
-                <asp:Button ID="ButtonDeleteImp4" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonDeleteImp4" runat="server" Text="Delete" 
+                    onclick="ButtonDeleteImp4_Click" />
                 <asp:Button ID="ButtonAddImp4" runat="server" Text="Add" 
-                    ToolTip="Add another impulse" />
-                <asp:Button ID="ButtonUpdateImp4" runat="server" Text="Update" />
+                    ToolTip="Add another impulse" onclick="ButtonAddImp4_Click" />
+                <asp:Button ID="ButtonUpdateImp4" runat="server" Text="Update" 
+                    onclick="ButtonUpdateImp4_Click" />
             </td>
         </tr>
         <tr>
             <td class="style12">
-                    <asp:HyperLink ID="HyperLinkImpl4" runat="server" NavigateUrl="EngineJpgGen.aspx?n=4" >
+                    <asp:HyperLink ID="HyperLinkImpl4" runat="server" NavigateUrl="EngineJpgGen.aspx?n=3" >
                     <asp:Image ID="ImageImpl4" runat="server" Height="200px" 
                         ImageUrl="~/Img/engineblank.JPG" Width="350px" />
                         </asp:HyperLink>
@@ -189,18 +205,21 @@
                 <asp:Label ID="LabelImpl5" runat="server" Text="Engine (5 impulse) profile:"></asp:Label>
                 <asp:CheckBox 
                     ID="CheckBoxImp5" runat="server" AutoPostBack="True" 
-                    oncheckedchanged="CheckBoxImp5_CheckedChanged" Text="use" />
+                    oncheckedchanged="CheckBoxImp5_CheckedChanged" 
+                    Text="use in calculations" />
             </td>
             <td>
-                <asp:Button ID="ButtonDeleteImp5" runat="server" Text="Delete" />
+                <asp:Button ID="ButtonDeleteImp5" runat="server" Text="Delete" 
+                    onclick="ButtonDeleteImp5_Click" />
                 <asp:Button ID="ButtonAddImp5" runat="server" Text="Add" 
-                    ToolTip="Add another impulse" />
-                <asp:Button ID="ButtonUpdateImp5" runat="server" Text="Update" />
+                    ToolTip="Add another impulse" onclick="ButtonAddImp5_Click" />
+                <asp:Button ID="ButtonUpdateImp5" runat="server" Text="Update" 
+                    onclick="ButtonUpdateImp5_Click" />
             </td>
         </tr>
         <tr>
             <td class="style12">
-                    <asp:HyperLink ID="HyperLinkImpl5" runat="server" NavigateUrl="EngineJpgGen.aspx?n=5" >
+                    <asp:HyperLink ID="HyperLinkImpl5" runat="server" NavigateUrl="EngineJpgGen.aspx?n=4" >
                     <asp:Image ID="ImageImpl5" runat="server" Height="200px" 
                         ImageUrl="~/Img/engineblank.JPG" Width="350px" />
                         </asp:HyperLink>

@@ -904,6 +904,26 @@ namespace SatCtrl
                 {
                     xml = null;
                 }
+                if (xml == null) // init file is absent - use main for now
+                {
+                    NameFile = "InitOrbit" + "Main.xml";
+                    MapPath = Server.MapPath(NameFile);
+                    iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
+                    if (iDirAccound > 0) // it is dir "account"
+                    {
+                        MapPath = MapPath.Substring(0, iDirAccound);
+                        MapPath += "\\SatCtrl\\\\SatCtrl\\\\" + NameFile;
+                    }
+
+                    try
+                    {
+                        xml = File.ReadAllText(MapPath);
+                    }
+                    catch (Exception Exs)
+                    {
+                        xml = null;
+                    }
+                }
                 if (xml != null)
                 {
                     SVal1 = GetValue(xml, "ProbKeplerLine1", 0);

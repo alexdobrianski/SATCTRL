@@ -23,10 +23,9 @@ namespace SatCtrl
                 szUsername = Page.User.Identity.Name.ToString();
             }
             String Param = Request.QueryString["n"];
-            int iEngine =1;
+            int iEngine =0;
             if (Param != null)
                 iEngine = Convert.ToInt32(Param);
-            iEngine = iEngine - 1;
             int iBrushSize = 1;
             double dLinelenX = 640;
             double dLinelenX0 = 5;
@@ -37,6 +36,7 @@ namespace SatCtrl
             Bitmap bitMapImage = new System.Drawing.Bitmap(Server.MapPath(NameMap));
             Graphics graphicImage = Graphics.FromImage(bitMapImage);
             Color MyColor = System.Drawing.Color.Red;
+
             SolidBrush myBrush = new SolidBrush(Color.Red);
             Pen myPen = new Pen(myBrush, iBrushSize);
 
@@ -46,13 +46,7 @@ namespace SatCtrl
             double dWidth = bitMapImage.Width;
             double dHeight = bitMapImage.Height;
 
-            //cImage.DrawLine(myPen, (float)(dLinelenX0), (float)dLinelenY0, (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0));
-            graphicImage.DrawLine(myPen, (float)(dLinelenX0), (float)dLinelenY0, (float)(dLinelenX0), (float)(dLinelenY0 + dLinelenY));
-            graphicImage.DrawLine(myPen, (float)(dLinelenX0), (float)dLinelenY0, (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0));
-
-            graphicImage.DrawLine(myPen, (float)(dLinelenX0 + dLinelenX), (float)dLinelenY0, (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0 + dLinelenY));
-            graphicImage.DrawLine(myPen, (float)(dLinelenX0), (float)(dLinelenY0 + dLinelenY), (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0 + dLinelenY));
-
+            
             List<double> ListEngineImpuse;
 
             int iEngineImpuse = 0;
@@ -68,6 +62,7 @@ namespace SatCtrl
                     List<double> ListDeltaT;
                     List<double> ListImpulseVal;
                     String strImpNumber;
+                    int iDeltaCount = 0;
 
                     if (iEngine >= 0 && iEngine < ListEngineImpuse.Count)
                     {
@@ -79,15 +74,104 @@ namespace SatCtrl
                         ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + szUsername];
                         ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + szUsername];
                         ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + szUsername];
+                        iDeltaCount = (int) ListDeltaT[iEngine];
                         SolidBrush PlotBrush = new SolidBrush(Color.Blue);
-
                         Pen PlotPen = new Pen(PlotBrush, iBrushSize);
+
+                        SolidBrush meshBrush = new SolidBrush(Color.Green);
+                        Pen meshPen = new Pen(meshBrush, iBrushSize);
+                        Font meshFont = new Font("Arial", 9);
                         double maxImpl = ListImpulseVal.Max();
                         double minImpl = ListImpulseVal.Min();
+                        double CoefMax = maxImpl - minImpl;
+
+                        if (CoefMax < 10.0)
+                            CoefMax = 1.0;
+                        else if (CoefMax < 100.0)
+                            CoefMax = 10.0;
+                        else if (CoefMax < 1000.0)
+                            CoefMax = 100.0;
+                        else if (CoefMax < 10000.0)
+                            CoefMax = 1000.0;
+                        else if (CoefMax < 100000.0)
+                            CoefMax = 10000.0;
+                        else if (CoefMax < 1000000.0)
+                            CoefMax = 100000.0;
+                        else if (CoefMax < 10000000.0)
+                            CoefMax = 1000000.0;
+                        else if (CoefMax < 100000000.0)
+                            CoefMax = 10000000.0;
+                        else if (CoefMax < 1000000000.0)
+                            CoefMax = 100000000.0;
+
+                        double CorrectedMax = (maxImpl - minImpl) / CoefMax;
+                        double LevelMax = CorrectedMax;
+                        int iLines = 2;
+                        if (CorrectedMax <= 2.0)
+                        {
+                            LevelMax = 2.0;
+                            iLines = 2;
+                        }
+                        else if (CorrectedMax <= 3.0)
+                        {
+                            LevelMax = 3.0;
+                            iLines = 3;
+                        }
+                        else if (CorrectedMax <= 4.0)
+                        {
+                            LevelMax = 4.0;
+                            iLines = 4;
+                        }
+                        else if (CorrectedMax <= 5.0)
+                        {
+                            LevelMax = 5.0;
+                            iLines = 5;
+                        }
+                        else if (CorrectedMax <= 6.0)
+                        {
+                            LevelMax = 6.0;
+                            iLines = 6;
+                        }
+                        else if (CorrectedMax <= 7.0)
+                        {
+                            LevelMax = 7.0;
+                            iLines = 7;
+                        }
+                        else if (CorrectedMax <= 8.0)
+                        {
+                            LevelMax = 8.0;
+                            iLines = 8;
+                        }
+                        else if (CorrectedMax <= 9.0)
+                        {
+                            LevelMax = 9.0;
+                            iLines = 9;
+                        }
+                        else if (CorrectedMax <= 10.0)
+                        {
+                            LevelMax = 10.0;
+                            iLines = 10;
+                        }
+                        String Value;
+                        for (int ii = 0; ii < iLines; ii++)
+                        {
+                            Value = Convert.ToString((iLines-ii) * CoefMax);
+                            graphicImage.DrawLine(meshPen, (float)(dLinelenX0), (float)dLinelenY0 + ii * (360 / iLines), (float)(dLinelenX), (float)(dLinelenY0 + ii * (360 / iLines)));
+                            graphicImage.DrawString(Value, meshFont, meshBrush, (float)(dLinelenX+3), (float)((float)dLinelenY0 + ii * (360 / iLines)));
+
+                        }
+                        maxImpl = minImpl + LevelMax * CoefMax;
+
                         int iCount = ListImpulseVal.Count;
                         double ddOld = 0.0;
                         double X0; double X1; double Y0; double Y1;
                         int iter = 0;
+                        //iDeltaCount = 1;
+                        int isec = 0;
+                        int nSeconds = 0;
+                        String strSecond;
+                        SizeF stringSize = new SizeF();
+                        int TextPos = (int)dLinelenX0;
                         foreach (double dd in ListImpulseVal)
                         {
                             if (iter > 0)
@@ -98,7 +182,23 @@ namespace SatCtrl
 
                                 Y0 = dLinelenY0 + 360 - 360.0 * ddOld / (maxImpl - minImpl);
                                 Y1 = dLinelenY0 + 360 - 360.0 * dd / (maxImpl - minImpl);
+                                isec += 1;
+                                if (isec >= iDeltaCount)
+                                {
+                                    isec = 0;
+                                    graphicImage.DrawLine(meshPen, (float)(X1), (float)dLinelenY0, (float)(X1), (float)(dLinelenY));
+                                    nSeconds += 1;
+                                    strSecond = Convert.ToString(nSeconds);
+                                    if (X1 > TextPos)
+                                    {
+                                        graphicImage.DrawString(strSecond, meshFont, meshBrush, (float)(X1), (float)(dLinelenY0 + dLinelenY));
+                                        stringSize = graphicImage.MeasureString(strSecond, meshFont);
+                                        TextPos = (int)X1 + (int)stringSize.Width * 2;
+                                    }
+                                    
+                                }
                                 graphicImage.DrawLine(PlotPen, (float)(X0), (float)Y0, (float)(X1), (float)(Y1));
+                                
                             }
                             ddOld = dd;
                             iter++;
@@ -106,6 +206,13 @@ namespace SatCtrl
                     }
                 }
             }
+            //cImage.DrawLine(myPen, (float)(dLinelenX0), (float)dLinelenY0, (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0));
+            graphicImage.DrawLine(myPen, (float)(dLinelenX0), (float)dLinelenY0, (float)(dLinelenX0), (float)(dLinelenY0 + dLinelenY));
+            graphicImage.DrawLine(myPen, (float)(dLinelenX0), (float)dLinelenY0, (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0));
+
+            graphicImage.DrawLine(myPen, (float)(dLinelenX0 + dLinelenX), (float)dLinelenY0, (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0 + dLinelenY));
+            graphicImage.DrawLine(myPen, (float)(dLinelenX0), (float)(dLinelenY0 + dLinelenY), (float)(dLinelenX0 + dLinelenX), (float)(dLinelenY0 + dLinelenY));
+
 
 
             Response.ContentType = "image/jpeg";

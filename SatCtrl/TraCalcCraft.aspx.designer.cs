@@ -22,6 +22,24 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.Label LabelUserName;
         
         /// <summary>
+        /// LabelTextToLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelTextToLogin;
+        
+        /// <summary>
+        /// HyperLinkLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkLogin;
+        
+        /// <summary>
         /// TextBoxProbM control.
         /// </summary>
         /// <remarks>
@@ -40,6 +58,15 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.TextBox TextBoxProbMTarget;
         
         /// <summary>
+        /// ButtonSetLandedMass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonSetLandedMass;
+        
+        /// <summary>
         /// LabelImpl1 control.
         /// </summary>
         /// <remarks>
@@ -56,15 +83,6 @@ namespace SatCtrl {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxImp1;
-        
-        /// <summary>
-        /// ButtonDeleteImp1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonDeleteImp1;
         
         /// <summary>
         /// ButtonUpdateImp1 control.
