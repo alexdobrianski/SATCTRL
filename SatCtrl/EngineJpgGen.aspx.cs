@@ -58,6 +58,7 @@ namespace SatCtrl
                     List<double> ListWeight;
                     List<double> ListFrameWeight;
                     List<double> ListEngineType;
+                    List<double> ListFireTime;
                     List<double> ListThrottle;
                     List<double> ListDeltaT;
                     List<double> ListImpulseVal;
@@ -72,6 +73,7 @@ namespace SatCtrl
                         ListWeight = (List<double>)HttpContext.Current.Application["Weight" + szUsername];
                         ListFrameWeight = (List<double>)HttpContext.Current.Application["FrameWeight" + szUsername];
                         ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + szUsername];
+                        ListFireTime = (List<double>)HttpContext.Current.Application["FireTime" + szUsername];
                         ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + szUsername];
                         ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + szUsername];
                         iDeltaCount = (int) ListDeltaT[iEngine];
@@ -81,6 +83,10 @@ namespace SatCtrl
                         SolidBrush meshBrush = new SolidBrush(Color.Green);
                         Pen meshPen = new Pen(meshBrush, iBrushSize);
                         Font meshFont = new Font("Arial", 9);
+
+                        SolidBrush FireBrush = new SolidBrush(Color.LightSalmon);
+                        Pen FirePen = new Pen(FireBrush, iBrushSize);
+
                         double maxImpl = ListImpulseVal.Max();
                         double minImpl = ListImpulseVal.Min();
                         double CoefMax = maxImpl - minImpl;
@@ -172,13 +178,21 @@ namespace SatCtrl
                         String strSecond;
                         SizeF stringSize = new SizeF();
                         int TextPos = (int)dLinelenX0;
+                        int iLiquidEngine = (int)ListEngineType[iEngineImpuse];
+                        int iFireTime = (int) ListFireTime[iEngineImpuse];
+                        if (iLiquidEngine >0)
+                        {
+                            if (iFireTime < 0 && iFireTime > 10000)
+                                iFireTime = 0;
+                        }
+                        int iLiquidFireTime = 0;
                         foreach (double dd in ListImpulseVal)
                         {
                             if (iter > 0)
                             {
                                 // drow line from ddOld to dd 
-                                X0 = dLinelenX0 + 640.0 * (double)(iter - 1) / (double)iCount;
-                                X1 = dLinelenX0 + 640.0 * (double)(iter) / (double)iCount;
+                                X0 = dLinelenX0 + 640.0 * (double)(iter + iLiquidFireTime  - 1) / (double)iCount;
+                                X1 = dLinelenX0 + 640.0 * (double)(iter + iLiquidFireTime) / (double)iCount;
 
                                 Y0 = dLinelenY0 + 360 - 360.0 * ddOld / (maxImpl - minImpl);
                                 Y1 = dLinelenY0 + 360 - 360.0 * dd / (maxImpl - minImpl);
@@ -197,11 +211,30 @@ namespace SatCtrl
                                     }
                                     
                                 }
+                                if (iLiquidEngine == iter)
+                                {
+                                    graphicImage.DrawLine(FirePen, (float)(X1), (float)dLinelenY0, (float)(X1), (float)(dLinelenY));
+                                    if (iFireTime > 0)
+                                    {
+                                        iLiquidFireTime += 1;
+                                        iFireTime -= 1;
+                                    }
+                                    else
+                                        iter++;
+
+                                    
+                                }
                                 graphicImage.DrawLine(PlotPen, (float)(X0), (float)Y0, (float)(X1), (float)(Y1));
                                 
                             }
                             ddOld = dd;
-                            iter++;
+                            if (iLiquidEngine == iter)
+                            {
+                            }
+                            else
+                            {
+                                iter++;
+                            }
                         }
                     }
                 }

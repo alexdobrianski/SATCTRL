@@ -10,6 +10,10 @@
          N = variable point on a plot describing impules value
                  -->
     <TRA:setting name="EngineType" value="-1.0" />
+    <!-- if engine is liquid (EngineType=NN)
+         set firing time of the engine 
+         otherwise it is ignored--->
+    <TRA:setting name="FireTime" value="0.0" />
 
     <!-- set engine Throttle  value (0.0 - 1.0) -->    
     <TRA:setting name="Throttle" value="1.0" />

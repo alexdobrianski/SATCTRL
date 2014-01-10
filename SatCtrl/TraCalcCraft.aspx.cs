@@ -21,6 +21,7 @@ namespace SatCtrl
         List<double> ListWeight = new List<double>();
         List<double> ListFrameWeight = new List<double>();
         List<double> ListEngineType = new List<double>();
+        List<double> ListFireTime = new List<double>();
         List<double> ListThrottle = new List<double>();
         List<double> ListDeltaT = new List<double>();
         List<double> ListImpulseVal = new List<double>();
@@ -246,7 +247,7 @@ namespace SatCtrl
 
         }
         String MakeEngineXMLFile(List<double> ListVal, double dEngineImpuse, double dWeight,
-            double dFrameWeight, double dEngineType, double dThrottle, double dDeltaT)
+            double dFrameWeight, double dEngineType, double dFireTime, double dThrottle, double dDeltaT)
         {
             // <TRA:setting name="EngineImpuse" value="1.0" />
             //   <TRA:setting name="Weight" value="17.157" />
@@ -262,20 +263,32 @@ namespace SatCtrl
             //    <TRA:setting name="DeltaT" value="5.0" />
 
             String strXML = "<TRA:setting name=\"EngineImpuse +\" value=\"" + dEngineImpuse + "\" />\r\n" +
-            "   <TRA:setting name=\"Weight\" value=\"" + dWeight + "\" />\r\n" +
-            "   <TRA:setting name=\"FrameWeight\" value=\"" + dFrameWeight + "\" />\r\n" +
+            "   <TRA name=\"Weight\" value=\"" + dWeight + "\" />\r\n" +
+            "   <TRA name=\"FrameWeight\" value=\"" + dFrameWeight + "\" />\r\n" +
             "   <!-- set engine type\r\n" +
             "     -1 = fixed \r\n" +
             "      N = variable point on a plot describing impules value\r\n" +
             "     -->\r\n" +
-            "   <TRA:setting name=\"EngineType\" value=\"" + dEngineType + "\" />\r\n" +
+            "   <TRA name=\"EngineType\" value=\"" + dEngineType + "\" />\r\n" +
             "   <!-- set engine Throttle  value (0.0 - 1.0) -->\r\n" +
-            "   <TRA:setting name=\"Throttle\" value=\"" + dThrottle + "\" />\r\n" +
+            "   <!-- if engine is liquid (EngineType=NN)\r\n" +
+            "        set firing time of the engine \r\n" +
+            "        otherwise it is ignored--->\r\n" +
+            "    <TRA:setting name=\"FireTime\" value=\"" + dFireTime + "\" />\r\n" +
+            "   <TRA name=\"Throttle\" value=\"" + dThrottle + "\" />\r\n" +
             "   <!-- iteration per sec from engine's plot -->\r\n" +
-            "    <TRA:setting name=\"DeltaT\" value=\"" + dDeltaT + "\" />\r\n";
+            "    <TRA name=\"DeltaT\" value=\"" + dDeltaT + "\" />\r\n";
+            String TimeVal;
+            String NumberVal;
+            double dI = 0;
             foreach (double dd in ListVal)
             {
-                strXML += "    <CT:setting name=\"ImplVal\" value=\"" + dd + "\" />\r\n";
+                NumberVal = Convert.ToString(dI);
+                TimeVal = Convert.ToString(dI / dDeltaT); dI += 1.0;
+
+                strXML += " <TRA n=\"" + NumberVal + "\" name=\"ImplVal\" value=\"" + dd + "\" t=\"" + TimeVal + "\"/>\r\n";
+                if (dEngineType == dI)
+                    strXML += " <! ---- from that point it will be XXX seconds of firing ------>\r\n";
             }
             return strXML;
         }
@@ -286,6 +299,7 @@ namespace SatCtrl
             String strEngineImpuse;
             String strWeight;
             String strEngineType;
+            String strFireTime;
             String strThrottle;
             String strDeltaT;
             String strFrameWeight;
@@ -294,6 +308,7 @@ namespace SatCtrl
             double dWeight;
             double FrameWeight;
             double EngineType;
+            double FireTime;
             double dThrottle;
             double dDeltaT;
 
@@ -348,6 +363,16 @@ namespace SatCtrl
                                 ListEngineType[iEngineImpuse] = EngineType;
                             else
                                 ListEngineType.Add(EngineType);
+
+
+
+                            strFireTime = GetValue(xml, "FireTime", iEngineImpuseUpdt);
+                            FireTime = Convert.ToDouble(strFireTime);
+                            if (update)
+                                ListFireTime[iEngineImpuse] = FireTime;
+                            else
+                                ListFireTime.Add(FireTime);
+
                             //<!-- set engine Throttle  value (0.0 - 1.0) -->    
                             //<TRA:setting name="Throttle" value="1.0" />
                             strThrottle = GetValue(xml, "Throttle", iEngineImpuseUpdt);
@@ -407,11 +432,14 @@ namespace SatCtrl
                     ListWeight = (List<double>)HttpContext.Current.Application["Weight" + szUsername];
                     ListFrameWeight = (List<double>)HttpContext.Current.Application["FrameWeight" + szUsername];
                     ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + szUsername];
+                    ListFireTime = (List<double>)HttpContext.Current.Application["FireTime" + szUsername];
                     ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + szUsername];
                     ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + szUsername];
 
-                    strEngineXML = MakeEngineXMLFile(ListImpulseVal, ListEngineImpuse.ElementAt(iEngineImpuse), ListWeight.ElementAt(iEngineImpuse),
-                        ListFrameWeight.ElementAt(iEngineImpuse), ListEngineType.ElementAt(iEngineImpuse), ListThrottle.ElementAt(iEngineImpuse), ListDeltaT.ElementAt(iEngineImpuse));
+                    strEngineXML = MakeEngineXMLFile(ListImpulseVal, ListEngineImpuse[iEngineImpuse], ListWeight[iEngineImpuse],
+                        ListFrameWeight[iEngineImpuse], ListEngineType[iEngineImpuse], 
+                        ListFireTime[iEngineImpuse],
+                        ListThrottle[iEngineImpuse], ListDeltaT[iEngineImpuse]);
                     switch (iEngineImpuse)
                     {
                         case 0:
@@ -572,6 +600,7 @@ namespace SatCtrl
                     HttpContext.Current.Application["Weight" + szUsername] = ListWeight;
                     HttpContext.Current.Application["FrameWeight" + szUsername] = ListFrameWeight;
                     HttpContext.Current.Application["EngineType" + szUsername] = ListEngineType;
+                    HttpContext.Current.Application["FireTime" + szUsername] = ListFireTime;
                     HttpContext.Current.Application["Throttle" + szUsername] = ListThrottle;
                     HttpContext.Current.Application["DeltaT" + szUsername] = ListDeltaT;
                     strProbM = Convert.ToString(TotalWeight);
