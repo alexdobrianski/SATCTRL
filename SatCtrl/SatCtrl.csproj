@@ -77,6 +77,7 @@
     <Content Include="Img\tra_sim.JPG" />
     <Content Include="LunarMapGen.aspx" />
     <Content Include="Post.aspx" />
+    <Content Include="PostCalcResult.aspx" />
     <Content Include="PostTra.aspx" />
     <Content Include="SessionData.aspx" />
     <Content Include="SessionPost.aspx" />
@@ -208,6 +209,13 @@
     </Compile>
     <Compile Include="Post.aspx.designer.cs">
       <DependentUpon>Post.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PostCalcResult.aspx.cs">
+      <DependentUpon>PostCalcResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PostCalcResult.aspx.designer.cs">
+      <DependentUpon>PostCalcResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="PostTra.aspx.cs">
       <DependentUpon>PostTra.aspx</DependentUpon>

@@ -23,30 +23,6 @@ namespace SatCtrl
         double dY;
         string TraStatus;
         string szUsername = "Main";
-        protected String GetValue(String xml, String SearchStr, int iInstance)
-        {
-            String MySearch = "\"" + SearchStr + "\"";
-            int FirstLine = xml.IndexOf(MySearch);
-            int iCount = 0;
-
-            if (FirstLine > 0)
-            {
-                do
-                {
-                    if (iCount == iInstance)
-                    {
-                        int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
-                        int LastValue = xml.IndexOf('\"', FirstValue) - 1;
-                        return xml.Substring(FirstValue, LastValue - FirstValue + 1);
-                    }
-                    FirstLine = xml.IndexOf(MySearch, FirstLine + 1);
-                    iCount += 1;
-                }
-                while (FirstLine > 0);
-            }
-            return null;
-        }
-
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -108,15 +84,15 @@ namespace SatCtrl
                 }
                 if (xml != null)
                 {
-                    strLongitude = GetValue(xml, "Targetlongitude", 0);
+                    strLongitude = SatCtrl.Global.Common.GetValue(xml, "Targetlongitude", 0);
                     strEW = strLongitude.Substring(0, 1);
                     if (strEW == "-") // east
                         strLongitude = "E" + strLongitude.Substring(1);
                     else
                         strLongitude = "W" + strLongitude;
                     HttpContext.Current.Application["Targetlongitude" + szUsername] = strLongitude;
-                    
-                    strLatitude = GetValue(xml, "Targetlatitude", 0);
+
+                    strLatitude = SatCtrl.Global.Common.GetValue(xml, "Targetlatitude", 0);
                     strNS = strLatitude.Substring(0, 1);
                     if (strNS == "-") // south
                         strLatitude = "S" + strLatitude.Substring(1);
@@ -178,23 +154,7 @@ namespace SatCtrl
                 ButtonFindImp.Enabled = false;
             }
         }
-        protected String AddHexString(String Str2)
-        {
-            String Str1 = "";
-            for (int i = 0; i < Str2.Length; i++)
-            {
-                Char CharS = Str2.ElementAt(i);
-                if ((CharS >= '0') && ((CharS <= '9')) || (CharS >= 'a') && ((CharS <= 'z')) || (CharS >= 'A') && ((CharS <= 'Z')))
-                {
-                    Str1 += CharS;
-                }
-                else
-                {
-                    Str1 = Str1 + "%" + Convert.ToByte(CharS).ToString("x2");
-                }
-            }
-            return Str1;
-        }
+        
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {

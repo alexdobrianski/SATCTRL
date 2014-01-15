@@ -12,29 +12,40 @@ namespace SatCtrl
 
     public class Global : System.Web.HttpApplication
     {
-        
-        protected String GetValue(String xml, String SearchStr, int iInstance)
+        public class Common
         {
-            String MySearch = "\"" + SearchStr + "\"";
-            int FirstLine = xml.IndexOf(MySearch);
-            int iCount = 0;
-
-            if (FirstLine > 0)
+            public static String GetValue(String xml, String SearchStr, int iInstance)
             {
-                do
+                String MySearch = "\"" + SearchStr + "\"";
+                int FirstLine = xml.IndexOf(MySearch);
+                int iCount = 0;
+
+                if (FirstLine > 0)
                 {
-                    if (iCount == iInstance)
+                    do
                     {
-                        int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
-                        int LastValue = xml.IndexOf('\"', FirstValue) - 1;
-                        return xml.Substring(FirstValue, LastValue - FirstValue + 1);
+                        if (iCount == iInstance)
+                        {
+                            int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
+                            int LastValue = xml.IndexOf('\"', FirstValue) - 1;
+                            return xml.Substring(FirstValue, LastValue - FirstValue + 1);
+                        }
+                        FirstLine = xml.IndexOf(MySearch, FirstLine + 1);
+                        iCount += 1;
                     }
-                    FirstLine = xml.IndexOf(MySearch, FirstLine+1);
-                    iCount+=1;
+                    while (FirstLine > 0);
                 }
-                while (FirstLine > 0);
+                return null;
             }
-            return null;
+            public static String WebSiteUrlAdress = null;
+            public static String GetWebSiteURLAdress()
+            {
+                if (WebSiteUrlAdress == null)
+                    WebSiteUrlAdress = System.Configuration.ConfigurationManager.AppSettings["WebSiteUrlAdress"];
+                if (WebSiteUrlAdress == null)
+                    WebSiteUrlAdress = "http://24.84.38.192";
+                return WebSiteUrlAdress;
+            }
         }
 
         void Application_Start(object sender, EventArgs e)
@@ -44,6 +55,8 @@ namespace SatCtrl
             string strMaxPacketNumber = "0";
             long MaxPacketNumber = 0;
             String szUsername = "main";
+
+            Common.GetWebSiteURLAdress();
 
             MySqlConnection conn =
                 new MySqlConnection("server=127.0.0.1;User Id=root;password=azura2samtak;Persist Security Info=True;database=missionlog");
@@ -142,19 +155,19 @@ namespace SatCtrl
                 }
                 if (xml != null)
                 {
-                    SVal1 = GetValue(xml, "ProbKeplerLine1",0);
+                    SVal1 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine1", 0);
                     HttpContext.Current.Application["ProbKeplerLine1"] = SVal1;
-                    SVal2 = GetValue(xml, "ProbKeplerLine2",0);
+                    SVal2 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine2", 0);
                     HttpContext.Current.Application["ProbKeplerLine2"] = SVal2;
-                    SVal3 = GetValue(xml, "ProbKeplerLine3",0);
+                    SVal3 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine3", 0);
                     HttpContext.Current.Application["ProbKeplerLine3"] = SVal3;
                 }
                 int iInteration = 1;
                 do
                 {
-                    SVal1 = GetValue(xml, "ProbKeplerLine1", iInteration);
-                    SVal2 = GetValue(xml, "ProbKeplerLine2", iInteration);
-                    SVal3 = GetValue(xml, "ProbKeplerLine3", iInteration);
+                    SVal1 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine1", iInteration);
+                    SVal2 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine2", iInteration);
+                    SVal3 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine3", iInteration);
                     if ((SVal1 != null) && (SVal2 != null) && (SVal3 != null))
                     {
                         HttpContext.Current.Application["GPS" + iInteration + "ProbKeplerLine1"] = SVal1;

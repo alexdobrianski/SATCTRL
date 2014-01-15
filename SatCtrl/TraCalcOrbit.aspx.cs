@@ -733,29 +733,6 @@ namespace SatCtrl
 			// "328903"        Revolution Number at Epoch
 			ProbRevAtEpoch = COPYKEPLER(TLE3.Substring(63),6);
         }
-        protected String GetValue(String xml, String SearchStr, int iInstance)
-        {
-            String MySearch = "\"" + SearchStr + "\"";
-            int FirstLine = xml.IndexOf(MySearch);
-            int iCount = 0;
-
-            if (FirstLine > 0)
-            {
-                do
-                {
-                    if (iCount == iInstance)
-                    {
-                        int FirstValue = xml.IndexOf("value=", FirstLine) + 7;
-                        int LastValue = xml.IndexOf('\"', FirstValue) - 1;
-                        return xml.Substring(FirstValue, LastValue - FirstValue + 1);
-                    }
-                    FirstLine = xml.IndexOf(MySearch, FirstLine + 1);
-                    iCount += 1;
-                }
-                while (FirstLine > 0);
-            }
-            return null;
-        }
 
         private void SetType(int Itype)
         {
@@ -926,11 +903,11 @@ namespace SatCtrl
                 }
                 if (xml != null)
                 {
-                    SVal1 = GetValue(xml, "ProbKeplerLine1", 0);
+                    SVal1 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine1", 0);
                     HttpContext.Current.Application["InitKeplerLine1" + szUsername] = SVal1;
-                    SVal2 = GetValue(xml, "ProbKeplerLine2", 0);
+                    SVal2 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine2", 0);
                     HttpContext.Current.Application["InitKeplerLine2" + szUsername] = SVal2;
-                    SVal3 = GetValue(xml, "ProbKeplerLine3", 0);
+                    SVal3 = SatCtrl.Global.Common.GetValue(xml, "ProbKeplerLine3", 0);
                     HttpContext.Current.Application["InitKeplerLine3" + szUsername] = SVal3;
                 }
             }
@@ -946,23 +923,7 @@ namespace SatCtrl
             }
 
         }
-        protected String AddHexString(String Str2)
-        {
-            String Str1 = "";
-            for (int i = 0; i < Str2.Length; i++)
-            {
-                Char CharS = Str2.ElementAt(i);
-                if ((CharS >= '0') && ((CharS <= '9')) || (CharS >= 'a') && ((CharS <= 'z')) || (CharS >= 'A') && ((CharS <= 'Z')))
-                {
-                    Str1 += CharS;
-                }
-                else
-                {
-                    Str1 = Str1 + "%" + Convert.ToByte(CharS).ToString("x2");
-                }
-            }
-            return Str1;
-        }
+        
 
         protected void CheckBoxCurTime_CheckedChanged(object sender, EventArgs e)
         {

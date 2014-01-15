@@ -15,29 +15,33 @@ namespace SatCtrl
 {
     public partial class _CraftCubeSat : System.Web.UI.Page
     {
+        public class Common
+        {
+            public static String AddHexString(String Str2)
+            {
+                String Str1 = "";
+                for (int i = 0; i < Str2.Length; i++)
+                {
+                    Char CharS = Str2.ElementAt(i);
+                    if ((CharS >= '0') && ((CharS <= '9')) || (CharS >= 'a') && ((CharS <= 'z')) || (CharS >= 'A') && ((CharS <= 'Z')))
+                    {
+                        Str1 += CharS;
+                    }
+                    else
+                    {
+                        Str1 = Str1 + "%" + Convert.ToByte(CharS).ToString("x2");
+                    }
+                }
+                return Str1;
+            }
+        }
         public long intMaxSessionN;
         protected void Page_Load(object sender, EventArgs e)
         {
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
         }
-        protected String AddHexString(String Str2)
-        {
-            String Str1 = "";
-            for (int i = 0; i < Str2.Length; i++)
-            {
-                Char CharS = Str2.ElementAt(i);
-                if ((CharS >= '0') && ((CharS <= '9')) || (CharS >= 'a') && ((CharS <= 'z')) || (CharS >= 'A') && ((CharS <= 'Z')))
-                {
-                    Str1 += CharS;
-                }
-                else
-                {
-                    Str1 = Str1 + "%" + Convert.ToByte(CharS).ToString("x2");
-                }
-            }
-            return Str1;
-        }
+        
         public void SendToStationPostToDB(string UpLoadMsg)
         {
             DateTime CtrlDate = new DateTime();
@@ -267,13 +271,13 @@ namespace SatCtrl
                         else
                             Delta = (FlashAddr + FlashLength) - StartAddr;
  
-                        MsgUplink.Text += AddHexString("3=#5   F\x05\x03");
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(StartAddr >> 16)));
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(((StartAddr & 0xff00) >> 8))));
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)((StartAddr & 0xff))));
-                        MsgUplink.Text += AddHexString("@");
-                        MsgUplink.Text += AddHexString(((char)Delta).ToString());
-                        MsgUplink.Text += AddHexString("\x33");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("3=#5   F\x05\x03");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(StartAddr >> 16)));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(((StartAddr & 0xff00) >> 8))));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)((StartAddr & 0xff))));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("@");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)Delta).ToString());
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("\x33");
                         StartAddr += Delta;
                     }
                 }
@@ -309,13 +313,13 @@ namespace SatCtrl
                         else
                             Delta = (FlashAddr + FlashLength) - StartAddr;
                         //  first command is "=9   " - responce send back to unit 9
-                        MsgUplink.Text += AddHexString("2=#9   F\x05\x03");
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(StartAddr >> 16)));
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(((StartAddr & 0xff00) >> 8))));
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)((StartAddr & 0xff))));
-                        MsgUplink.Text += AddHexString("@");
-                        MsgUplink.Text += AddHexString(((char)Delta).ToString());
-                        MsgUplink.Text += AddHexString("\x32");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2=#9   F\x05\x03");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(StartAddr >> 16)));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(((StartAddr & 0xff00) >> 8))));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)((StartAddr & 0xff))));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("@");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)Delta).ToString());
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("\x32");
                         StartAddr += Delta;
                     }
                 }
@@ -329,7 +333,7 @@ namespace SatCtrl
 
         protected void ButtonGrStFlasherace_Click(object sender, EventArgs e)
         {
-            MsgUplink.Text += AddHexString("2=#9   F\x01\x06\x46\x01\xC7\x32");
+            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2=#9   F\x01\x06\x46\x01\xC7\x32");
         }
 
         protected void ButtonUploadGrStFlash_Click(object sender, EventArgs e)
@@ -351,12 +355,12 @@ namespace SatCtrl
                         Address = istr.Substring(0, 8);
                         iAdr = Int32.Parse(Address.Substring(7,1), System.Globalization.NumberStyles.HexNumber);
                         FlashAddr = Int32.Parse(Address, System.Globalization.NumberStyles.HexNumber);
-                        MsgUplink.Text += AddHexString("2=#9   F\x01\x06\x46");//
-                        MsgUplink.Text += AddHexString(((char)(16 - iAdr + 4)).ToString());
-                        MsgUplink.Text += AddHexString("\x02");
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(FlashAddr >> 16)));
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)(((FlashAddr & 0xff00) >> 8))));
-                        MsgUplink.Text += AddHexString(char.ConvertFromUtf32((int)((FlashAddr & 0xff))));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2=#9   F\x01\x06\x46");//
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(16 - iAdr + 4)).ToString());
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("\x02");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(FlashAddr >> 16)));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(((FlashAddr & 0xff00) >> 8))));
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)((FlashAddr & 0xff))));
                         for (int i = iAdr; i < 16; i++)
                         {
                             if (i < 8)
@@ -365,10 +369,10 @@ namespace SatCtrl
                                 ByteHex = istr.Substring(37 - 24 + i*3, 2);
                             iByteHex = Int32.Parse(ByteHex, System.Globalization.NumberStyles.HexNumber);
                             if (iByteHex >= '0' && iByteHex <= '9')
-                                MsgUplink.Text += AddHexString("#");
-                            MsgUplink.Text += AddHexString(((char)iByteHex).ToString());
+                                MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("#");
+                            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)iByteHex).ToString());
                         }
-                        MsgUplink.Text += AddHexString("2");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2");
                         //break;
                     }
                     //GrStFileUploadFlash.SaveAs("C:\\Uploads\\" +
@@ -404,14 +408,14 @@ namespace SatCtrl
             int Day = d.Day; Day = Day / 10; Day = Day * 16 + (d.Day - Day * 10);
             int Month = d.Month; Month = Month / 10; Month = Month * 16 + (d.Month - Month * 10);
             int Year = d.Year - 2000; Year = Year / 10; Year = Year * 16 + (d.Year - 2000 - Year * 10);
-            string message = "222t" + AddHexString(((char)(Mils1)).ToString());
-            message += AddHexString(((char)(Mils2)).ToString());
-            message += AddHexString(((char)(Sec)).ToString());
-            message += AddHexString(((char)(Min)).ToString());
-            message += AddHexString(((char)(Hour)).ToString());
-            message += AddHexString(((char)(Day)).ToString());
-            message += AddHexString(((char)(Month)).ToString());
-            message += AddHexString(((char)(Year)).ToString());
+            string message = "222t" + SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Mils1)).ToString());
+            message += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Mils2)).ToString());
+            message += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Sec)).ToString());
+            message += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Min)).ToString());
+            message += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Hour)).ToString());
+            message += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Day)).ToString());
+            message += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Month)).ToString());
+            message += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(Year)).ToString());
             message += "2";
             SendToStationPostToDB(message);
         }
