@@ -54,7 +54,28 @@ namespace SatCtrl
                 
                 if (IsList != null)
                 {
-                    _TraCalcCraft.Common.GetFromApplication(IsList);
+                    _TraCalcCraft.CraftParam MyCraft;
+                    MyCraft.ListEngineImpuse = new List<double>();
+                    MyCraft.ListWeight = new List<double>();
+                    MyCraft.ListFrameWeight = new List<double>();
+                    MyCraft.ListEngineType = new List<double>();
+                    MyCraft.ListFireTime = new List<double>();
+                    MyCraft.ListThrottle = new List<double>();
+                    MyCraft.ListDeltaT = new List<double>();
+                    MyCraft.ListImpulseVal = new List<double>();
+                    MyCraft.szUsername = szUsername;
+                    MyCraft.TotalWeight = 0.0;
+                    MyCraft.strProbM ="";
+                    MyCraft.strProbMTarget ="";
+                    MyCraft.strEngineXML ="";
+                    MyCraft.TextBoxEngineXML1_Text ="";
+                    MyCraft.TextBoxEngineXML2_Text ="";
+                    MyCraft.TextBoxEngineXML3_Text ="";
+                    MyCraft.TextBoxEngineXML4_Text ="";
+                    MyCraft.TextBoxEngineXML5_Text ="";
+                    MyCraft.iTotalIteration = 0;
+
+                    MyCraft = _TraCalcCraft.Common.GetFromApplication(MyCraft, IsList);
                     xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n" +
                           "<data version=\"1.00\" xmlns:TRA=\"http://www.adobri.com/tra\">\r\n" +
                           "<TRA:section name=\"TraInfo\">\r\n" +
@@ -169,8 +190,8 @@ namespace SatCtrl
 
 
 
-                    xml = xml+ _TraCalcCraft.Common.TextBoxEngineXML1_Text + _TraCalcCraft.Common.TextBoxEngineXML2_Text + _TraCalcCraft.Common.TextBoxEngineXML3_Text
-                    + _TraCalcCraft.Common.TextBoxEngineXML4_Text + _TraCalcCraft.Common.TextBoxEngineXML5_Text;
+                    xml = xml + MyCraft.TextBoxEngineXML1_Text + MyCraft.TextBoxEngineXML2_Text + MyCraft.TextBoxEngineXML3_Text
+                    + MyCraft.TextBoxEngineXML4_Text + MyCraft.TextBoxEngineXML5_Text;
                     xml = xml+ "</TRA:section>\r\n"+
                     "</data>\r\n";
                     Response.Write(xml);

@@ -14,85 +14,92 @@ namespace SatCtrl
 {
     public partial class _TraCalcCraft : System.Web.UI.Page
     {
+        public struct CraftParam
+        {
+            public double TotalWeight;
+            public List<double> ListEngineImpuse ;
+            public List<double> ListWeight;
+            public List<double> ListFrameWeight;
+            public List<double> ListEngineType;
+            public List<double> ListFireTime;
+            public List<double> ListThrottle;
+            public List<double> ListDeltaT;
+            public List<double> ListImpulseVal;
+            public string szUsername;
+            public String strProbM;
+            public String strProbMTarget;
+            public String strEngineXML;
+            public String TextBoxEngineXML1_Text;
+            public String TextBoxEngineXML2_Text;
+            public String TextBoxEngineXML3_Text;
+            public String TextBoxEngineXML4_Text;
+            public String TextBoxEngineXML5_Text;
+            public int iTotalIteration;
+        };
         public class Common
         {
-            public static double TotalWeight = 0.0;
-            public static List<double> ListEngineImpuse = new List<double>();
-            public static List<double> ListWeight = new List<double>();
-            public static List<double> ListFrameWeight = new List<double>();
-            public static List<double> ListEngineType = new List<double>();
-            public static List<double> ListFireTime = new List<double>();
-            public static List<double> ListThrottle = new List<double>();
-            public static List<double> ListDeltaT = new List<double>();
-            public static List<double> ListImpulseVal = new List<double>();
-            public static string szUsername = "Main";
-            public static String strProbM;
-            public static String strProbMTarget;
-            public static String strEngineXML;
-            public static String TextBoxEngineXML1_Text;
-            public static String TextBoxEngineXML2_Text;
-            public static String TextBoxEngineXML3_Text;
-            public static String TextBoxEngineXML4_Text;
-            public static String TextBoxEngineXML5_Text;
 
-            public static void GetFromApplication(object IsList)
+            public static CraftParam GetFromApplication(CraftParam MyCraft, object IsList)
             {
+                
                 String strImpNumber;
-                strProbM = IsList.ToString();
+                MyCraft.strProbM = IsList.ToString();
                 //TextBoxProbM.Text = strProbM;
-                IsList = HttpContext.Current.Application["ProbMTarget" + szUsername];
+                IsList = HttpContext.Current.Application["ProbMTarget" + MyCraft.szUsername];
                 if (IsList != null)
                 {
-                    strProbMTarget = IsList.ToString();
+                    MyCraft.strProbMTarget = IsList.ToString();
                     //TextBoxProbMTarget.Text = strProbMTarget;
                 }
                 int iEngineImpuse = 0;
-                ListEngineImpuse = (List<double>)HttpContext.Current.Application["EngineImpuse" + szUsername];
-                if (ListEngineImpuse.Count > 0)
+                MyCraft.ListEngineImpuse = (List<double>)HttpContext.Current.Application["EngineImpuse" + MyCraft.szUsername];
+                if (MyCraft.ListEngineImpuse.Count > 0)
                 {
-                    for (iEngineImpuse = 0; iEngineImpuse < ListEngineImpuse.Count; iEngineImpuse++)
+                    for (iEngineImpuse = 0; iEngineImpuse < MyCraft.ListEngineImpuse.Count; iEngineImpuse++)
                     {
-                        strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
-                        ListImpulseVal = (List<double>)HttpContext.Current.Application[strImpNumber];
-                        ListWeight = (List<double>)HttpContext.Current.Application["Weight" + szUsername];
-                        ListFrameWeight = (List<double>)HttpContext.Current.Application["FrameWeight" + szUsername];
-                        ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + szUsername];
-                        ListFireTime = (List<double>)HttpContext.Current.Application["FireTime" + szUsername];
-                        ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + szUsername];
-                        ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + szUsername];
+                        strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + MyCraft.szUsername;
+                        MyCraft.ListImpulseVal = (List<double>)HttpContext.Current.Application[strImpNumber];
+                        MyCraft.ListWeight = (List<double>)HttpContext.Current.Application["Weight" + MyCraft.szUsername];
+                        MyCraft.ListFrameWeight = (List<double>)HttpContext.Current.Application["FrameWeight" + MyCraft.szUsername];
+                        MyCraft.ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + MyCraft.szUsername];
+                        MyCraft.ListFireTime = (List<double>)HttpContext.Current.Application["FireTime" + MyCraft.szUsername];
+                        MyCraft.ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + MyCraft.szUsername];
+                        MyCraft.ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + MyCraft.szUsername];
 
-                        strEngineXML = SatCtrl._TraCalcCraft.Common.MakeEngineXMLFile(ListImpulseVal, ListEngineImpuse[iEngineImpuse], ListWeight[iEngineImpuse],
-                            ListFrameWeight[iEngineImpuse], ListEngineType[iEngineImpuse],
-                            ListFireTime[iEngineImpuse],
-                            ListThrottle[iEngineImpuse], ListDeltaT[iEngineImpuse]);
+                        MyCraft.strEngineXML = SatCtrl._TraCalcCraft.Common.MakeEngineXMLFile(MyCraft.ListImpulseVal, MyCraft.ListEngineImpuse[iEngineImpuse], 
+                            MyCraft.ListWeight[iEngineImpuse],
+                            MyCraft.ListFrameWeight[iEngineImpuse], MyCraft.ListEngineType[iEngineImpuse],
+                            MyCraft.ListFireTime[iEngineImpuse],
+                            MyCraft.ListThrottle[iEngineImpuse], MyCraft.ListDeltaT[iEngineImpuse]);
                         switch (iEngineImpuse)
                         {
                             case 0:
-                                TextBoxEngineXML1_Text = strEngineXML;
+                                MyCraft.TextBoxEngineXML1_Text = MyCraft.strEngineXML;
                                 //CheckBoxImp1.Checked = true;
                                 break;
                             case 1:
-                                TextBoxEngineXML2_Text = strEngineXML;
+                                MyCraft.TextBoxEngineXML2_Text = MyCraft.strEngineXML;
                                 //CheckBoxImp2.Checked = true;
                                 break;
                             case 2:
-                                TextBoxEngineXML3_Text = strEngineXML;
+                                MyCraft.TextBoxEngineXML3_Text = MyCraft.strEngineXML;
                                 //CheckBoxImp3.Checked = true;
                                 break;
                             case 3:
-                                TextBoxEngineXML4_Text = strEngineXML;
+                                MyCraft.TextBoxEngineXML4_Text = MyCraft.strEngineXML;
                                 //CheckBoxImp4.Checked = true;
                                 break;
                             case 4:
-                                TextBoxEngineXML5_Text = strEngineXML;
+                                MyCraft.TextBoxEngineXML5_Text = MyCraft.strEngineXML;
                                 //CheckBoxImp5.Checked = true;
                                 break;
                         }
 
                     }
                 }
+                return MyCraft;
             }
-            static public int ProcessOneImpl(String xml, int iEngineImpuse, int iTotalIteration, int iEngineImpuseUpdt, bool update = false)
+            static public CraftParam ProcessOneImpl(CraftParam MyCraft, String xml, int iEngineImpuse, int iTotalIteration, int iEngineImpuseUpdt, bool update = false)
             {
                 String strImpNumber;
                 String strEngineImpuse;
@@ -128,29 +135,29 @@ namespace SatCtrl
                             if (dImplVal == 0.0 && iIteration > 1) // next engine's impulse
                             {
 
-                                ListImpulseVal.Add(dImplVal);
-                                strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
-                                HttpContext.Current.Application[strImpNumber] = ListImpulseVal;
+                                MyCraft.ListImpulseVal.Add(dImplVal);
+                                strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + MyCraft.szUsername;
+                                HttpContext.Current.Application[strImpNumber] = MyCraft.ListImpulseVal;
 
                                 //<TRA:setting name="EngineImpuse" value="1.0" />
                                 strEngineImpuse = SatCtrl.Global.Common.GetValue(xml, "EngineImpuse", iEngineImpuseUpdt);
                                 dEngineImpuse = Convert.ToDouble(strEngineImpuse);
                                 if (update)
-                                    ListEngineImpuse[iEngineImpuse] = dEngineImpuse;
+                                    MyCraft.ListEngineImpuse[iEngineImpuse] = dEngineImpuse;
                                 else
-                                    ListEngineImpuse.Add(dEngineImpuse);
+                                    MyCraft.ListEngineImpuse.Add(dEngineImpuse);
                                 // <TRA:setting name="Weight" value="17.157" />
                                 strWeight = SatCtrl.Global.Common.GetValue(xml, "Weight", iEngineImpuseUpdt);
                                 dWeight = Convert.ToDouble(strWeight);
-                                TotalWeight += dWeight;
+                                MyCraft.TotalWeight += dWeight;
                                 if (update)
-                                    ListWeight[iEngineImpuse] = dWeight;
+                                    MyCraft.ListWeight[iEngineImpuse] = dWeight;
                                 else
-                                    ListWeight.Add(dWeight);
+                                    MyCraft.ListWeight.Add(dWeight);
                                 // <TRA:setting name="FrameWeight" value="7.0" />
                                 strFrameWeight = SatCtrl.Global.Common.GetValue(xml, "FrameWeight", iEngineImpuseUpdt);
                                 FrameWeight = Convert.ToDouble(strFrameWeight);
-                                ListFrameWeight.Add(FrameWeight);
+                                MyCraft.ListFrameWeight.Add(FrameWeight);
                                 // <!-- set engine type
                                 //      -1 = fixed 
                                 //      N = variable point on a plot describing impules value
@@ -159,18 +166,18 @@ namespace SatCtrl
                                 strEngineType = SatCtrl.Global.Common.GetValue(xml, "EngineType", iEngineImpuseUpdt);
                                 EngineType = Convert.ToDouble(strEngineType);
                                 if (update)
-                                    ListEngineType[iEngineImpuse] = EngineType;
+                                    MyCraft.ListEngineType[iEngineImpuse] = EngineType;
                                 else
-                                    ListEngineType.Add(EngineType);
+                                    MyCraft.ListEngineType.Add(EngineType);
 
 
 
                                 strFireTime = SatCtrl.Global.Common.GetValue(xml, "FireTime", iEngineImpuseUpdt);
                                 FireTime = Convert.ToDouble(strFireTime);
                                 if (update)
-                                    ListFireTime[iEngineImpuse] = FireTime;
+                                    MyCraft.ListFireTime[iEngineImpuse] = FireTime;
                                 else
-                                    ListFireTime.Add(FireTime);
+                                    MyCraft.ListFireTime.Add(FireTime);
 
                                 //<!-- set engine Throttle  value (0.0 - 1.0) -->    
                                 //<TRA:setting name="Throttle" value="1.0" />
@@ -178,22 +185,23 @@ namespace SatCtrl
                                 dThrottle = Convert.ToDouble(strThrottle);
 
                                 if (update)
-                                    ListThrottle[iEngineImpuse] = dThrottle;
+                                    MyCraft.ListThrottle[iEngineImpuse] = dThrottle;
                                 else
-                                    ListThrottle.Add(dThrottle);
+                                    MyCraft.ListThrottle.Add(dThrottle);
                                 //<!-- iteration per sec from engine's plot -->
                                 //<TRA:setting name="DeltaT" value="5.0" />
                                 strDeltaT = SatCtrl.Global.Common.GetValue(xml, "DeltaT", iEngineImpuseUpdt);
                                 dDeltaT = Convert.ToDouble(strDeltaT);
                                 if (update)
-                                    ListDeltaT[iEngineImpuse] = dDeltaT;
+                                    MyCraft.ListDeltaT[iEngineImpuse] = dDeltaT;
                                 else
-                                    ListDeltaT.Add(dDeltaT);
-                                return iTotalIteration;
+                                    MyCraft.ListDeltaT.Add(dDeltaT);
+                                MyCraft.iTotalIteration = iTotalIteration;
+                                return MyCraft;
                             }
                             else
                             {
-                                ListImpulseVal.Add(dImplVal);
+                                MyCraft.ListImpulseVal.Add(dImplVal);
                             }
 
                         }
@@ -202,7 +210,8 @@ namespace SatCtrl
                     while (strImplVal != null);
                 }
 
-                return 0;
+                MyCraft.iTotalIteration = 0;
+                return MyCraft;
             }
             
             public static String MakeEngineXMLFile(List<double> ListVal, double dEngineImpuse, double dWeight,
@@ -264,10 +273,10 @@ namespace SatCtrl
         //List<double> ListThrottle = new List<double>();
         //List<double> ListDeltaT = new List<double>();
         //List<double> ListImpulseVal = new List<double>();
-        void UpdateVisibility()
+        void UpdateVisibility(CraftParam MyCraft)
         {
 
-            switch (SatCtrl._TraCalcCraft.Common.ListEngineImpuse.Count)
+            switch (MyCraft.ListEngineImpuse.Count)
             {
                 case 1:
                     CheckBoxImp5.Visible = false;
@@ -462,224 +471,41 @@ namespace SatCtrl
             }
 
         }
-        /*
-        double TotalWeight = 0.0;
-        public int ProcessOneImpl(String xml, int iEngineImpuse, int iTotalIteration, int iEngineImpuseUpdt, bool update = false)
-        {
-            String strImpNumber;
-            String strEngineImpuse;
-            String strWeight;
-            String strEngineType;
-            String strFireTime;
-            String strThrottle;
-            String strDeltaT;
-            String strFrameWeight;
-
-            double dEngineImpuse;
-            double dWeight;
-            double FrameWeight;
-            double EngineType;
-            double FireTime;
-            double dThrottle;
-            double dDeltaT;
-
-            {
-                // read engine profiles
-                String strImplVal = null;
-                double dImplVal = 0;
-
-                int iIteration = 0;
-                do
-                {
-                    strImplVal = SatCtrl.Global.Common.GetValue(xml, "ImplVal", iTotalIteration);
-                    iTotalIteration += 1;
-                    iIteration += 1;
-                    if (strImplVal != null)
-                    {
-                        dImplVal = Convert.ToDouble(strImplVal);
-                        if (dImplVal == 0.0 && iIteration > 1) // next engine's impulse
-                        {
-
-                            ListImpulseVal.Add(dImplVal);
-                            strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
-                            HttpContext.Current.Application[strImpNumber] = ListImpulseVal;
-
-                            //<TRA:setting name="EngineImpuse" value="1.0" />
-                            strEngineImpuse = SatCtrl.Global.Common.GetValue(xml, "EngineImpuse", iEngineImpuseUpdt);
-                            dEngineImpuse = Convert.ToDouble(strEngineImpuse);
-                            if (update)
-                                ListEngineImpuse[iEngineImpuse] = dEngineImpuse;
-                            else
-                                ListEngineImpuse.Add(dEngineImpuse);
-                            // <TRA:setting name="Weight" value="17.157" />
-                            strWeight = SatCtrl.Global.Common.GetValue(xml, "Weight", iEngineImpuseUpdt);
-                            dWeight = Convert.ToDouble(strWeight);
-                            TotalWeight += dWeight;
-                            if (update)
-                                ListWeight[iEngineImpuse] = dWeight;
-                            else
-                                ListWeight.Add(dWeight);
-                            // <TRA:setting name="FrameWeight" value="7.0" />
-                            strFrameWeight = SatCtrl.Global.Common.GetValue(xml, "FrameWeight", iEngineImpuseUpdt);
-                            FrameWeight = Convert.ToDouble(strFrameWeight);
-                            ListFrameWeight.Add(FrameWeight);
-                            // <!-- set engine type
-                            //      -1 = fixed 
-                            //      N = variable point on a plot describing impules value
-                            //          -->
-                            //<TRA:setting name="EngineType" value="-1.0" />
-                            strEngineType = SatCtrl.Global.Common.GetValue(xml, "EngineType", iEngineImpuseUpdt);
-                            EngineType = Convert.ToDouble(strEngineType);
-                            if (update)
-                                ListEngineType[iEngineImpuse] = EngineType;
-                            else
-                                ListEngineType.Add(EngineType);
-
-
-
-                            strFireTime = SatCtrl.Global.Common.GetValue(xml, "FireTime", iEngineImpuseUpdt);
-                            FireTime = Convert.ToDouble(strFireTime);
-                            if (update)
-                                ListFireTime[iEngineImpuse] = FireTime;
-                            else
-                                ListFireTime.Add(FireTime);
-
-                            //<!-- set engine Throttle  value (0.0 - 1.0) -->    
-                            //<TRA:setting name="Throttle" value="1.0" />
-                            strThrottle = SatCtrl.Global.Common.GetValue(xml, "Throttle", iEngineImpuseUpdt);
-                            dThrottle = Convert.ToDouble(strThrottle);
-
-                            if (update)
-                                ListThrottle[iEngineImpuse] = dThrottle;
-                            else
-                                ListThrottle.Add(dThrottle);
-                            //<!-- iteration per sec from engine's plot -->
-                            //<TRA:setting name="DeltaT" value="5.0" />
-                            strDeltaT = SatCtrl.Global.Common.GetValue(xml, "DeltaT", iEngineImpuseUpdt);
-                            dDeltaT = Convert.ToDouble(strDeltaT);
-                            if (update)
-                                ListDeltaT[iEngineImpuse] = dDeltaT;
-                            else
-                                ListDeltaT.Add(dDeltaT);
-                            return iTotalIteration;
-                        }
-                        else
-                        {
-                            ListImpulseVal.Add(dImplVal);
-                        }
-
-                    }
-
-                }
-                while (strImplVal != null);
-            }
-
-            return 0;
-        }
-         */
-        /*
-        public void GetFromApplication(object IsList)
-        {
-            String strProbM;
-            String strProbMTarget;
-            String strImpNumber;
-            String strEngineXML;
-
-
-            strProbM = IsList.ToString();
-            TextBoxProbM.Text = strProbM;
-            IsList = HttpContext.Current.Application["ProbMTarget" + szUsername];
-            if (IsList != null)
-            {
-                strProbMTarget = IsList.ToString();
-                TextBoxProbMTarget.Text = strProbMTarget;
-            }
-            int iEngineImpuse = 0;
-            ListEngineImpuse = (List<double>)HttpContext.Current.Application["EngineImpuse" + szUsername];
-            if (ListEngineImpuse.Count > 0)
-            {
-                for (iEngineImpuse = 0; iEngineImpuse < ListEngineImpuse.Count; iEngineImpuse++)
-                {
-                    strImpNumber = "ImplVal" + Convert.ToString(iEngineImpuse) + szUsername;
-                    ListImpulseVal = (List<double>)HttpContext.Current.Application[strImpNumber];
-                    ListWeight = (List<double>)HttpContext.Current.Application["Weight" + szUsername];
-                    ListFrameWeight = (List<double>)HttpContext.Current.Application["FrameWeight" + szUsername];
-                    ListEngineType = (List<double>)HttpContext.Current.Application["EngineType" + szUsername];
-                    ListFireTime = (List<double>)HttpContext.Current.Application["FireTime" + szUsername];
-                    ListThrottle = (List<double>)HttpContext.Current.Application["Throttle" + szUsername];
-                    ListDeltaT = (List<double>)HttpContext.Current.Application["DeltaT" + szUsername];
-
-                    strEngineXML = SatCtrl._TraCalcCraft.Common.MakeEngineXMLFile(ListImpulseVal, ListEngineImpuse[iEngineImpuse], ListWeight[iEngineImpuse],
-                        ListFrameWeight[iEngineImpuse], ListEngineType[iEngineImpuse], 
-                        ListFireTime[iEngineImpuse],
-                        ListThrottle[iEngineImpuse], ListDeltaT[iEngineImpuse]);
-                    switch (iEngineImpuse)
-                    {
-                        case 0:
-                            TextBoxEngineXML1.Text = strEngineXML;
-                            ImageImpl1.ImageUrl = "EngineJpgGen.aspx?n=0";
-                            //CheckBoxImp1.Checked = true;
-                            break;
-                        case 1:
-                            TextBoxEngineXML2.Text = strEngineXML;
-                            ImageImpl2.ImageUrl = "EngineJpgGen.aspx?n=1";
-                            //CheckBoxImp2.Checked = true;
-                            break;
-                        case 2:
-                            TextBoxEngineXML3.Text = strEngineXML;
-                            ImageImpl3.ImageUrl = "EngineJpgGen.aspx?n=2";
-                            //CheckBoxImp3.Checked = true;
-                            break;
-                        case 3:
-                            TextBoxEngineXML4.Text = strEngineXML;
-                            ImageImpl4.ImageUrl = "EngineJpgGen.aspx?n=3";
-                            //CheckBoxImp4.Checked = true;
-                            break;
-                        case 4:
-                            TextBoxEngineXML5.Text = strEngineXML;
-                            ImageImpl5.ImageUrl = "EngineJpgGen.aspx?n=4";
-                            //CheckBoxImp5.Checked = true;
-                            break;
-                    }
-
-                }
-            }
-        }*/
-        protected void GetAndSetAndUpdate(object IsList)
+        protected CraftParam GetAndSetAndUpdate(CraftParam MyCraft, object IsList)
         {
             if (IsList != null)
             {
-                SatCtrl._TraCalcCraft.Common.GetFromApplication(IsList);
-                TextBoxProbM.Text = SatCtrl._TraCalcCraft.Common.strProbM;
-                TextBoxProbMTarget.Text = SatCtrl._TraCalcCraft.Common.strProbMTarget;
-                if (SatCtrl._TraCalcCraft.Common.ListEngineImpuse.Count > 0)
+                MyCraft = SatCtrl._TraCalcCraft.Common.GetFromApplication(MyCraft, IsList);
+                TextBoxProbM.Text = MyCraft.strProbM;
+                TextBoxProbMTarget.Text = MyCraft.strProbMTarget;
+                if (MyCraft.ListEngineImpuse.Count > 0)
                 {
-                    for (int iEngineImpuse = 0; iEngineImpuse < SatCtrl._TraCalcCraft.Common.ListEngineImpuse.Count; iEngineImpuse++)
+                    for (int iEngineImpuse = 0; iEngineImpuse < MyCraft.ListEngineImpuse.Count; iEngineImpuse++)
                     {
                         switch (iEngineImpuse)
                         {
                             case 0:
-                                TextBoxEngineXML1.Text = SatCtrl._TraCalcCraft.Common.TextBoxEngineXML1_Text;
+                                TextBoxEngineXML1.Text = MyCraft.TextBoxEngineXML1_Text;
                                 ImageImpl1.ImageUrl = "EngineJpgGen.aspx?n=0";
                                 //CheckBoxImp1.Checked = true;
                                 break;
                             case 1:
-                                TextBoxEngineXML2.Text = SatCtrl._TraCalcCraft.Common.TextBoxEngineXML2_Text;
+                                TextBoxEngineXML2.Text = MyCraft.TextBoxEngineXML2_Text;
                                 ImageImpl2.ImageUrl = "EngineJpgGen.aspx?n=1";
                                 //CheckBoxImp2.Checked = true;
                                 break;
                             case 2:
-                                TextBoxEngineXML3.Text = SatCtrl._TraCalcCraft.Common.TextBoxEngineXML3_Text;
+                                TextBoxEngineXML3.Text = MyCraft.TextBoxEngineXML3_Text;
                                 ImageImpl3.ImageUrl = "EngineJpgGen.aspx?n=2";
                                 //CheckBoxImp3.Checked = true;
                                 break;
                             case 3:
-                                TextBoxEngineXML4.Text = SatCtrl._TraCalcCraft.Common.TextBoxEngineXML4_Text;
+                                TextBoxEngineXML4.Text = MyCraft.TextBoxEngineXML4_Text;
                                 ImageImpl4.ImageUrl = "EngineJpgGen.aspx?n=3";
                                 //CheckBoxImp4.Checked = true;
                                 break;
                             case 4:
-                                TextBoxEngineXML5.Text = SatCtrl._TraCalcCraft.Common.TextBoxEngineXML5_Text;
+                                TextBoxEngineXML5.Text = MyCraft.TextBoxEngineXML5_Text;
                                 ImageImpl5.ImageUrl = "EngineJpgGen.aspx?n=4";
                                 //CheckBoxImp5.Checked = true;
                                 break;
@@ -689,7 +515,8 @@ namespace SatCtrl
                 }
 
             }
-            UpdateVisibility();
+            UpdateVisibility(MyCraft);
+            return MyCraft;
         }
         String TextBoxEngineXML1Value;
         String TextBoxEngineXML2Value;
@@ -697,19 +524,28 @@ namespace SatCtrl
         String TextBoxEngineXML4Value;
         String TextBoxEngineXML5Value;
         String TextBoxProbMTargetValue;
-
+        CraftParam MyCraft;
         protected void Page_Load(object sender, EventArgs e)
         {
-            String strProbM;
-            String strProbMTarget;
+            //String strProbM;
+            //String strProbMTarget;
             //String strImpNumber;
             //String strEngineXML;
+            MyCraft.ListEngineImpuse = new List<double>();
+            MyCraft.ListWeight = new List<double>();
+            MyCraft.ListFrameWeight = new List<double>();
+            MyCraft.ListEngineType = new List<double>();
+            MyCraft.ListFireTime = new List<double>();
+            MyCraft.ListThrottle = new List<double>();
+            MyCraft.ListDeltaT = new List<double>();
+            MyCraft.ListImpulseVal = new List<double>();
+            MyCraft.TotalWeight = 0.0;
 
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
             if (Page.User.Identity.IsAuthenticated)
             {
-                SatCtrl._TraCalcCraft.Common.szUsername = Page.User.Identity.Name.ToString();
+                MyCraft.szUsername = Page.User.Identity.Name.ToString();
                 TextBoxEngineXML1.ReadOnly = false;
                 TextBoxEngineXML2.ReadOnly = false;
                 TextBoxEngineXML3.ReadOnly = false;
@@ -721,6 +557,7 @@ namespace SatCtrl
             }
             else
             {
+                MyCraft.szUsername = "Main";
                 LabelTextToLogin.Visible = true;
                 HyperLinkLogin.Visible = true;
             }
@@ -731,12 +568,12 @@ namespace SatCtrl
             TextBoxEngineXML5Value = TextBoxEngineXML5.Text.ToString();
             TextBoxProbMTargetValue = TextBoxProbMTarget.Text.ToString();
 
-            LabelUserName.Text = SatCtrl._TraCalcCraft.Common.szUsername;
-            object IsList = HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername];
+            LabelUserName.Text = MyCraft.szUsername;
+            object IsList = HttpContext.Current.Application["ProbM" + MyCraft.szUsername];
             if (IsList == null)
             {
                 String xml = null;
-                String NameFile = "InitCraft" + SatCtrl._TraCalcCraft.Common.szUsername + ".xml";
+                String NameFile = "InitCraft" + MyCraft.szUsername + ".xml";
                 String MapPath = Server.MapPath(NameFile);
                 int iDirAccound = MapPath.IndexOf("\\SatCtrl\\");
                 if (iDirAccound > 0) // it is dir "account"
@@ -775,14 +612,14 @@ namespace SatCtrl
                 }
                 if (xml != null)
                 {
-                    SatCtrl._TraCalcCraft.Common.ListImpulseVal = new List<double>();
-                    strProbM = SatCtrl.Global.Common.GetValue(xml, "ProbM", 0);
-                    HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername] = strProbM;
+                    MyCraft.ListImpulseVal = new List<double>();
+                    MyCraft.strProbM = SatCtrl.Global.Common.GetValue(xml, "ProbM", 0);
+                    HttpContext.Current.Application["ProbM" + MyCraft.szUsername] = MyCraft.strProbM;
 
-                    strProbMTarget = SatCtrl.Global.Common.GetValue(xml, "ProbMTarget", 0);
-                    HttpContext.Current.Application["ProbMTarget" + SatCtrl._TraCalcCraft.Common.szUsername] = strProbMTarget;
+                    MyCraft.strProbMTarget = SatCtrl.Global.Common.GetValue(xml, "ProbMTarget", 0);
+                    HttpContext.Current.Application["ProbMTarget" + MyCraft.szUsername] = MyCraft.strProbMTarget;
 
-                    SatCtrl._TraCalcCraft.Common.TotalWeight = Convert.ToDouble(strProbMTarget);
+                    MyCraft.TotalWeight = Convert.ToDouble(MyCraft.strProbMTarget);
                     // now need to read all engines profiles
                     
                     int iTotalIteration = 0;
@@ -790,7 +627,8 @@ namespace SatCtrl
                     int iEngineImpuseUpdt = 0;
                     do
                     {
-                        iTotalIteration = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, iEngineImpuseUpdt);
+                        MyCraft = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(MyCraft, xml, iEngineImpuse, iTotalIteration, iEngineImpuseUpdt);
+                        iTotalIteration = MyCraft.iTotalIteration;
                         switch (iEngineImpuse)
                         {
                             case 0:
@@ -811,58 +649,58 @@ namespace SatCtrl
                         }
                         iEngineImpuse += 1;
                         iEngineImpuseUpdt += 1;
-                        SatCtrl._TraCalcCraft.Common.ListImpulseVal = new List<double>(); 
+                        MyCraft.ListImpulseVal = new List<double>(); 
                     }
                     while (iTotalIteration != 0);
 
-                    HttpContext.Current.Application["EngineImpuse" + SatCtrl._TraCalcCraft.Common.szUsername] = SatCtrl._TraCalcCraft.Common.ListEngineImpuse;
-                    HttpContext.Current.Application["Weight" + SatCtrl._TraCalcCraft.Common.szUsername] = SatCtrl._TraCalcCraft.Common.ListWeight;
-                    HttpContext.Current.Application["FrameWeight" + SatCtrl._TraCalcCraft.Common.szUsername] = SatCtrl._TraCalcCraft.Common.ListFrameWeight;
-                    HttpContext.Current.Application["EngineType" + SatCtrl._TraCalcCraft.Common.szUsername] = SatCtrl._TraCalcCraft.Common.ListEngineType;
-                    HttpContext.Current.Application["FireTime" + SatCtrl._TraCalcCraft.Common.szUsername] = SatCtrl._TraCalcCraft.Common.ListFireTime;
-                    HttpContext.Current.Application["Throttle" + SatCtrl._TraCalcCraft.Common.szUsername] = SatCtrl._TraCalcCraft.Common.ListThrottle;
-                    HttpContext.Current.Application["DeltaT" + SatCtrl._TraCalcCraft.Common.szUsername] = SatCtrl._TraCalcCraft.Common.ListDeltaT;
-                    strProbM = Convert.ToString(SatCtrl._TraCalcCraft.Common.TotalWeight);
-                    HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername] = strProbM;
+                    HttpContext.Current.Application["EngineImpuse" + MyCraft.szUsername] = MyCraft.ListEngineImpuse;
+                    HttpContext.Current.Application["Weight" + MyCraft.szUsername] = MyCraft.ListWeight;
+                    HttpContext.Current.Application["FrameWeight" + MyCraft.szUsername] = MyCraft.ListFrameWeight;
+                    HttpContext.Current.Application["EngineType" + MyCraft.szUsername] = MyCraft.ListEngineType;
+                    HttpContext.Current.Application["FireTime" + MyCraft.szUsername] = MyCraft.ListFireTime;
+                    HttpContext.Current.Application["Throttle" + MyCraft.szUsername] = MyCraft.ListThrottle;
+                    HttpContext.Current.Application["DeltaT" + MyCraft.szUsername] = MyCraft.ListDeltaT;
+                    MyCraft.strProbM = Convert.ToString(MyCraft.TotalWeight);
+                    HttpContext.Current.Application["ProbM" + MyCraft.szUsername] = MyCraft.strProbM;
                 }
                 else // file with initial data do not exsists
                 {
-                    strProbM = "255";
-                    HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername] = strProbM;
-                    strProbMTarget = "4";
-                    HttpContext.Current.Application["ProbMTarget"] = strProbMTarget;
+                    MyCraft.strProbM = "255";
+                    HttpContext.Current.Application["ProbM" + MyCraft.szUsername] = MyCraft.strProbM;
+                    MyCraft.strProbMTarget = "4";
+                    HttpContext.Current.Application["ProbMTarget"] = MyCraft.strProbMTarget;
                 }
-                IsList = HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername];
+                IsList = HttpContext.Current.Application["ProbM" + MyCraft.szUsername];
             }
             else // value in memory
             {
             }
             // no take everything
-            GetAndSetAndUpdate(IsList);
+            MyCraft = GetAndSetAndUpdate(MyCraft, IsList);
         }
         
         protected void CheckBoxImp1_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateVisibility();
+            UpdateVisibility(MyCraft);
         }
         protected void CheckBoxImp2_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateVisibility();
+            UpdateVisibility(MyCraft);
         }
 
         protected void CheckBoxImp3_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateVisibility();
+            UpdateVisibility(MyCraft);
         }
 
         protected void CheckBoxImp4_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateVisibility();
+            UpdateVisibility(MyCraft);
         }
 
         protected void CheckBoxImp5_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateVisibility();
+            UpdateVisibility(MyCraft);
         }
         /// <summary>
         /// update group
@@ -871,57 +709,63 @@ namespace SatCtrl
         /// <param name="e"></param>
         protected void ButtonUpdateImp1_Click(object sender, EventArgs e)
         {
-            SatCtrl._TraCalcCraft.Common.ListImpulseVal = new List<double>();
+            MyCraft.ListImpulseVal = new List<double>();
             String xml = TextBoxEngineXML1Value;
             int iEngineImpuse = 0;
             int iTotalIteration = 0;
-            iTotalIteration = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
-            object IsList = HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername];
-            GetAndSetAndUpdate(IsList);
+            
+            MyCraft = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(MyCraft, xml, iEngineImpuse, iTotalIteration, 0, true);
+            iTotalIteration = MyCraft.iTotalIteration;
+            object IsList = HttpContext.Current.Application["ProbM" + MyCraft.szUsername];
+            MyCraft = GetAndSetAndUpdate(MyCraft, IsList);
         }
 
         protected void ButtonUpdateImp2_Click(object sender, EventArgs e)
         {
-            SatCtrl._TraCalcCraft.Common.ListImpulseVal = new List<double>();
+            MyCraft.ListImpulseVal = new List<double>();
             String xml = TextBoxEngineXML2Value;
             int iEngineImpuse = 1;
             int iTotalIteration = 0;
-            iTotalIteration = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
-            object IsList = HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername];
-            GetAndSetAndUpdate(IsList);
+            MyCraft = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(MyCraft, xml, iEngineImpuse, iTotalIteration, 0, true);
+            iTotalIteration = MyCraft.iTotalIteration;
+            object IsList = HttpContext.Current.Application["ProbM" + MyCraft.szUsername];
+            MyCraft = GetAndSetAndUpdate(MyCraft, IsList);
         }
 
         protected void ButtonUpdateImp3_Click(object sender, EventArgs e)
         {
-            SatCtrl._TraCalcCraft.Common.ListImpulseVal = new List<double>();
+            MyCraft.ListImpulseVal = new List<double>();
             String xml = TextBoxEngineXML3Value;
             int iEngineImpuse = 2;
             int iTotalIteration = 0;
-            iTotalIteration = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
-            object IsList = HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername];
-            GetAndSetAndUpdate(IsList);
+            MyCraft = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(MyCraft, xml, iEngineImpuse, iTotalIteration, 0, true);
+            iTotalIteration = MyCraft.iTotalIteration;
+            object IsList = HttpContext.Current.Application["ProbM" + MyCraft.szUsername];
+            MyCraft = GetAndSetAndUpdate(MyCraft, IsList);
         }
 
         protected void ButtonUpdateImp4_Click(object sender, EventArgs e)
         {
-            SatCtrl._TraCalcCraft.Common.ListImpulseVal = new List<double>();
+            MyCraft.ListImpulseVal = new List<double>();
             String xml = TextBoxEngineXML4Value;
             int iEngineImpuse = 2;
             int iTotalIteration = 0;
-            iTotalIteration = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
-            object IsList = HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername];
-            GetAndSetAndUpdate(IsList);
+            MyCraft = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(MyCraft, xml, iEngineImpuse, iTotalIteration, 0, true);
+            iTotalIteration = MyCraft.iTotalIteration;
+            object IsList = HttpContext.Current.Application["ProbM" + MyCraft.szUsername];
+            MyCraft = GetAndSetAndUpdate(MyCraft, IsList);
         }
 
         protected void ButtonUpdateImp5_Click(object sender, EventArgs e)
         {
-            SatCtrl._TraCalcCraft.Common.ListImpulseVal = new List<double>();
+            MyCraft.ListImpulseVal = new List<double>();
             String xml = TextBoxEngineXML5Value;
             int iEngineImpuse = 2;
             int iTotalIteration = 0;
-            iTotalIteration = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(xml, iEngineImpuse, iTotalIteration, 0, true);
-            object IsList = HttpContext.Current.Application["ProbM" + SatCtrl._TraCalcCraft.Common.szUsername];
-            GetAndSetAndUpdate(IsList);
+            MyCraft = SatCtrl._TraCalcCraft.Common.ProcessOneImpl(MyCraft, xml, iEngineImpuse, iTotalIteration, 0, true);
+            iTotalIteration = MyCraft.iTotalIteration;
+            object IsList = HttpContext.Current.Application["ProbM" + MyCraft.szUsername];
+            MyCraft = GetAndSetAndUpdate(MyCraft, IsList);
         }
 
         ///////
