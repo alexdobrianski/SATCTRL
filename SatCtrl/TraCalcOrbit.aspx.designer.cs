@@ -202,6 +202,15 @@ namespace SatCtrl {
         protected global::System.Web.UI.WebControls.TextBox TextBoxTimeCalc;
         
         /// <summary>
+        /// ButtonSetStart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonSetStart;
+        
+        /// <summary>
         /// TextBoxX control.
         /// </summary>
         /// <remarks>

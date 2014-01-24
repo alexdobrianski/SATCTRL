@@ -34,14 +34,15 @@
         </tr>
         <tr>
             <td class="style8">
-                TLE1:<asp:TextBox ID="TextBoxTLE1" runat="server" Width="679px"></asp:TextBox>
+                TLE1:<asp:TextBox ID="TextBoxTLE1" runat="server" 
+                    Width="556px"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="style4">
                 TLE2:<asp:TextBox ID="TextBoxTLE2" 
-                    runat="server" Width="679px"></asp:TextBox>
-                &nbsp;&nbsp;
+                    runat="server" Width="554px"></asp:TextBox>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="ButtonSetTLE" runat="server" onclick="ButtonSetTLE_Click" 
                     Text="Set" />
                 <asp:Button ID="ButtonRestoreTLE" runat="server" 
@@ -61,21 +62,22 @@
         <tr>
             <td class="style4">
                 inclination&nbsp;&nbsp;
-                <asp:TextBox ID="TextBoxOrbitInc" runat="server" Width="100px" ></asp:TextBox>
+                <asp:TextBox ID="TextBoxOrbitInc" runat="server" Width="88px" ></asp:TextBox>
                 <br />
                 perigee&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                 <asp:TextBox ID="TextBoxOrbitPerigee" 
-                    runat="server" Width="100px"></asp:TextBox>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; apogee<asp:TextBox 
+                    runat="server" Width="92px"></asp:TextBox>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; apogee<asp:TextBox 
                     ID="TextBoxApogee" runat="server" Width="100px"></asp:TextBox>
                 &nbsp;&nbsp;
                 Period (check value):
                 <asp:TextBox ID="TextBoxOrbitPeriod" runat="server" Width="100px"></asp:TextBox>
                 <br />
-                perigee time<asp:TextBox ID="TextBoxOrbitPereegeTime" runat="server" 
-                    Width="116px" Font-Size="X-Small"></asp:TextBox>
+                perigee time<asp:TextBox 
+                    ID="TextBoxOrbitPereegeTime" runat="server" 
+                    Width="92px" Font-Size="X-Small"></asp:TextBox>
 &nbsp;perigee longitude<asp:TextBox ID="TextBoxOrbitLongitude" runat="server" Width="100px"></asp:TextBox>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="ButtonSetOrbital" runat="server" 
                     onclick="ButtonSetOrbital_Click" Text="Set" />
                 <asp:Button ID="ButtonRestoreOrbital" runat="server" 
@@ -89,12 +91,14 @@
         </tr>
         <tr>
             <td class="style4">
-                Position/Speed at:<asp:CheckBox ID="CheckBoxCurTime" runat="server" 
+                Start treajectory calculation at:<asp:CheckBox ID="CheckBoxCurTime" runat="server" 
                     oncheckedchanged="CheckBoxCurTime_CheckedChanged" Text="Curent time" 
                     AutoPostBack="True" CausesValidation="True" />
-&nbsp; at:
+                ,&nbsp; or at:
                 <asp:TextBox ID="TextBoxTimeCalc" runat="server" Font-Size="X-Small" 
-                    Width="116px">07/05/13 08:28:00:000</asp:TextBox>
+                    Width="116px" ToolTip="fromat dd/mm/yy hh:mm:ss:msk">07/05/13 08:28:00:000</asp:TextBox>
+            &nbsp;[dd/mm/yy hh:mm:ss:msk]<asp:Button ID="ButtonSetStart" runat="server" 
+                    onclick="ButtonSetStart_Click" Text="Set" />
             </td>
         </tr>
         <tr>
