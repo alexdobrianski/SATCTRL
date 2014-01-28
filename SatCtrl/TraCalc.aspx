@@ -7,13 +7,7 @@
         <tr>
             <td class="style2">
                 Initial Orbit
-                <asp:RadioButton ID="RadioButton1" runat="server" Text="Two Line Element" 
-                    GroupName="InitialOrbbit" />
-                <asp:RadioButton ID="RadioButton2" runat="server" Text="Inc/Pe/Ap" 
-                    GroupName="InitialOrbbit" />
-                <asp:RadioButton ID="RadioButton3" runat="server" Text="Speed and vel" 
-                    GroupName="InitialOrbbit" />
-            </td>
+                </td>
             <td>
                 Status:
                 <asp:Label ID="LabelStatus" runat="server" Text="Status"></asp:Label>
@@ -29,7 +23,7 @@
         </tr>
         <tr>
             <td class="style8">
-                TLE1:<asp:TextBox ID="TextBox3" runat="server" Width="473px"></asp:TextBox>
+                TLE1:<asp:TextBox ID="TextBoxTLE1" runat="server" Width="473px" ReadOnly="True"></asp:TextBox>
             </td>
             <td class="style9">
                 Target<asp:RadioButton ID="RadioButton5" runat="server" Enabled="False" 
@@ -39,8 +33,8 @@
         </tr>
         <tr>
             <td class="style4">
-                TLE2:<asp:TextBox ID="TextBox4" 
-                    runat="server" Width="471px"></asp:TextBox>
+                TLE2:<asp:TextBox ID="TextBoxTLE2" 
+                    runat="server" Width="471px" ReadOnly="True"></asp:TextBox>
             </td>
             <td class="style5">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -49,7 +43,7 @@
         </tr>
         <tr>
             <td class="style4">
-                Orbital parameters:</td>
+                Craft parameters:</td>
             <td class="style5">
                 Target:<asp:RadioButton ID="RadioButtonTargetLL" runat="server" 
                     GroupName="TargetType" ToolTip="Set target as location on the lunar surface." />
@@ -61,18 +55,21 @@
         </tr>
         <tr>
             <td class="style4">
-                inclination
-                <asp:TextBox ID="TextBox5" runat="server" Width="100px"></asp:TextBox>
                 <br />
-                perigee<asp:TextBox ID="TextBox6" 
-                    runat="server" Width="103px"></asp:TextBox>
-&nbsp;apogee<asp:TextBox ID="TextBox7" runat="server" Width="104px"></asp:TextBox>
-                Period:
-                <asp:TextBox ID="TextBox9" runat="server" Width="99px"></asp:TextBox>
+            Total mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:TextBox ID="TextBoxProbM" 
+                    runat="server" ReadOnly="True"></asp:TextBox>
+            Landed mass&nbsp; 
+                <asp:TextBox 
+                    ID="TextBoxProbMTarget" runat="server" ReadOnly="True"></asp:TextBox>
                 <br />
-                perigee time<asp:TextBox ID="TextBox10" runat="server" Width="87px"></asp:TextBox>
-&nbsp;perigee longitude<asp:TextBox ID="TextBox11" runat="server" Width="97px"></asp:TextBox>
-&nbsp;</td>
+                <asp:Image ID="ImageEngine1" runat="server" Visible="False" Height="100px" />
+                <asp:Image ID="ImageEngine2" runat="server" Visible="False" Height="100px" />
+                <br />
+                <asp:Image ID="ImageEngine3" runat="server" Visible="False" Height="100px" />
+                <asp:Image ID="ImageEngine4" runat="server" Visible="False" Height="100px" />
+                <br />
+                <asp:Image ID="ImageEngine5" runat="server" Visible="False" Height="100px" />
+            </td>
             <td class="style5">
                 <asp:ImageButton ID="ImageLunarMap" runat="server" Height="180px" 
                     ImageUrl="~/LunarMapGen.aspx" onclick="ImageButton1_Click" 
@@ -83,39 +80,30 @@
         </tr>
         <tr>
             <td class="style4">
-                Position/Speed</td>
+                &nbsp;</td>
             <td class="style5">
                 <asp:Button ID="ButtonFindImp" runat="server" Text="Find Impulses" 
                     
                     ToolTip="That will start the search for values of impulses from initial orbit to reach the target on the lunar surface." 
                     Width="190px" />
-                &nbsp;from
-                <asp:TextBox ID="FindImpulsesFromDate" runat="server" Font-Size="X-Small" 
-                    Width="110px">07/05/13 08:28:00:000</asp:TextBox>
+                
                 </td>
         </tr>
         <tr>
             <td class="style4">
-                X :<asp:TextBox ID="TextBox12" runat="server" Width="86px"></asp:TextBox>
-                &nbsp;
-                Y:<asp:TextBox ID="TextBox13" runat="server" Width="99px"></asp:TextBox>
-                &nbsp;
-                Z<asp:TextBox ID="TextBox14" runat="server" Width="80px"></asp:TextBox>
-            </td>
+                &nbsp;</td>
             <td class="style5">
-                <asp:Button ID="ButtonImpOptimization" runat="server" Text="Impulses optimization" 
-                    
-                    ToolTip="That will start the search of possible firing time and directions to reach the target on the lunar surface." />
-                &nbsp;from
-                <asp:TextBox ID="TextBox20" runat="server" Font-Size="X-Small" Width="108px">07/05/13 08:28:00:000</asp:TextBox>
-                </td>
+                &nbsp;Start treajectory calculation at: ,&nbsp; or at: &nbsp;<asp:TextBox 
+                    ID="FindImpulsesFromDate" runat="server" Font-Size="X-Small" 
+                    ontextchanged="FindImpulsesFromDate_TextChanged" Width="110px">07/05/13 08:28:00:000</asp:TextBox>
+&nbsp;till
+                <asp:TextBox ID="TextBoxTotalDays" runat="server" 
+                    ontextchanged="TextBoxTotalDays_TextChanged">1</asp:TextBox>
+&nbsp;days</td>
         </tr>
         <tr>
             <td class="style4">
-                Vx<asp:TextBox ID="TextBox15" runat="server" Width="91px"></asp:TextBox>
-                Vy<asp:TextBox ID="TextBox16" runat="server" Width="98px"></asp:TextBox>
-                Vz<asp:TextBox ID="TextBox17" runat="server" Width="85px"></asp:TextBox>
-            </td>
+                &nbsp;</td>
             <td class="style5">
                 &nbsp;</td>
         </tr>

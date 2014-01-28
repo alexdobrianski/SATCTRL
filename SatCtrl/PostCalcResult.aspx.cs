@@ -23,9 +23,33 @@ namespace SatCtrl
             public static  String GenXMLForOptimization(String szUsername)
             {
                 String xml = null;
+                String TextBoxTotalDays_Text;
+                String SVal1 =  null;
+                String SVal2 = null;
+                String SVal3 = null;
                 object IsList = HttpContext.Current.Application["ProbM" + szUsername];
 
-                if (IsList != null)
+                object IsStartDate = HttpContext.Current.Application["StartDate" + szUsername];
+
+                object IsITotalDays = HttpContext.Current.Application["TotalDays" + szUsername];
+                if (IsITotalDays != null)
+                {
+                    TextBoxTotalDays_Text = IsITotalDays.ToString();
+                }
+                else
+                {
+                    TextBoxTotalDays_Text = "1";
+                }
+                object IsIt = HttpContext.Current.Application["InitKeplerLine1" + szUsername];
+                object IsIt2 = HttpContext.Current.Application["InitKeplerLine2" + szUsername];
+                object IsIt3 = HttpContext.Current.Application["InitKeplerLine3" + szUsername];
+                if ((IsIt != null) && (IsIt2 != null) && (IsIt3 != null))
+                {
+                    SVal1 = IsIt.ToString();
+                    SVal2 = IsIt2.ToString();
+                    SVal3 = IsIt3.ToString();
+                }
+                if ((IsList != null) && (IsStartDate != null) && (IsIt != null))
                 {
                     _TraCalcCraft.CraftParam MyCraft;
                     MyCraft.ListEngineImpuse = new List<double>();
@@ -61,7 +85,7 @@ namespace SatCtrl
                           "    or set as normal date and time DD/MM/YY HH:MM:SS:MLS\r\n" +
                           "    or negativge value set current date\r\n" +
                           "    or (not implemented et) set as normal date and time DD/MM/YY HH:MM:SS:MLS-->\r\n" +
-                          "    <TRA name=\"dStartJD\" value=\"2451544.5\" />\r\n" +
+                          "    <TRA name=\"dStartJD\" value=\"" + IsStartDate.ToString() + "\" />\r\n" +
                           "    <TRA name=\"TRAVisual\" value=\"" +
                           Global.Common.GetWebSiteURLAdress() + "/SatCtrl/PostCaclResult.aspx\" />\r\n" +
                           "    <TRA name=\"RGBImageW\" value=\"1280\" />\r\n" +
@@ -81,12 +105,12 @@ namespace SatCtrl
                           "    <TRA name=\"RGBScale\" value=\"90000000\" />\r\n" +
                           "    <TRA name=\"IterPerSec\" value=\"32\" />\r\n" +
                           "    <TRA name=\"StartLandingIteraPerSec\" value=\"772050\" />\r\n" +
-                          "    <TRA name=\"TotalDays\" value=\"0.0416666667\" />\r\n" +
+                          "    <TRA name=\"TotalDays\" value=\"" + TextBoxTotalDays_Text + "\" />\r\n" +
                           "    <TRA name=\"AU\" value=\"149597870697.39999\" />\r\n" +
                           "    <TRA name=\"ProbM\" value=\"67.5\" />\r\n" +
-                          "    <TRA name=\"ProbKeplerLine1\" value=\"0 ISS (ZARYA)\" />\r\n" +
-                          "    <TRA name=\"ProbKeplerLine2\" value=\"1 25544U 98067A   11062.66968330  .00024457  00000-0  18183-3 0  9357\" />\r\n" +
-                          "    <TRA name=\"ProbKeplerLine3\" value=\"2 25544 051.6480 342.0829 0005279 039.9625 033.1957 15.72669582704292\" />\r\n" +
+                          "    <TRA name=\"ProbKeplerLine1\" value=\"" + SVal1 + "\" />\r\n" +
+                          "    <TRA name=\"ProbKeplerLine2\" value=\"" + SVal2 + "\" />\r\n" +
+                          "    <TRA name=\"ProbKeplerLine3\" value=\"" + SVal3 + "\" />\r\n" +
                           "    <TRA name=\"GRSTNNAME\" value=\"vancouver\" />\r\n" +
                           "    <TRA name=\"GRSTNLat\" value=\"49.257735\" />\r\n" +
                           "    <TRA name=\"GRSTNLong\" value=\"-123.123904\" />\r\n" +
@@ -192,7 +216,8 @@ namespace SatCtrl
                 {
                     szUsername = Page.User.Identity.Name.ToString();
                 }
-                if (null != _PostCalcResult.Common.GenXMLForOptimization(szUsername))
+                xml = _PostCalcResult.Common.GenXMLForOptimization(szUsername);
+                if (null != xml)
                 {
                     Response.Write(xml);
                 }
