@@ -291,6 +291,8 @@ namespace SatCtrl
 
         protected void ButtonGrStReadFlash_Click(object sender, EventArgs e)
         {
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
+
             if ((GrStReadFlashFrom.Text != "") && (GrStReadFlashLen.Text != ""))
             {
                 long FlashAddr = Int32.Parse(GrStReadFlashFrom.Text.ToString(), System.Globalization.NumberStyles.HexNumber);
@@ -313,13 +315,13 @@ namespace SatCtrl
                         else
                             Delta = (FlashAddr + FlashLength) - StartAddr;
                         //  first command is "=9   " - responce send back to unit 9
-                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2=#9   F\x05\x03");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "=#9   F\x05\x03");
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(StartAddr >> 16)));
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(((StartAddr & 0xff00) >> 8))));
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)((StartAddr & 0xff))));
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("@");
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)Delta).ToString());
-                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("\x32");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit);
                         StartAddr += Delta;
                     }
                 }
@@ -333,11 +335,13 @@ namespace SatCtrl
 
         protected void ButtonGrStFlasherace_Click(object sender, EventArgs e)
         {
-            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2=#9   F\x01\x06\x46\x01\xC7\x32");
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
+            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "=#9   F\x01\x06\x46\x01\xC7" + szUnit);
         }
 
         protected void ButtonUploadGrStFlash_Click(object sender, EventArgs e)
         {
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
             if (GrStFileUploadFlash.HasFile)
                 try
                 {
@@ -355,7 +359,7 @@ namespace SatCtrl
                         Address = istr.Substring(0, 8);
                         iAdr = Int32.Parse(Address.Substring(7,1), System.Globalization.NumberStyles.HexNumber);
                         FlashAddr = Int32.Parse(Address, System.Globalization.NumberStyles.HexNumber);
-                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2=#9   F\x01\x06\x46");//
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "=#9   F\x01\x06\x46");//
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)(16 - iAdr + 4)).ToString());
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("\x02");
                         MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(char.ConvertFromUtf32((int)(FlashAddr >> 16)));
@@ -372,7 +376,7 @@ namespace SatCtrl
                                 MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("#");
                             MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)iByteHex).ToString());
                         }
-                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("2");
+                        MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit);
                         //break;
                     }
                     //GrStFileUploadFlash.SaveAs("C:\\Uploads\\" +
@@ -424,6 +428,8 @@ namespace SatCtrl
         {
             SendToStationPostToDB("222=#9 T2");
         }
+
+
         /*
         protected void ButtonUploadGrStFlash_Click(object sender, EventArgs e)
         {

@@ -140,7 +140,10 @@
                     Enabled="False" />
             </td>
             <td class="style9">
-                <span class="style6"><strong>GrStn commands:</strong></span><br /><br />
+                GrStn Unit addr:<asp:TextBox 
+                    ID="TextBoxGrStnUnit" runat="server" Width="20px">2</asp:TextBox>
+                <br />
+                <span cGrStn commands:</strong></span><br /><br />
                 <asp:Button ID="ButtonGrStReadFlash" runat="server" Text="Read GrStn Flash" 
                     onclick="ButtonGrStReadFlash_Click" />
                     &nbsp;from:<asp:TextBox ID="GrStReadFlashFrom" runat="server" Width="90px"></asp:TextBox>
@@ -149,10 +152,14 @@
                 <br />
                 <asp:Button ID="ButtonGrStFlasherace" runat="server" 
                     onclick="ButtonGrStFlasherace_Click" Text="Erace Intetrnal FLash" /><br />
-                <asp:FileUpload ID="GrStFileUploadFlash" runat="server" />
+                <asp:FileUpload ID="GrStFileUploadFlash" runat="server" 
+                    ToolTip="format : 00000050:__20_43_4F_50_59_20_38_0D_|_0A_2F_2F_2F_2F_2F_2F_2F" />
                 <asp:Button ID="ButtonUploadGrStFlash" runat="server" Text="Upload Flash File" 
-                       onclick="ButtonUploadGrStFlash_Click" />
-                <br />
+                       onclick="ButtonUploadGrStFlash_Click" 
+                    ToolTip="format : 00000050:__20_43_4F_50_59_20_38_0D_|_0A_2F_2F_2F_2F_2F_2F_2F" 
+                    Width="117px" />
+                    ....
+                <a href="hexdata.txt">Sample Format</a><br />
                 <asp:Button ID="ButtonSetClkGrStn" runat="server" 
                     onclick="ButtonSetClkGrStn_Click" Text="SetClock " />
                 &lt;-from mission ctrl.
@@ -162,7 +169,7 @@
         </tr>
         <tr>
             <td class="style3">
-                <span class="style6"><strong>sequence of&nbsp; commands send via backup comm</strong></span><br />
+                <span class="style6"><strong>sequence of&nbsp; commands send via backup comms send via backup comm</strong></span><br />
                 <asp:TextBox ID="BackUpM10" runat="server" TextMode="MultiLine" Height="131px" 
                     Width="415px" ></asp:TextBox>
                     <br />
