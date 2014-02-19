@@ -25,6 +25,7 @@ namespace SatCtrl
             String str_gs_time = Page.Request.QueryString["gs_time"];
             String str_package = null;// Page.Request.QueryString["package"];
             String str_originalUrl = Page.Request.RawUrl.ToString();
+            String shorttime = "";
             int iPackPosition = str_originalUrl.IndexOf("package=");
             if (iPackPosition > 0)
             {
@@ -94,6 +95,7 @@ namespace SatCtrl
                     DateTime d = new DateTime();
                     d = DateTime.UtcNow;
                     str_d_time = d.ToString("yy/MM/dd HH:mm:ss") + "." + d.Millisecond.ToString().PadLeft(3, '0');
+                    shorttime = d.ToString("HH:mm:ss");
                     //String ConnStr = System.Configuration.ConfigurationManager.ConnectionStrings.ConnectionStrings["missionlogConnectionString"];
 
                     //str_package = str_package.Substring(1);
@@ -116,6 +118,39 @@ namespace SatCtrl
 
                     //tb.Text = d.ToString("MM/dd/yy HH:mm:ss") + "." + d.Millisecond.ToString();
                 }
+                // store responce for visualization
+                String Str1 = "";
+                String Str2 = "";
+                String Str3 = "";
+                String Str4 = "";
+                String Str5 = "";
+                object oStr1 = HttpContext.Current.Application["resp1"];
+                object oStr2 = HttpContext.Current.Application["resp2"];
+                object oStr3 = HttpContext.Current.Application["resp3"];
+                object oStr4 = HttpContext.Current.Application["resp4"];
+                object oStr5 = HttpContext.Current.Application["resp5"];
+
+                if (oStr1 != null)
+                    Str1 = oStr1.ToString();
+                if (oStr2 != null)
+                    Str2 = oStr2.ToString();
+                if (oStr3 != null)
+                    Str3 = oStr3.ToString();
+                if (oStr4 != null)
+                    Str4 = oStr4.ToString();
+                if (oStr5 != null)
+                    Str5 = oStr5.ToString();
+                Str1 = Str2;
+                Str2 = Str3;
+                Str3 = Str4;
+                Str4 = Str5;
+                Str5 = shorttime+ ":>"+str_package;
+                HttpContext.Current.Application["resp1"] = Str1;
+                HttpContext.Current.Application["resp2"] = Str2;
+                HttpContext.Current.Application["resp3"] = Str3;
+                HttpContext.Current.Application["resp4"] = Str4;
+                HttpContext.Current.Application["resp5"] = Str5;
+
             }
         }
     }

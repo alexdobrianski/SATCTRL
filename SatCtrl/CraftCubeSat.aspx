@@ -110,8 +110,11 @@
         </tr>
         <tr>
             <td class="style7">
-                <span class="style6"><strong>responce:</strong></span><br />
-                <asp:TextBox ID="TextBox19" runat="server" Height="169px" ReadOnly="True" 
+                <span class="style6">
+                <asp:Button ID="Button15" runat="server" Text="Check responce:" 
+                    ToolTip="update responce window" />
+                </span><br />
+                <asp:TextBox ID="TextBoxResponce" runat="server" Height="169px" ReadOnly="True" 
                     TextMode="MultiLine" Width="415px"></asp:TextBox>
                 </td>
             <td class="style8">
@@ -169,7 +172,7 @@
         </tr>
         <tr>
             <td class="style3">
-                <span class="style6"><strong>sequence of&nbsp; commands send via backup comms send via backup comm</strong></span><br />
+                <span class="style6"><strong>sequence of&nbsp; commands send via backup comm</strong></span><br />
                 <asp:TextBox ID="BackUpM10" runat="server" TextMode="MultiLine" Height="131px" 
                     Width="415px" ></asp:TextBox>
                     <br />

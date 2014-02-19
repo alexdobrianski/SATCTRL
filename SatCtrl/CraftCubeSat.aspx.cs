@@ -40,6 +40,39 @@ namespace SatCtrl
         {
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
+            String Str1 = "";
+            String Str2 = "";
+            String Str3 = "";
+            String Str4 = "";
+            String Str5 = "";
+            object oStr1 = HttpContext.Current.Application["resp1"];
+            object oStr2 = HttpContext.Current.Application["resp2"];
+            object oStr3 = HttpContext.Current.Application["resp3"];
+            object oStr4 = HttpContext.Current.Application["resp4"];
+            object oStr5 = HttpContext.Current.Application["resp5"];
+
+            if (oStr1 != null)
+                Str1 = oStr1.ToString();
+            if (oStr2 != null)
+                Str2 = oStr2.ToString();
+            if (oStr3 != null)
+                Str3 = oStr3.ToString();
+            if (oStr4 != null)
+                Str4 = oStr4.ToString();
+            if (oStr5 != null)
+                Str5 = oStr5.ToString();
+            String MainOut = "";
+            if (Str1 != "")
+                MainOut = Str1 + "\x0d\x0a";
+            if (Str2 != "")
+                MainOut = MainOut+ Str2 + "\x0d\x0a";
+            if (Str3 != "")
+                MainOut = MainOut + Str3 + "\x0d\x0a";
+            if (Str4 != "")
+                MainOut = MainOut + Str4 + "\x0d\x0a";
+            if (Str5 != "")
+                MainOut = MainOut + Str5 + "\x0d\x0a";
+            TextBoxResponce.Text = MainOut;
         }
         
         public void SendToStationPostToDB(string UpLoadMsg)
