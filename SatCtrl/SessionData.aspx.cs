@@ -14,10 +14,11 @@ namespace SatCtrl
     {
         public long intMaxSessionN;
         public bool wassize = false;
+        public bool DoHexBox = false;
         public String OutHexSmallSize( int BinDatai)
         {
             String strOut = "";
-            if ((BinDatai >= ' ') && (BinDatai <= '~'))
+            if ((BinDatai >= ' ') && (BinDatai <= '~') && !DoHexBox)
             {
                 if (wassize == true)
                     strOut += "</font>";
@@ -54,6 +55,7 @@ namespace SatCtrl
         {
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
+            DoHexBox = CheckBoxHex.Checked;
         }
         /*protected void GridView1_RowDataBound(object sender,    GridViewRowEventArgs e)
         {

@@ -144,7 +144,22 @@
             </td>
             <td class="style9">
                 GrStn Unit addr:<asp:TextBox 
-                    ID="TextBoxGrStnUnit" runat="server" Width="20px">2</asp:TextBox>
+                    ID="TextBoxGrStnUnit" runat="server" Width="20px">5</asp:TextBox>
+                &nbsp;&nbsp;
+                <asp:Button ID="ButtonATDTL" runat="server" onclick="ButtonATDTL_Click" 
+                    Text="atdtl" ToolTip="attempt to dial picosat" />
+&nbsp;
+                <asp:Button ID="ButtonATD" runat="server" onclick="ButtonATD_Click" Text="ATD" 
+                    ToolTip="ping picosat" />
+&nbsp;
+                <asp:Button ID="ButtonATP" runat="server" onclick="ButtonATP_Click" Text="ATP" 
+                    ToolTip="10 times ping picocat" />
+&nbsp;
+                <asp:Button ID="ButtonATC" runat="server" onclick="ButtonATC_Click" Text="ATC" 
+                    ToolTip="constant pinging picosat" />
+&nbsp;
+                <asp:Button ID="ButtonATX" runat="server" onclick="ButtonATX_Click" Text="ATX" 
+                    ToolTip="stop pinging picosat" />
                 <br />
                 <span cGrStn commands:</strong></span><br /><br />
                 <asp:Button ID="ButtonGrStReadFlash" runat="server" Text="Read GrStn Flash" 

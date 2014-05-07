@@ -40,6 +40,7 @@ namespace SatCtrl
         {
             string strMaxSessionN = HttpContext.Current.Application["strMaxSessionN"].ToString();
             intMaxSessionN = Convert.ToInt32(strMaxSessionN);
+            
             String Str1 = "";
             String Str2 = "";
             String Str3 = "";
@@ -73,6 +74,7 @@ namespace SatCtrl
             if (Str5 != "")
                 MainOut = MainOut + Str5 + "\x0d\x0a";
             TextBoxResponce.Text = MainOut;
+            
         }
         
         public void SendToStationPostToDB(string UpLoadMsg)
@@ -460,6 +462,36 @@ namespace SatCtrl
         protected void ButtonGrStnGetClock_Click(object sender, EventArgs e)
         {
             SendToStationPostToDB("222=#9 T2");
+        }
+
+        protected void ButtonATDTL_Click(object sender, EventArgs e)
+        {
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
+            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "atdtl\x0d\x0a" + szUnit);
+        }
+
+        protected void ButtonATD_Click(object sender, EventArgs e)
+        {
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
+            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "ATD" + szUnit);
+        }
+
+        protected void ButtonATP_Click(object sender, EventArgs e)
+        {
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
+            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "ATP" + szUnit);
+        }
+
+        protected void ButtonATC_Click(object sender, EventArgs e)
+        {
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
+            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "ATC" + szUnit);
+        }
+
+        protected void ButtonATX_Click(object sender, EventArgs e)
+        {
+            string szUnit = TextBoxGrStnUnit.Text.ToString();
+            MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(szUnit + "ATX" + szUnit);
         }
 
 

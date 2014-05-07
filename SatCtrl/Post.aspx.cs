@@ -24,12 +24,16 @@ namespace SatCtrl
             String str_g_station = Page.Request.QueryString["g_station"];
             String str_gs_time = Page.Request.QueryString["gs_time"];
             String str_package = null;// Page.Request.QueryString["package"];
+            String str_package_readable = "";
             String str_originalUrl = Page.Request.RawUrl.ToString();
             String shorttime = "";
+            int countnonreadable = 0;
+            int countTotal = 0;
             int iPackPosition = str_originalUrl.IndexOf("package=");
             if (iPackPosition > 0)
             {
                 str_package = str_originalUrl.Substring(iPackPosition + 8);
+                countTotal = str_package.Length;
                 // manual convert
                 byte[] BinData = new byte[str_package.Length*2];
                 System.Buffer.BlockCopy(str_package.ToArray(), 0, BinData, 0, str_package.Length*2);
@@ -67,7 +71,16 @@ namespace SatCtrl
                         case '\'': str_package += "&#39;"; break;
                         case '\"': str_package += "&#34;"; break;
                         case '&': str_package += "&amp;"; break;
-                        default: str_package += (char)Orig;  break;
+                        default: 
+                            str_package += (char)Orig;
+                            if ((Orig >= ' ') && (Orig <= '~'))
+                            {
+                                str_package_readable += Orig;
+                            }
+                            else
+                                countnonreadable++;
+                            //    str_package_readable += '.';
+                            break;
                         }
                         continue;
                     }
@@ -144,7 +157,11 @@ namespace SatCtrl
                 Str2 = Str3;
                 Str3 = Str4;
                 Str4 = Str5;
-                Str5 = shorttime+ ":>"+str_package;
+                Str5 = shorttime + ":>" + str_package_readable;
+                if (countnonreadable * 2 > countTotal)
+                {
+                    Str5 += "(some data)";
+                }
                 HttpContext.Current.Application["resp1"] = Str1;
                 HttpContext.Current.Application["resp2"] = Str2;
                 HttpContext.Current.Application["resp3"] = Str3;

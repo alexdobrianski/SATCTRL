@@ -40,6 +40,7 @@
                 </asp:BoundField>
             </Columns>
         </asp:GridView>
+        <asp:CheckBox ID="CheckBoxHex" runat="server" AutoPostBack="True" Text="Hex" />
 </p>
     <p>
         data</p>

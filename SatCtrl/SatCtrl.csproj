@@ -66,6 +66,7 @@
     <Content Include="Default.aspx" />
     <Content Include="GroundStation.aspx" />
     <Content Include="GrStn.exe" />
+    <Content Include="hexdata.txt" />
     <Content Include="Img\cubesat_ctrl.JPG" />
     <Content Include="Img\engineblank.JPG" />
     <Content Include="Img\GrStn.JPG" />
@@ -321,7 +322,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>3159</DevelopmentServerPort>
+          <DevelopmentServerPort>1140</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
