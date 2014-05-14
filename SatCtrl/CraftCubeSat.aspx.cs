@@ -407,7 +407,7 @@ namespace SatCtrl
                             else
                                 ByteHex = istr.Substring(37 - 24 + i*3, 2);
                             iByteHex = Int32.Parse(ByteHex, System.Globalization.NumberStyles.HexNumber);
-                            if (iByteHex >= '0' && iByteHex <= '9')
+                            if ((iByteHex >= '0' && iByteHex <= '9') || (iByteHex == '#')) 
                                 MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString("#");
                             MsgUplink.Text += SatCtrl._CraftCubeSat.Common.AddHexString(((char)iByteHex).ToString());
                         }
